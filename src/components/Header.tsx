@@ -2,25 +2,45 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Code2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/projets", label: "Projets" },
-  { href: "/a-propos", label: "À propos" },
-  { href: "/contact", label: "Contact" },
+  { href: "#accueil", label: "Accueil" },
+  { href: "#projets", label: "Projets" },
+  { href: "#a-propos", label: "À propos" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [isSheetOpen, setSheetOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState("#accueil");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navLinks.map(link => document.querySelector(link.href));
+      const scrollPosition = window.scrollY + 150;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section && (section as HTMLElement).offsetTop <= scrollPosition) {
+          setActiveLink(navLinks[i].href);
+          break;
+        }
+      }
+    };
+
+    document.addEventListener("scroll", handleScroll);
+    return () => document.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   const NavLink = ({ href, label, className }: { href: string, label: string, className?: string }) => {
-    const isActive = pathname === href;
+    const isActive = activeLink === href;
     return (
       <Link
         href={href}
@@ -40,7 +60,7 @@ export function Header() {
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2" onClick={() => setSheetOpen(false)}>
+          <Link href="#accueil" className="flex items-center gap-2" onClick={() => setSheetOpen(false)}>
             <Code2 className="h-7 w-7 text-primary" />
             <span className="font-headline font-bold text-xl">
               Matthéo

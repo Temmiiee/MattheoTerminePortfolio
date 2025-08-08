@@ -50,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={cn(ptSans.variable, spaceGrotesk.variable)}>
+    <html lang="fr" className={cn(ptSans.variable, spaceGrotesk.variable, 'scroll-smooth')}>
       <head>
         <style dangerouslySetInnerHTML={{ __html: `
           :root {

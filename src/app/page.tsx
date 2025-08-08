@@ -4,6 +4,9 @@ import { CodeXml, Gauge, Palette, ArrowRight, Accessibility } from "lucide-react
 import Link from "next/link";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/lib/projects";
+import Image from "next/image";
+import { Download, Mail, MessageCircle } from "lucide-react";
+import { ContactForm } from "@/components/ContactForm";
 
 const services = [
   {
@@ -29,12 +32,10 @@ const services = [
 ];
 
 export default function Home() {
-  const featuredProjects = projects.slice(0, 2);
-
   return (
     <div className="space-y-16 md:space-y-24">
       {/* Hero Section */}
-      <section className="text-center py-16">
+      <section id="accueil" className="text-center py-16 scroll-mt-20">
         <h1 className="font-headline text-4xl md:text-6xl font-bold text-primary mb-4 animate-fade-in-down">
           Matthéo
         </h1>
@@ -46,10 +47,10 @@ export default function Home() {
         </p>
         <div className="flex gap-4 justify-center">
           <Button asChild size="lg">
-            <Link href="/projets">Mes projets</Link>
+            <Link href="#projets">Mes projets</Link>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <Link href="/contact">Me contacter</Link>
+            <Link href="#contact">Me contacter</Link>
           </Button>
         </div>
       </section>
@@ -77,23 +78,107 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Projects Section */}
-      <section id="projects" className="scroll-mt-20">
+      {/* Projects Section */}
+      <section id="projets" className="scroll-mt-20">
         <div className="text-center mb-12">
           <h2 className="font-headline text-3xl md:text-4xl font-bold">Mes projets</h2>
           <p className="text-lg text-muted-foreground mt-2">Quelques exemples de mon travail.</p>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
-          {featuredProjects.map((project) => (
+          {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
-        <div className="text-center mt-12">
-          <Button asChild variant="link" className="text-lg text-primary">
-            <Link href="/projets">
-              Voir tous les projets <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
+      </section>
+
+       {/* About Section */}
+      <section id="a-propos" className="max-w-4xl mx-auto scroll-mt-20">
+        <header className="text-center mb-12">
+          <h2 className="font-headline text-3xl md:text-4xl font-bold text-primary">À propos de moi</h2>
+          <p className="mt-4 text-lg text-muted-foreground">Mon parcours, ma vision et ma passion pour le web.</p>
+        </header>
+
+        <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
+          <div className="md:col-span-1">
+            <div className="aspect-square rounded-full overflow-hidden shadow-lg mx-auto w-48 h-48 md:w-full md:h-auto">
+              <Image
+                src="https://placehold.co/400x400.png"
+                alt="Photo de Matthéo"
+                width={400}
+                height={400}
+                data-ai-hint="professional portrait"
+                className="w-full h-full object-cover"
+                priority
+              />
+            </div>
+          </div>
+
+          <div className="md:col-span-2 space-y-6 text-foreground/90">
+            <h3 className="font-headline text-3xl font-bold text-foreground">
+              Passionné par la création d'expériences web performantes et inclusives.
+            </h3>
+            <div className="space-y-4 text-lg">
+              <p>
+                Depuis le début de ma carrière, je me suis consacré à transformer des idées créatives en sites web fonctionnels et esthétiques. Mon objectif est de construire des solutions qui non seulement répondent aux besoins de mes clients, mais qui offrent aussi une expérience utilisateur fluide et agréable pour tous.
+              </p>
+              <p>
+                Je crois fermement en un web ouvert et accessible. C'est pourquoi j'accorde une importance capitale au respect des standards, à la performance et aux normes d'accessibilité (RGAA). Un bon site, selon moi, est un site rapide, facile à utiliser et qui ne laisse personne de côté.
+              </p>
+              <p>
+                Constamment en veille technologique, j'aime explorer de nouveaux outils et de nouvelles méthodes pour améliorer la qualité de mon travail et proposer des solutions toujours plus innovantes.
+              </p>
+            </div>
+            <div className="pt-4">
+              <Button asChild size="lg">
+                  <Link href="/CV_Matthéo.pdf" target="_blank">
+                      <Download className="mr-2 h-5 w-5" />
+                      Télécharger mon CV
+                  </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="max-w-4xl mx-auto scroll-mt-20">
+        <header className="text-center mb-12">
+          <h2 className="font-headline text-3xl md:text-4xl font-bold text-primary">Contactez-moi</h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Une question, un projet ? N'hésitez pas à me contacter. Je vous répondrai dans les plus brefs délais.
+          </p>
+        </header>
+        
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div className="space-y-6">
+            <h3 className="font-headline text-2xl font-bold">Autres moyens de contact</h3>
+            <p className="text-muted-foreground">
+              Si vous préférez, vous pouvez aussi me joindre directement par email ou via WhatsApp.
+            </p>
+            <div className="space-y-4">
+              <Button asChild variant="outline" className="w-full justify-start text-left h-auto py-3">
+                <Link href="mailto:contact@mattheo.fr">
+                  <Mail className="mr-4 h-6 w-6 text-primary" />
+                  <div>
+                    <div className="font-semibold">Email</div>
+                    <div className="text-muted-foreground">contact@mattheo.fr</div>
+                  </div>
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="w-full justify-start text-left h-auto py-3">
+                <Link href="https://wa.me/33612345678" target="_blank">
+                  <MessageCircle className="mr-4 h-6 w-6 text-accent" />
+                  <div>
+                    <div className="font-semibold">WhatsApp</div>
+                    <div className="text-muted-foreground">Discutons en direct</div>
+                  </div>
+                </Link>
+              </Button>
+            </div>
+          </div>
+          <div>
+            <ContactForm />
+          </div>
         </div>
       </section>
     </div>
