@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "À propos",
-  description: "Découvrez le parcours, les compétences et la vision de Alex Durand, intégrateur web freelance.",
+  description: "Découvrez le parcours, les compétences et la vision de Matthéo, intégrateur web freelance.",
 };
 
 export default function AboutPage() {
@@ -22,7 +22,7 @@ export default function AboutPage() {
           <div className="aspect-square rounded-full overflow-hidden shadow-lg mx-auto w-48 h-48 md:w-full md:h-auto">
             <Image
               src="https://placehold.co/400x400.png"
-              alt="Photo de Alex Durand"
+              alt="Photo de Matthéo"
               width={400}
               height={400}
               data-ai-hint="professional portrait"
@@ -49,7 +49,7 @@ export default function AboutPage() {
           </div>
           <div className="pt-4">
              <Button asChild size="lg">
-                <Link href="/CV_Alex_Durand.pdf" target="_blank">
+                <Link href="/CV_Matthéo.pdf" target="_blank">
                     <Download className="mr-2 h-5 w-5" />
                     Télécharger mon CV
                 </Link>

@@ -43,7 +43,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-2" onClick={() => setSheetOpen(false)}>
             <Code2 className="h-7 w-7 text-primary" />
             <span className="font-headline font-bold text-xl">
-              Alex Durand
+              Matthéo
             </span>
           </Link>
 

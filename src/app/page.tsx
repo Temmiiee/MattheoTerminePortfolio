@@ -36,7 +36,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="text-center py-16">
         <h1 className="font-headline text-4xl md:text-6xl font-bold text-primary mb-4 animate-fade-in-down">
-          Alex Durand
+          Matthéo
         </h1>
         <p className="font-headline text-xl md:text-2xl text-foreground/80 mb-6 max-w-3xl mx-auto">
           Intégrateur Web Freelance

@@ -9,7 +9,7 @@ import { Toaster } from '@/components/ui/toaster';
 const ptSans = PT_Sans({
   subsets: ['latin'],
   weight: ['400', '700'],
-  variable: '--font-pt-sans',
+  variable: '--font-body',
 });
 
 const spaceGrotesk = Space_Grotesk({
@@ -19,15 +19,15 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Intégrateur Web Freelance – Alex Durand',
-    template: '%s | Alex Durand – Intégrateur Web Freelance',
+    default: 'Intégrateur Web Freelance – Matthéo',
+    template: '%s | Matthéo – Intégrateur Web Freelance',
   },
-  description: 'Portfolio de Alex Durand, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+  description: 'Portfolio de Matthéo, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
   openGraph: {
-    title: 'Intégrateur Web Freelance – Alex Durand',
-    description: 'Portfolio de Alex Durand, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+    title: 'Intégrateur Web Freelance – Matthéo',
+    description: 'Portfolio de Matthéo, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
     url: 'https://your-domain.com', // Replace with your actual domain
-    siteName: 'Portfolio Alex Durand',
+    siteName: 'Portfolio Matthéo',
     locale: 'fr_FR',
     type: 'website',
   },
@@ -52,10 +52,12 @@ export default function RootLayout({
   return (
     <html lang="fr" className={cn(ptSans.variable, spaceGrotesk.variable)}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
+        <style dangerouslySetInnerHTML={{ __html: `
+          :root {
+            --font-pt-sans: ${ptSans.style.fontFamily};
+            --font-space-grotesk: ${spaceGrotesk.style.fontFamily};
+          }
+        `}} />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
         <Header />

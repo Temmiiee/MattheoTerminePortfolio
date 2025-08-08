@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Projets",
-  description: "Découvrez les projets réalisés par Alex Durand, intégrateur web freelance.",
+  description: "Découvrez les projets réalisés par Matthéo, intégrateur web freelance.",
 };
 
 export default function ProjectsPage() {

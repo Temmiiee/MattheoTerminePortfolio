@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contactez Alex Durand pour vos projets web. Formulaire de contact, email et WhatsApp disponibles.",
+  description: "Contactez Matthéo pour vos projets web. Formulaire de contact, email et WhatsApp disponibles.",
 };
 
 export default function ContactPage() {
@@ -27,11 +27,11 @@ export default function ContactPage() {
           </p>
           <div className="space-y-4">
             <Button asChild variant="outline" className="w-full justify-start text-left h-auto py-3">
-              <Link href="mailto:contact@alexdurand.fr">
+              <Link href="mailto:contact@mattheo.fr">
                 <Mail className="mr-4 h-6 w-6 text-primary" />
                 <div>
                   <div className="font-semibold">Email</div>
-                  <div className="text-muted-foreground">contact@alexdurand.fr</div>
+                  <div className="text-muted-foreground">contact@mattheo.fr</div>
                 </div>
               </Link>
             </Button>
