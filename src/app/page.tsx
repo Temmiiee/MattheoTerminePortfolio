@@ -51,9 +51,9 @@ const pricingPlans = [
         price: "À partir de 890€",
         description: "Une solution complète pour les entreprises souhaitant détailler leurs services et leur activité.",
         features: [
-            "Jusqu'à 5 pages (ex: Accueil, Blog...)",
-            "Design entièrement personnalisé",
-            "Intégration d'un système de blog",
+            "Nombre de pages illimité",
+            "Design personnalisé (de zéro ou selon votre charte graphique)",
+            "Développement de fonctionnalités spécifiques",
             "Optimisation pour le référencement",
             "Formation pour gérer votre contenu",
         ],
