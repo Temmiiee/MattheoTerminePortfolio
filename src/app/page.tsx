@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CodeXml, Gauge, Palette, ArrowRight, Accessibility } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { CodeXml, Gauge, Palette, ArrowRight, Accessibility, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/lib/projects";
@@ -30,6 +30,52 @@ const services = [
     description: "Garantir que votre site est utilisable par tous, y compris les personnes en situation de handicap.",
   },
 ];
+
+const pricingPlans = [
+    {
+        title: "Site Vitrine Essentiel",
+        price: "À partir de 490€",
+        description: "Idéal pour présenter votre activité, un portfolio ou un CV en ligne.",
+        features: [
+            "1 page unique",
+            "Design responsive (adapté mobile)",
+            "Formulaire de contact",
+            "Optimisation SEO de base",
+            "Mise en ligne",
+        ],
+        cta: "Choisir cette offre",
+        featured: false,
+    },
+    {
+        title: "Site Multi-pages Professionnel",
+        price: "À partir de 890€",
+        description: "Pour les entreprises qui ont besoin de plus d'espace pour présenter leurs services.",
+        features: [
+            "Jusqu'à 5 pages (ex: Accueil, Services, Blog...)",
+            "Design personnalisé",
+            "Intégration d'un blog",
+            "Optimisation SEO avancée",
+            "Formation à la gestion du contenu",
+        ],
+        cta: "Choisir cette offre",
+        featured: true,
+    },
+    {
+        title: "Solution Sur-Mesure",
+        price: "Sur devis",
+        description: "Pour les projets uniques : e-commerce, application web, fonctionnalités spécifiques.",
+        features: [
+            "Analyse approfondie de vos besoins",
+            "Développement de fonctionnalités complexes",
+            "Intégration de paiements en ligne",
+            "Espace d'administration personnalisé",
+            "Maintenance et support dédiés",
+        ],
+        cta: "Demander un devis",
+        featured: false,
+    },
+]
+
 
 export default function Home() {
   return (
@@ -75,6 +121,38 @@ export default function Home() {
               </CardContent>
             </Card>
           ))}
+        </div>
+      </section>
+      
+      {/* Pricing Section */}
+      <section id="tarifs" className="scroll-mt-20">
+        <div className="text-center mb-12">
+          <h2 className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
+          <p className="text-lg text-muted-foreground mt-2">Des offres claires et adaptées à vos besoins.</p>
+        </div>
+        <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            {pricingPlans.map((plan) => (
+                <Card key={plan.title} className={`flex flex-col ${plan.featured ? 'border-primary border-2 shadow-lg' : ''}`}>
+                    <CardHeader>
+                        <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
+                        <CardDescription>{plan.description}</CardDescription>
+                        <p className="text-3xl font-bold text-primary pt-4">{plan.price}</p>
+                    </CardHeader>
+                    <CardContent className="flex flex-col flex-grow">
+                        <ul className="space-y-3 mb-6 flex-grow">
+                            {plan.features.map((feature) => (
+                                <li key={feature} className="flex items-start">
+                                    <CheckCircle2 className="h-5 w-5 text-accent mr-2 mt-0.5 shrink-0" />
+                                    <span>{feature}</span>
+                                </li>
+                            ))}
+                        </ul>
+                        <Button asChild size="lg" className="w-full mt-auto" variant={plan.featured ? 'default' : 'outline'}>
+                            <Link href="#contact">{plan.cta}</Link>
+                        </Button>
+                    </CardContent>
+                </Card>
+            ))}
         </div>
       </section>
 
