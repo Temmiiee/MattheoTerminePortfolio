@@ -24,7 +24,7 @@ import { Textarea } from "./ui/textarea";
 import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
-  siteType: z.enum(["vitrine", "ecommerce"], {
+  siteType: z.enum(["vitrine", "ecommerce", "webapp"], {
     required_error: "Veuillez sélectionner un type de site.",
   }),
   designType: z.enum(["template", "custom"], {
@@ -50,6 +50,7 @@ const pricingModel = {
   siteType: {
     vitrine: 350,
     ecommerce: 1200,
+    webapp: 2500,
   },
   designType: {
     template: 200,
@@ -72,7 +73,7 @@ export function QuoteCalculator() {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      siteType: siteTypeParam === 'vitrine' || siteTypeParam === 'ecommerce' ? siteTypeParam : undefined,
+      siteType: siteTypeParam === 'vitrine' || siteTypeParam === 'ecommerce' || siteTypeParam === 'webapp' ? siteTypeParam : undefined,
       designType: designTypeParam === 'template' || designTypeParam === 'custom' ? designTypeParam : undefined,
       features: [],
       maintenance: maintenanceParam === 'true',
@@ -82,7 +83,7 @@ export function QuoteCalculator() {
 
   useEffect(() => {
     form.reset({
-        siteType: siteTypeParam === 'vitrine' || siteTypeParam === 'ecommerce' ? siteTypeParam : undefined,
+        siteType: siteTypeParam === 'vitrine' || siteTypeParam === 'ecommerce' || siteTypeParam === 'webapp' ? siteTypeParam : undefined,
         designType: designTypeParam === 'template' || designTypeParam === 'custom' ? designTypeParam : undefined,
         features: [],
         maintenance: maintenanceParam === 'true',
@@ -179,24 +180,35 @@ export function QuoteCalculator() {
                   <RadioGroup
                     onValueChange={field.onChange}
                     value={field.value}
-                    className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4"
+                    className="flex flex-col space-y-2"
                   >
-                    <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
+                        <FormControl>
+                            <RadioGroupItem value="vitrine" />
+                        </FormControl>
+                        <FormLabel className="font-normal w-full">
+                            <span className="font-bold block">Site Vitrine</span>
+                            <span className="text-sm text-muted-foreground">Présenter votre activité et vos services.</span>
+                        </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
+                        <FormControl>
+                            <RadioGroupItem value="ecommerce" />
+                        </FormControl>
+                        <FormLabel className="font-normal w-full">
+                            <span className="font-bold block">E-commerce</span>
+                            <span className="text-sm text-muted-foreground">Vendre des produits en ligne (base).</span>
+                        </FormLabel>
+                        </FormItem>
+                    </div>
+                     <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
                       <FormControl>
-                        <RadioGroupItem value="vitrine" />
+                        <RadioGroupItem value="webapp" />
                       </FormControl>
                       <FormLabel className="font-normal w-full">
-                        <span className="font-bold block">Site Vitrine</span>
-                        <span className="text-sm text-muted-foreground">Présenter votre activité et vos services.</span>
-                      </FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
-                      <FormControl>
-                        <RadioGroupItem value="ecommerce" />
-                      </FormControl>
-                      <FormLabel className="font-normal w-full">
-                        <span className="font-bold block">E-commerce</span>
-                        <span className="text-sm text-muted-foreground">Vendre des produits en ligne (base).</span>
+                        <span className="font-bold block">Application Web</span>
+                        <span className="text-sm text-muted-foreground">Projet complexe avec des fonctionnalités sur mesure (SaaS, plateforme, etc.).</span>
                       </FormLabel>
                     </FormItem>
                   </RadioGroup>
