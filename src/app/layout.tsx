@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
+import Link from 'next/link';
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -60,8 +61,9 @@ export default function RootLayout({
         `}} />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
+        <Link href="#main-content" className="skip-link">Aller au contenu principal</Link>
         <Header />
-        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <main id="main-content" className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           {children}
         </main>
         <Footer />

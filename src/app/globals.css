@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5, h6 {
     --secondary-foreground: 222 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 216 12% 42%; /* Increased contrast from 46.9% to 42% */
 
     --accent: 174 100% 29%; /* #009688 */
     --accent-foreground: 0 0% 100%;
@@ -92,5 +92,34 @@ h1, h2, h3, h4, h5, h6 {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: -999;
+  }
+
+  .skip-link:focus, .skip-link:active {
+    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--primary));
+    left: auto;
+    top: auto;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    z-index: 9999;
+    text-decoration: none;
+    font-weight: bold;
   }
 }
