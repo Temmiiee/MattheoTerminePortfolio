@@ -7,7 +7,6 @@ import { projects } from "@/lib/projects";
 import Image from "next/image";
 import { Download, Mail, MessageCircle } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
-import { ProjectIdeaGenerator } from "@/components/ProjectIdeaGenerator";
 
 const services = [
   {
@@ -183,20 +182,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-        {/* AI Project Idea Generator Section */}
-        <section id="ai-generator" className="scroll-mt-20" aria-labelledby="ai-generator-title">
-            <header className="text-center mb-12">
-                <h2 id="ai-generator-title" className="font-headline text-3xl md:text-4xl font-bold">
-                    <Bot className="inline-block h-10 w-10 mr-2 text-primary" />
-                    En Manque d'Inspiration ?
-                </h2>
-                <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Décrivez votre activité ou votre idée, et laissez l'IA vous suggérer un concept de site web !</p>
-            </header>
-            <div className="max-w-2xl mx-auto">
-                <ProjectIdeaGenerator />
-            </div>
-        </section>
 
       {/* Pricing Section */}
       <section id="tarifs" className="scroll-mt-20" aria-labelledby="tarifs-title">
