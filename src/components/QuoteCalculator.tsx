@@ -18,6 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState, useMemo } from "react";
 import { Separator } from "./ui/separator";
+import Link from "next/link";
 
 const formSchema = z.object({
   siteType: z.enum(["vitrine", "ecommerce", "sur-mesure"], {
@@ -57,7 +58,6 @@ const pricingModel = {
 };
 
 export function QuoteCalculator() {
-  const [totalPrice, setTotalPrice] = useState<number | null>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -84,21 +84,17 @@ export function QuoteCalculator() {
   
   const watchedValues = form.watch();
 
-  useMemo(() => {
-    const { success } = formSchema.safeParse(watchedValues);
+  const totalPrice = useMemo(() => {
+    const { success, data } = formSchema.safeParse(watchedValues);
     if(success) {
-      const price = calculatePrice(watchedValues);
-      setTotalPrice(price);
-    } else {
-      setTotalPrice(null);
+      return calculatePrice(data as FormValues);
     }
-
+    return null;
   }, [watchedValues, formSchema]);
 
 
   function onSubmit(values: FormValues) {
     const price = calculatePrice(values);
-    setTotalPrice(price);
     console.log("Final Quote Data:", { ...values, estimatedPrice: price });
   }
 
@@ -243,7 +239,7 @@ export function QuoteCalculator() {
                     Cette estimation est fournie à titre indicatif. Un devis détaillé vous sera fourni après discussion de votre projet.
                 </p>
                  <Button asChild size="lg" className="mt-6">
-                    <Link href="#contact">Contacter pour un devis final</Link>
+                    <Link href="/#contact">Contacter pour un devis final</Link>
                 </Button>
                 </>
             ) : (
