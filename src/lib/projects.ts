@@ -45,6 +45,7 @@ export const projects: Project[] = [
     ],
     imageUrl: "https://placehold.co/1200x800.png",
     dataAiHint: "data analysis",
+    liveLink: "#",
     repoLink: "#",
   },
 ];
