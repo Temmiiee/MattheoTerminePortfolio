@@ -32,50 +32,49 @@ const services = [
 ];
 
 const pricingPlans = [
-    {
-        title: "Site Vitrine Essentiel",
-        price: "À partir de 490€",
-        description: "La solution idéale pour démarrer et marquer votre présence en ligne avec un site professionnel.",
-        features: [
-            "Jusqu'à 3 pages",
-            "Design moderne et responsive",
-            "Formulaire de contact fonctionnel",
-            "Optimisation pour le référencement",
-            "Mise en ligne sur votre hébergement",
-        ],
-        cta: "Choisir cette offre",
-        featured: false,
-    },
-    {
-        title: "Site Multi-pages Professionnel",
-        price: "À partir de 890€",
-        description: "Une solution complète pour les entreprises souhaitant détailler leurs services et leur activité.",
-        features: [
-            "Nombre de pages illimité",
-            "Design personnalisé (de zéro ou selon votre charte graphique)",
-            "Développement de fonctionnalités spécifiques",
-            "Optimisation pour le référencement",
-            "Formation pour gérer votre contenu",
-        ],
-        cta: "Choisir cette offre",
-        featured: true,
-    },
-    {
-        title: "Solution Sur-Mesure",
-        price: "Sur devis",
-        description: "Un projet unique ? Discutons-en pour construire la solution parfaitement adaptée à vos ambitions.",
-        features: [
-            "Analyse approfondie de vos besoins",
-            "Développement de fonctionnalités spécifiques",
-            "Intégration de services tiers (API, etc.)",
-            "Espace d'administration personnalisé",
-            "Accompagnement et support dédiés",
-        ],
-        cta: "Demander un devis",
-        featured: false,
-    },
+  {
+    title: "Site Vitrine Essentiel",
+    price: "À partir de 490€",
+    description: "La solution idéale pour démarrer et marquer votre présence en ligne avec un site professionnel.",
+    features: [
+      "Jusqu'à 3 pages",
+      "Design moderne et responsive",
+      "Formulaire de contact fonctionnel",
+      "Optimisation pour le référencement",
+      "Mise en ligne sur votre hébergement",
+    ],
+    cta: "Choisir cette offre",
+    featured: false,
+  },
+  {
+    title: "Site Multi-pages Professionnel",
+    price: "À partir de 890€",
+    description: "Une solution complète pour les entreprises souhaitant détailler leurs services et leur activité.",
+    features: [
+      "Nombre de pages illimité",
+      "Design personnalisé (de zéro ou selon votre charte graphique)",
+      "Développement de fonctionnalités spécifiques",
+      "Optimisation pour le référencement",
+      "Formation pour gérer votre contenu",
+    ],
+    cta: "Choisir cette offre",
+    featured: true,
+  },
+  {
+    title: "Solution Sur-Mesure",
+    price: "Sur devis",
+    description: "Un projet unique ? Discutons-en pour construire la solution parfaitement adaptée à vos ambitions.",
+    features: [
+      "Analyse approfondie de vos besoins",
+      "Développement de fonctionnalités spécifiques",
+      "Intégration de services tiers (API, etc.)",
+      "Espace d'administration personnalisé",
+      "Accompagnement et support dédiés",
+    ],
+    cta: "Demander un devis",
+    featured: false,
+  },
 ];
-
 
 export default function Home() {
   return (
@@ -83,7 +82,7 @@ export default function Home() {
       {/* Hero Section */}
       <section id="accueil" className="text-center py-16 scroll-mt-20" aria-labelledby="hero-title">
         <h1 id="hero-title" className="font-headline text-4xl md:text-6xl font-bold text-primary mb-4 animate-fade-in-down">
-          Matthéo
+          Matthéo Termine
         </h1>
         <p className="font-headline text-xl md:text-2xl text-foreground/80 mb-6 max-w-3xl mx-auto">
           Intégrateur Web Freelance
@@ -181,7 +180,7 @@ export default function Home() {
             <div className="aspect-square rounded-full overflow-hidden shadow-lg mx-auto w-48 h-48 md:w-full md:h-auto">
               <Image
                 src="https://placehold.co/400x400.png"
-                alt="Photo de Matthéo"
+                alt="Photo de Matthéo Termine"
                 width={400}
                 height={400}
                 data-ai-hint="professional portrait"
@@ -238,11 +237,11 @@ export default function Home() {
             </p>
             <div className="space-y-4">
               <Button asChild variant="outline" className="w-full justify-start text-left h-auto py-3">
-                <Link href="mailto:contact@mattheo.fr" aria-label="Envoyer un email à contact@mattheo.fr">
+                <Link href="mailto:contact@mattheo-termine.fr" aria-label="Envoyer un email à contact@mattheo-termine.fr">
                   <Mail className="mr-4 h-6 w-6 text-primary" aria-hidden="true" />
                   <div>
                     <div className="font-semibold">Email</div>
-                    <div className="text-muted-foreground">contact@mattheo.fr</div>
+                    <div className="text-muted-foreground">contact@mattheo-termine.fr</div>
                   </div>
                 </Link>
               </Button>

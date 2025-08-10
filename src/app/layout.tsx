@@ -20,15 +20,15 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Intégrateur Web Freelance – Matthéo',
-    template: '%s | Matthéo – Intégrateur Web Freelance',
+    default: 'Intégrateur Web Freelance – Matthéo Termine',
+    template: '%s | Matthéo Termine – Intégrateur Web Freelance',
   },
-  description: 'Portfolio de Matthéo, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+  description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
   openGraph: {
-    title: 'Intégrateur Web Freelance – Matthéo',
-    description: 'Portfolio de Matthéo, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+    title: 'Intégrateur Web Freelance – Matthéo Termine',
+    description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
     url: 'https://your-domain.com', // Replace with your actual domain
-    siteName: 'Portfolio Matthéo',
+    siteName: 'Portfolio Matthéo Termine',
     locale: 'fr_FR',
     type: 'website',
   },
