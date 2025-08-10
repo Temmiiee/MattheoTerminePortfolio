@@ -16,10 +16,11 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
 import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   siteType: z.enum(["vitrine", "ecommerce"], {
@@ -31,6 +32,8 @@ const formSchema = z.object({
   pageCount: z.coerce.number().min(1, "Il doit y avoir au moins 1 page.").max(50, "Pour plus de 50 pages, un devis sur mesure est nécessaire."),
   features: z.array(z.string()).optional(),
   maintenance: z.boolean().default(false).optional(),
+  projectDescription: z.string().optional(),
+  files: z.any().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -69,11 +72,14 @@ export function QuoteCalculator() {
       pageCount: 5,
       features: [],
       maintenance: false,
+      projectDescription: "",
     },
   });
 
-  const calculatePrice = (data: Partial<FormValues>) => {
-    const parsedData = formSchema.safeParse(data);
+  const watchedValues = form.watch();
+
+  const { base: basePrice, total: totalPrice } = useMemo(() => {
+    const parsedData = formSchema.safeParse(watchedValues);
     if (!parsedData.success) {
       return { base: null, total: null };
     }
@@ -102,12 +108,6 @@ export function QuoteCalculator() {
     }
     
     return { base, total: base + featurePrice };
-  };
-  
-  const watchedValues = form.watch();
-
-  const { base: basePrice, total: totalPrice } = useMemo(() => {
-      return calculatePrice(watchedValues);
   }, [watchedValues]);
 
   return (
@@ -279,12 +279,58 @@ export function QuoteCalculator() {
                 </FormItem>
               )}
             />
+            
+            <Separator />
+
+            <div>
+                <h3 className="text-lg font-semibold">6. Informations complémentaires</h3>
+                <FormDescription>
+                    Ces informations ne modifient pas le tarif mais m'aideront à mieux comprendre votre projet.
+                </FormDescription>
+            </div>
+
+            <FormField
+                control={form.control}
+                name="projectDescription"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Décrivez votre projet</FormLabel>
+                    <FormControl>
+                    <Textarea
+                        placeholder="Quels sont vos objectifs ? Qui est votre cible ? Avez-vous des exemples de sites que vous aimez ?"
+                        className="min-h-[150px]"
+                        {...field}
+                    />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+
+            <FormField
+                control={form.control}
+                name="files"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Charte graphique, logo, ou inspirations</FormLabel>
+                     <FormDescription>
+                        Vous pouvez téléverser jusqu'à 3 fichiers (images, PDF...).
+                    </FormDescription>
+                    <FormControl>
+                    <Input type="file" multiple {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+
+
         </form>
       </Form>
       
       <Separator />
 
-      <div className="mt-8 sticky bottom-0 bg-background/95 backdrop-blur-sm py-6">
+      <div className="mt-8 py-6">
         <h3 className="text-2xl font-bold font-headline text-center">Estimation du devis</h3>
         <div className="mt-4 bg-secondary p-6 rounded-lg text-center">
             {totalPrice !== null ? (
@@ -305,6 +351,3 @@ export function QuoteCalculator() {
     </div>
   );
 }
-
-
-  

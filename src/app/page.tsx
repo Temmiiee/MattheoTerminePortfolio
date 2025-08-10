@@ -217,7 +217,7 @@ export default function Home() {
             <Button asChild size="lg">
                 <Link href="/devis" aria-label="Accéder au calculateur de devis">
                     <FileText className="mr-2 h-5 w-5" />
-                    Calculer mon devis
+                    Estimer mon devis
                 </Link>
             </Button>
         </div>
