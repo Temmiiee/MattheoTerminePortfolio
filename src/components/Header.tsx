@@ -19,10 +19,16 @@ const navLinks = [
 
 export function Header() {
   const pathname = usePathname();
+  const isHomePage = pathname === '/';
   const [isSheetOpen, setSheetOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("#accueil");
 
   useEffect(() => {
+    if (!isHomePage) {
+      setActiveLink("");
+      return;
+    }
+
     const handleScroll = () => {
       const sections = navLinks.map(link => document.querySelector(link.href));
       const scrollPosition = window.scrollY + 150;
@@ -38,14 +44,16 @@ export function Header() {
 
     document.addEventListener("scroll", handleScroll);
     return () => document.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage]);
 
 
   const NavLink = ({ href, label, className }: { href: string, label: string, className?: string }) => {
     const isActive = activeLink === href;
+    const finalHref = isHomePage ? href : `/${href}`;
+
     return (
       <Link
-        href={href}
+        href={finalHref}
         className={cn(
           "transition-colors text-lg md:text-sm hover:text-primary",
           isActive ? "text-primary font-semibold" : "text-foreground/60",
@@ -62,7 +70,7 @@ export function Header() {
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="#accueil" className="flex items-center gap-2" onClick={() => setSheetOpen(false)}>
+          <Link href="/" className="flex items-center gap-2" onClick={() => setSheetOpen(false)}>
             <Code2 className="h-7 w-7 text-primary" />
             <span className="font-headline font-bold text-xl">
               Matthéo Termine

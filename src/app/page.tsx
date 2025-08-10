@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CodeXml, Gauge, Palette, Accessibility, CheckCircle2 } from "lucide-react";
+import { CodeXml, Gauge, Palette, Accessibility, CheckCircle2, FileText } from "lucide-react";
 import Link from "next/link";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/lib/projects";
@@ -84,7 +84,7 @@ export default function Home() {
         <h1 id="hero-title" className="font-headline text-4xl md:text-6xl font-bold text-primary mb-4 animate-fade-in-down">
           Matthéo Termine
         </h1>
-        <p className="font-headline text-xl md:text-2xl text-foreground/80 mb-6 max-w-3xl mx-auto">
+        <p className="font-headline text-xl md:text-2xl text-foreground/80 mb-6 max-w-3xl mx-auto" role="doc-subtitle">
           Intégrateur Web Freelance
         </p>
         <p className="text-lg md:text-xl text-foreground/90 max-w-2xl mx-auto mb-8">
@@ -140,7 +140,7 @@ export default function Home() {
       <section id="tarifs" className="scroll-mt-20" aria-labelledby="tarifs-title">
         <header className="text-center mb-12">
           <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
-          <p className="text-lg text-muted-foreground mt-2">Des offres claires et adaptées à vos besoins.</p>
+          <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
         </header>
         <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
             {pricingPlans.map((plan) => (
@@ -165,6 +165,14 @@ export default function Home() {
                     </CardContent>
                 </Card>
             ))}
+        </div>
+        <div className="text-center mt-12">
+            <Button asChild size="lg">
+                <Link href="/devis" aria-label="Accéder au calculateur de devis">
+                    <FileText className="mr-2 h-5 w-5" />
+                    Calculer mon devis
+                </Link>
+            </Button>
         </div>
       </section>
 
