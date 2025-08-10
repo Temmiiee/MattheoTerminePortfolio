@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CodeXml, Gauge, Palette, Accessibility, CheckCircle2, FileText, Search, Bot, Feather, Rocket, PencilRuler, Server, LifeBuoy } from "lucide-react";
+import { CodeXml, Gauge, Palette, Accessibility, CheckCircle2, FileText, Search, Rocket, PencilRuler, Server, LifeBuoy } from "lucide-react";
 import Link from "next/link";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/lib/projects";
@@ -69,6 +69,7 @@ const pricingPlans = [
     cta: "Choisir cette offre",
     featured: false,
     isNew: false,
+    link: "/devis?siteType=vitrine&designType=template",
   },
   {
     title: "Site Multi-pages Professionnel",
@@ -84,6 +85,7 @@ const pricingPlans = [
     cta: "Choisir cette offre",
     featured: true,
     isNew: false,
+    link: "/devis?siteType=vitrine&designType=custom",
   },
   {
     title: "Solution Sur-Mesure",
@@ -99,6 +101,7 @@ const pricingPlans = [
     cta: "Demander un devis",
     featured: false,
     isNew: false,
+    link: "/devis",
   },
    {
     title: "Maintenance & Hébergement",
@@ -114,6 +117,7 @@ const pricingPlans = [
     cta: "Souscrire maintenant",
     featured: false,
     isNew: true,
+    link: "/devis?maintenance=true",
   },
 ];
 
@@ -171,19 +175,17 @@ export default function Home() {
               <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Une approche structurée pour garantir la réussite de votre projet.</p>
           </header>
           <div className="relative">
-              <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-border -translate-y-1/2" aria-hidden="true"></div>
+              <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-border" aria-hidden="true"></div>
               <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8">
                   {processSteps.map((step) => (
-                      <div key={step.title} className="flex flex-col items-center text-center">
-                          <div className="relative z-10 w-24 h-24 rounded-full bg-background border-4 border-primary flex items-center justify-center">
+                      <div key={step.title} className="flex flex-col items-center text-center p-4">
+                          <div className="relative z-10 w-24 h-24 rounded-full bg-background border-4 border-primary flex items-center justify-center mb-4">
                               <div className="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                                 <step.icon className="w-10 h-10" />
                               </div>
                           </div>
-                          <div className="mt-4">
-                              <h3 className="font-headline text-xl font-bold">{step.title}</h3>
-                              <p className="text-muted-foreground mt-2">{step.description}</p>
-                          </div>
+                          <h3 className="font-headline text-xl font-bold">{step.title}</h3>
+                          <p className="text-muted-foreground mt-2">{step.description}</p>
                       </div>
                   ))}
               </div>
@@ -227,7 +229,7 @@ export default function Home() {
                             ))}
                         </ul>
                         <Button asChild size="lg" className="w-full mt-auto" variant={plan.featured ? 'default' : 'outline'}>
-                            <Link href="/devis" aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
+                            <Link href={plan.link} aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
                         </Button>
                     </CardContent>
                 </Card>
@@ -254,7 +256,7 @@ export default function Home() {
                             </div>
                            <p className="text-3xl font-bold text-primary">{plan.price}</p>
                            <Button asChild size="lg" className="w-full md:w-auto mt-4 md:mt-0">
-                                <Link href="/devis" aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
+                                <Link href={plan.link} aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
                             </Button>
                         </div>
                     </CardContent>

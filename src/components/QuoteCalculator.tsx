@@ -16,11 +16,12 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   siteType: z.enum(["vitrine", "ecommerce"], {
@@ -64,14 +65,32 @@ const pricingModel = {
 
 
 export function QuoteCalculator() {
+  const searchParams = useSearchParams();
+  const siteTypeParam = searchParams.get('siteType');
+  const designTypeParam = searchParams.get('designType');
+  const maintenanceParam = searchParams.get('maintenance');
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      siteType: siteTypeParam === 'vitrine' || siteTypeParam === 'ecommerce' ? siteTypeParam : undefined,
+      designType: designTypeParam === 'template' || designTypeParam === 'custom' ? designTypeParam : undefined,
       features: [],
-      maintenance: false,
+      maintenance: maintenanceParam === 'true',
       projectDescription: "",
     },
   });
+
+  useEffect(() => {
+    form.reset({
+        siteType: siteTypeParam === 'vitrine' || siteTypeParam === 'ecommerce' ? siteTypeParam : undefined,
+        designType: designTypeParam === 'template' || designTypeParam === 'custom' ? designTypeParam : undefined,
+        features: [],
+        maintenance: maintenanceParam === 'true',
+        projectDescription: "",
+    });
+  }, [siteTypeParam, designTypeParam, maintenanceParam, form]);
+
 
   const watchedValues = form.watch();
 
@@ -116,7 +135,7 @@ export function QuoteCalculator() {
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value}
                     className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4"
                   >
                     <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
@@ -153,7 +172,7 @@ export function QuoteCalculator() {
                  <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value}
                     className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4"
                   >
                     <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
@@ -309,7 +328,7 @@ export function QuoteCalculator() {
       <div className="mt-8 py-6">
         <h3 className="text-2xl font-bold font-headline text-center">Estimation du devis</h3>
         <div className="mt-4 bg-secondary p-6 rounded-lg text-center">
-            {totalPrice !== null ? (
+            {totalPrice !== null && (watchedValues.siteType && watchedValues.designType) ? (
                 <>
                 <p className="text-4xl font-bold text-primary">{totalPrice} € <span className="text-lg font-normal text-muted-foreground">HT</span></p>
                 {maintenanceCost > 0 && (
