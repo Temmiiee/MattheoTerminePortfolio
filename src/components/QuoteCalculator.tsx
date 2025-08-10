@@ -94,37 +94,81 @@ export function QuoteCalculator() {
 
   const watchedValues = form.watch();
 
-  const { total: totalPrice, maintenanceCost } = useMemo(() => {
+  const { total: totalPrice, maintenanceCost, details } = useMemo(() => {
     const parsedData = formSchema.safeParse(watchedValues);
     if (!parsedData.success) {
-      return { total: null, maintenanceCost: 0 };
+      return { total: null, maintenanceCost: 0, details: {} };
     }
     const finalData = parsedData.data;
 
     let base = 0;
+    const details: Record<string, number> = {};
+    
     if (finalData.siteType) {
-      base += pricingModel.siteType[finalData.siteType];
+      const price = pricingModel.siteType[finalData.siteType];
+      base += price;
+      details[`Site ${finalData.siteType}`] = price;
     }
     if(finalData.designType) {
-        base += pricingModel.designType[finalData.designType];
+        const price = pricingModel.designType[finalData.designType];
+        base += price;
+        details[`Design ${finalData.designType}`] = price;
     }
 
     let featurePrice = 0;
     if (finalData.features) {
       finalData.features.forEach((featureId) => {
-        featurePrice += pricingModel.features[featureId] || 0;
+        const feature = featureOptions.find(f => f.id === featureId);
+        if (feature) {
+          featurePrice += feature.price;
+          details[feature.label] = feature.price;
+        }
       });
     }
 
     const maintenance = finalData.maintenance ? pricingModel.maintenance : 0;
+    if (maintenance > 0) {
+      details["Maintenance & Hébergement"] = maintenance;
+    }
     
-    return { total: base + featurePrice, maintenanceCost: maintenance };
+    return { total: base + featurePrice, maintenanceCost: maintenance, details };
   }, [watchedValues]);
+
+  const onSubmit = (data: FormValues) => {
+    const subject = `Proposition de devis pour un ${data.siteType}`;
+    
+    let body = `Bonjour,\n\nVoici une proposition de devis basée sur votre demande.\n\n`;
+    body += `----------------------------------------\n`;
+    body += `RÉCAPITULATIF DE LA DEMANDE\n`;
+    body += `----------------------------------------\n\n`;
+
+    if (data.projectDescription) {
+      body += `Description du projet :\n${data.projectDescription}\n\n`;
+    }
+
+    body += `Détails de l'estimation :\n`;
+    Object.entries(details).forEach(([key, value]) => {
+      if (key.toLowerCase().includes('maintenance')) return;
+      body += `- ${key}: ${value} €\n`;
+    });
+
+    body += `\n----------------------------------------\n`;
+    body += `TOTAL (HT) : ${totalPrice} €\n`;
+     if (maintenanceCost > 0) {
+      body += `Maintenance & Hébergement : ${maintenanceCost} € / mois\n`;
+    }
+    body += `----------------------------------------\n\n`;
+    body += `Ce devis est une estimation et peut être affiné après discussion.\n\n`;
+    body += `Cordialement,\nMatthéo Termine`;
+
+    const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+  };
 
   return (
     <div className="space-y-8">
       <Form {...form}>
-        <form className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           
           <FormField
             control={form.control}
@@ -319,35 +363,29 @@ export function QuoteCalculator() {
                 )}
             />
 
-
+            <div className="mt-8 py-6">
+                <h3 className="text-2xl font-bold font-headline text-center">Estimation du devis</h3>
+                <div className="mt-4 bg-secondary p-6 rounded-lg text-center">
+                    {totalPrice !== null && (watchedValues.siteType && watchedValues.designType) ? (
+                        <>
+                        <p className="text-4xl font-bold text-primary">{totalPrice} € <span className="text-lg font-normal text-muted-foreground">HT</span></p>
+                        {maintenanceCost > 0 && (
+                            <p className="text-xl font-semibold text-primary mt-2">+ {maintenanceCost} € / mois</p>
+                        )}
+                        <p className="text-muted-foreground mt-2 max-w-md mx-auto">
+                            Cette estimation est à titre indicatif. Elle évolue en fonction de vos choix.
+                        </p>
+                        <Button type="submit" size="lg" className="mt-6">
+                            Proposer le projet
+                        </Button>
+                        </>
+                    ) : (
+                        <p className="text-lg text-muted-foreground px-4">Veuillez remplir les options ci-dessus pour obtenir une estimation.</p>
+                    )}
+                </div>
+              </div>
         </form>
       </Form>
-      
-      <Separator />
-
-      <div className="mt-8 py-6">
-        <h3 className="text-2xl font-bold font-headline text-center">Estimation du devis</h3>
-        <div className="mt-4 bg-secondary p-6 rounded-lg text-center">
-            {totalPrice !== null && (watchedValues.siteType && watchedValues.designType) ? (
-                <>
-                <p className="text-4xl font-bold text-primary">{totalPrice} € <span className="text-lg font-normal text-muted-foreground">HT</span></p>
-                {maintenanceCost > 0 && (
-                     <p className="text-xl font-semibold text-primary mt-2">+ {maintenanceCost} € / mois</p>
-                )}
-                <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-                    Cette estimation est à titre indicatif. Elle évolue en fonction de vos choix.
-                </p>
-                 <Button asChild size="lg" className="mt-6">
-                    <Link href="/#contact">Discutons de votre projet pour un devis final</Link>
-                </Button>
-                </>
-            ) : (
-                <p className="text-lg text-muted-foreground px-4">Veuillez remplir les options ci-dessus pour obtenir une estimation.</p>
-            )}
-        </div>
-      </div>
     </div>
   );
 }
-
-    
