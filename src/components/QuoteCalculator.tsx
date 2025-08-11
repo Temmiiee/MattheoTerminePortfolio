@@ -226,6 +226,30 @@ export function QuoteCalculator() {
           />
 
            <FormField
+              control={form.control}
+              name="wordpress"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center space-x-3">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      id="wordpress-checkbox"
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel htmlFor="wordpress-checkbox" className="font-normal">
+                      Je souhaite que le site soit développé sur WordPress.
+                    </FormLabel>
+                    <FormDescription>
+                      Cette information est à titre indicatif et n'impacte pas le devis.
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
+
+           <FormField
             control={form.control}
             name="designType"
             render={({ field }) => (
@@ -261,30 +285,6 @@ export function QuoteCalculator() {
               </FormItem>
             )}
           />
-
-            <FormField
-              control={form.control}
-              name="wordpress"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base font-semibold">
-                      Technologie : WordPress
-                    </FormLabel>
-                    <FormDescription>
-                      Cochez cette case si vous souhaitez que le site soit développé sur WordPress. N'impacte pas le devis.
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
           
           <FormField
             control={form.control}
