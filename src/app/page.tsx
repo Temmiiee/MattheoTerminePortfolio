@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -265,8 +264,10 @@ export default function Home() {
           <p className="text-lg text-muted-foreground mt-2">Quelques exemples de mon travail.</p>
         </header>
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+          {projects.map((project, index) => (
+            <div key={project.slug} className="animate-fade-in" style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
+              <ProjectCard project={project} />
+            </div>
           ))}
         </div>
       </section>
@@ -278,12 +279,12 @@ export default function Home() {
             <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
             </header>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 items-start">
-                {pricingPlans.map((plan) => (
-                    <Card key={plan.title} className={`flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${plan.featured ? 'border-primary border-2 shadow-lg' : 'border'}`}>
-                        <CardHeader className={`p-6 ${plan.featured ? 'bg-primary text-primary-foreground' : 'bg-muted/30'}`}>
+                {pricingPlans.map((plan, index) => (
+                    <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in border-2", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
+                        <CardHeader className="p-6 bg-primary text-primary-foreground">
                             <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
-                            <p className={`text-3xl font-bold pt-4 ${plan.featured ? 'text-white' : 'text-primary'}`}>{plan.price}</p>
-                            <CardDescription className={`${plan.featured ? 'text-primary-foreground/80' : ''}`}>{plan.description}</CardDescription>
+                            <p className="text-3xl font-bold pt-4 text-white">{plan.price}</p>
+                            <CardDescription className="text-primary-foreground/80">{plan.description}</CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow p-6">
                             <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
