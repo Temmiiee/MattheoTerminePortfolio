@@ -179,25 +179,28 @@ const ProcessSection = () => {
                 </header>
 
                 <div className="relative">
-                    {/* Vertical line for mobile */}
-                    <div className="absolute left-6 w-0.5 h-full bg-border md:hidden" aria-hidden="true"></div>
-                    {/* Vertical line for desktop */}
-                    <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-border" aria-hidden="true"></div>
+                    {/* Vertical line for all screens */}
+                    <div className="absolute left-6 md:left-1/2 w-0.5 h-full bg-border -translate-x-1/2" aria-hidden="true"></div>
                     
-                    <div className="space-y-12 md:space-y-0">
+                    <div className="space-y-12">
                         {processSteps.map((step, index) => (
-                             <div key={step.title} className="relative md:grid md:grid-cols-2 md:gap-x-12 md:items-center">
-                                {/* Icon */}
+                             <div key={step.title} className="relative flex items-start md:grid md:grid-cols-2 md:gap-x-12 md:items-center">
+                                {/* Icon container */}
                                 <div className={cn(
-                                    "relative z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full",
+                                    "flex-shrink-0",
                                     "md:order-1",
-                                    index % 2 === 0 ? "md:col-start-1" : "md:col-start-2"
+                                    index % 2 === 0 ? "md:col-start-1" : "md:col-start-2",
+                                    "flex justify-center"
                                 )}>
-                                    <step.icon className="text-primary-foreground h-6 w-6"/>
+                                    <div className="relative z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
+                                        <step.icon className="text-primary-foreground h-6 w-6"/>
+                                    </div>
                                 </div>
+                                
                                 {/* Card */}
                                 <div className={cn(
-                                    "ml-20 -mt-4 md:ml-0 md:mt-0",
+                                    "ml-6 md:ml-0",
+                                    "w-full",
                                     index % 2 === 0 ? "md:col-start-2" : "md:col-start-1 md:row-start-1 md:text-right"
                                 )}>
                                     <div className="bg-card p-6 rounded-lg shadow-lg border">
@@ -239,7 +242,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="scroll-mt-20 animate-fade-in" aria-labelledby="services-title">
+      <section id="services" className="scroll-mt-20" aria-labelledby="services-title">
         <header className="text-center mb-12">
           <h2 id="services-title" className="font-headline text-3xl md:text-4xl font-bold">Mes services</h2>
           <p className="text-lg text-muted-foreground mt-2">Ce que je peux faire pour vous.</p>
@@ -265,7 +268,7 @@ export default function Home() {
       <ProcessSection />
       
       {/* Projects Section */}
-      <section id="projets" className="scroll-mt-20 animate-fade-in" aria-labelledby="projects-title">
+      <section id="projets" className="scroll-mt-20" aria-labelledby="projects-title">
         <header className="text-center mb-12">
           <h2 id="projects-title" className="font-headline text-3xl md:text-4xl font-bold">Mes projets</h2>
           <p className="text-lg text-muted-foreground mt-2">Quelques exemples de mon travail.</p>
@@ -280,7 +283,7 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section id="tarifs" className="scroll-mt-20 animate-fade-in" aria-labelledby="tarifs-title">
+      <section id="tarifs" className="scroll-mt-20" aria-labelledby="tarifs-title">
           <header className="text-center mb-12">
           <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
           <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
