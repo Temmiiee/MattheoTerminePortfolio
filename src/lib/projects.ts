@@ -20,14 +20,14 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "kit-design-ui-istex",
-    title: "Kit de design UI Istex",
-    description: "Un site WordPress centralisant la charte graphique et les composants UI pour les intégrateurs.",
+    slug: "theme-wordpress-istex",
+    title: "Thème WordPress sur-mesure",
+    description: "Un thème WordPress pour centraliser une charte graphique et des composants UI pour les intégrateurs.",
     longDescription: "Ce projet a été conçu pour servir de référentiel central pour la charte graphique d'Istex. Il permet aux intégrateurs et aux développeurs d'accéder facilement à une bibliothèque de composants UI, de pictogrammes, et de consulter les règles d'affichage. L'objectif principal était d'assurer la cohérence visuelle sur tous les produits Istex et d'accélérer le processus d'intégration.",
     technologies: [
       { name: "WordPress", icon: WordpressIcon },
-      { name: "HTML5", icon: CodeXml },
-      { name: "CSS3", icon: CodeXml },
+      { name: "PHP", icon: CodeXml },
+      { name: "JavaScript", icon: CodeXml },
     ],
     imageUrl: "https://placehold.co/1200x800.png",
     dataAiHint: "design system",

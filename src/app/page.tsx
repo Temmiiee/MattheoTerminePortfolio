@@ -12,6 +12,7 @@ import { Download, Mail, MessageCircle } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import React, { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { WordpressIcon } from "@/components/icons/WordpressIcon";
 
 const services = [
   {
@@ -20,9 +21,9 @@ const services = [
     description: "Des sites web modernes et adaptatifs qui s'affichent parfaitement sur tous les appareils.",
   },
   {
-    icon: CodeXml,
-    title: "Intégration HTML/CSS",
-    description: "Transformation de vos maquettes (Figma, Sketch, etc.) en code HTML/CSS de haute qualité.",
+    icon: WordpressIcon,
+    title: "Création de sites WordPress",
+    description: "Développement de thèmes et de sites sur mesure avec le CMS le plus populaire au monde.",
   },
   {
     icon: Gauge,
@@ -63,7 +64,7 @@ const pricingPlans = [
   {
     title: "Site Vitrine Essentiel",
     price: "À partir de 550€",
-    description: "La solution idéale pour démarrer et marquer votre présence en ligne avec un site professionnel.",
+    description: "Idéal pour démarrer avec un site professionnel (WordPress ou code sur-mesure).",
     features: [
       "Jusqu'à 3 pages",
       "Design moderne et responsive",
@@ -79,7 +80,7 @@ const pricingPlans = [
   {
     title: "Site Multi-pages Professionnel",
     price: "À partir de 1150€",
-    description: "Une offre complète pour un site vitrine personnalisé et optimisé pour la croissance.",
+    description: "Un site complet (WordPress ou code sur-mesure) pour une présence affirmée.",
     features: [
         "Jusqu'à 5 pages",
         "Design 100% sur-mesure",
@@ -95,7 +96,7 @@ const pricingPlans = [
   {
     title: "Application Web",
     price: "À partir de 2500€",
-    description: "Une solution complète pour les projets complexes nécessitant des fonctionnalités sur mesure (SaaS, plateforme...).",
+    description: "Solution complète pour les projets complexes nécessitant des fonctionnalités sur mesure (SaaS, plateforme...).",
     features: [
       "Espace utilisateur (connexion, etc.)",
       "Fonctionnalités sur-mesure",
@@ -343,7 +344,7 @@ export default function Home() {
             </h3>
             <div className="space-y-4 text-lg">
               <p>
-                Depuis le début de ma carrière, je me suis consacré à transformer des idées créatives en sites web fonctionnels et esthétiques. Mon objectif est de construire des solutions qui non seulement répondent aux besoins de mes clients, mais qui offrent aussi une expérience utilisateur fluide et agréable pour tous.
+                Je transforme des idées créatives en sites web fonctionnels, que ce soit en écrivant du code sur-mesure ou en personnalisant des solutions WordPress. Mon objectif est de construire des plateformes qui répondent aux besoins de mes clients et qui offrent une expérience utilisateur fluide.
               </p>
               <p>
                 Je crois fermement en un web ouvert et accessible. C'est pourquoi j'accorde une importance capitale au respect des standards, à la performance et aux normes d'accessibilité (RGAA). Un bon site, selon moi, est un site rapide, facile à utiliser et qui ne laisse personne de côté.
