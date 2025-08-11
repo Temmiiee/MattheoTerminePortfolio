@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5, h6 {
     --secondary-foreground: 222 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 216 12% 42%; /* Increased contrast from 46.9% to 42% */
+    --muted-foreground: 216 12% 42%;
 
     --accent: 174 100% 29%; /* #009688 */
     --accent-foreground: 0 0% 100%;

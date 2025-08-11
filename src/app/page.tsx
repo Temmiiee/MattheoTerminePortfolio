@@ -74,7 +74,7 @@ const pricingPlans = [
     cta: "Choisir cette offre",
     featured: false,
     link: "/devis?siteType=vitrine&designType=template",
-    headerClass: "bg-muted text-muted-foreground"
+    headerClass: "bg-secondary text-secondary-foreground"
   },
   {
     title: "Site Multi-pages Professionnel",
@@ -122,7 +122,7 @@ const pricingPlans = [
     cta: "Demander un devis",
     featured: false,
     link: "/devis",
-    headerClass: "bg-secondary text-secondary-foreground",
+    headerClass: "bg-muted text-muted-foreground",
   },
 ];
 
@@ -193,7 +193,7 @@ const ProcessSection = () => {
                                 </div>
                                 <div className={cn(
                                     "ml-6 md:ml-0",
-                                    "w-full", // Ensure card takes full width available
+                                    "w-full", 
                                     index % 2 === 0 ? "md:col-start-2 md:row-start-1" : "md:col-start-1 md:row-start-1 md:text-right"
                                 )}>
                                     <div className="bg-card p-6 rounded-lg shadow-lg border">
