@@ -13,6 +13,7 @@ import { ContactForm } from "@/components/ContactForm";
 import React, { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { WordpressIcon } from "@/components/icons/WordpressIcon";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const services = [
   {
@@ -127,9 +128,33 @@ const pricingPlans = [
   },
 ];
 
+
+const AnimatedSection = ({ children, className, animation = "fade-in-up" }: { children: React.ReactNode, className?: string, animation?: string }) => {
+    const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.1 });
+
+    return (
+        <section ref={ref} className={cn(className, "transition-all duration-700 ease-out", isIntersecting ? "opacity-100 translate-y-0" : "opacity-0", animation)}>
+            {children}
+        </section>
+    );
+};
+
+const AnimatedDiv = ({ children, className, animation = "fade-in-up", delay = 0 }: { children: React.ReactNode, className?: string, animation?: string, delay?: number }) => {
+    const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+
+    return (
+        <div ref={ref} style={{transitionDelay: `${delay}ms`}} className={cn(className, "transition-all duration-700 ease-out", isIntersecting ? "opacity-100 translate-y-0 translate-x-0" : "opacity-0", animation)}>
+            {children}
+        </div>
+    );
+};
+
+
 const ProcessSection = () => {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [isTouchDevice, setIsTouchDevice] = useState(false);
+    const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+
 
     useEffect(() => {
         setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
@@ -166,14 +191,15 @@ const ProcessSection = () => {
     return (
         <section
             id="processus"
-            ref={sectionRef}
+            ref={ref}
             className={cn(
-                "scroll-mt-20 py-16 md:py-24 rounded-2xl interactive-bg",
-                { "touch-active": isTouchDevice }
+                "scroll-mt-20 py-16 md:py-24 rounded-2xl interactive-bg transition-opacity duration-700 ease-out",
+                { "touch-active": isTouchDevice },
+                isIntersecting ? "opacity-100" : "opacity-0"
             )}
             aria-labelledby="process-title"
         >
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div ref={sectionRef} className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <header className="text-center mb-12 md:mb-16">
                     <h2 id="process-title" className="font-headline text-3xl md:text-4xl font-bold">Mon Processus de Travail</h2>
                     <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Une approche structurée pour garantir la réussite de votre projet.</p>
@@ -199,17 +225,19 @@ const ProcessSection = () => {
                                 </div>
                                 
                                 {/* Card */}
-                                <div className={cn(
-                                    "ml-6 md:ml-0",
-                                    "w-full",
-                                    "animate-fade-in",
-                                    index % 2 === 0 ? "md:col-start-2 md:animate-fade-in-left" : "md:col-start-1 md:row-start-1 md:text-right md:animate-fade-in-right"
-                                )}>
+                                 <AnimatedDiv
+                                    animation={index % 2 === 0 ? "animate-fade-in-right" : "animate-fade-in-left"}
+                                    delay={index * 150}
+                                    className={cn(
+                                        "ml-6 md:ml-0",
+                                        "w-full",
+                                        index % 2 === 0 ? "md:col-start-2" : "md:col-start-1 md:row-start-1 md:text-right"
+                                    )}>
                                      <div className="bg-card p-6 rounded-lg shadow-lg border w-full">
                                         <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
                                         <p className="text-muted-foreground">{step.description}</p>
                                     </div>
-                                </div>
+                                </AnimatedDiv>
                             </div>
                         ))}
                     </div>
@@ -244,77 +272,81 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="scroll-mt-20" aria-labelledby="services-title">
+      <AnimatedSection id="services" className="scroll-mt-20" aria-labelledby="services-title">
         <header className="text-center mb-12">
           <h2 id="services-title" className="font-headline text-3xl md:text-4xl font-bold">Mes services</h2>
           <p className="text-lg text-muted-foreground mt-2">Ce que je peux faire pour vous.</p>
         </header>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
-            <Card key={service.title} className="text-center hover:shadow-lg transition-shadow duration-300 hover:-translate-y-1 animate-fade-in" style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
-              <CardHeader>
-                <div className="mx-auto bg-primary/10 text-primary rounded-full p-4 w-fit mb-4" aria-hidden="true">
-                  <service.icon className="w-8 h-8" />
-                </div>
-                <CardTitle className="font-headline text-xl">{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{service.description}</p>
-              </CardContent>
-            </Card>
+             <AnimatedDiv key={service.title} delay={index * 150} animation="animate-fade-in-up">
+                <Card className="text-center hover:shadow-lg transition-shadow duration-300 hover:-translate-y-1 h-full">
+                <CardHeader>
+                    <div className="mx-auto bg-primary/10 text-primary rounded-full p-4 w-fit mb-4" aria-hidden="true">
+                    <service.icon className="w-8 h-8" />
+                    </div>
+                    <CardTitle className="font-headline text-xl">{service.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-muted-foreground">{service.description}</p>
+                </CardContent>
+                </Card>
+            </AnimatedDiv>
           ))}
         </div>
-      </section>
+      </AnimatedSection>
       
       {/* Process Section */}
       <ProcessSection />
       
       {/* Projects Section */}
-      <section id="projets" className="scroll-mt-20" aria-labelledby="projects-title">
+      <AnimatedSection id="projets" className="scroll-mt-20" aria-labelledby="projects-title">
         <header className="text-center mb-12">
           <h2 id="projects-title" className="font-headline text-3xl md:text-4xl font-bold">Mes projets</h2>
           <p className="text-lg text-muted-foreground mt-2">Quelques exemples de mon travail.</p>
         </header>
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div key={project.slug} className="animate-fade-in" style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
+            <AnimatedDiv key={project.slug} delay={index * 150} animation="animate-fade-in-up">
               <ProjectCard project={project} />
-            </div>
+            </AnimatedDiv>
           ))}
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Pricing Section */}
-      <section id="tarifs" className="scroll-mt-20" aria-labelledby="tarifs-title">
+      <AnimatedSection id="tarifs" className="scroll-mt-20" aria-labelledby="tarifs-title">
           <header className="text-center mb-12">
           <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
           <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
           </header>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {pricingPlans.map((plan, index) => (
-                  <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
-                      <CardHeader className={cn("p-6", plan.headerClass)}>
-                          <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
-                          <p className="text-3xl font-bold pt-4">{plan.price}</p>
-                          <CardDescription className={cn(plan.headerClass.includes('text-primary-foreground') || plan.headerClass.includes('text-background') ? "text-inherit/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent className="flex flex-col flex-grow p-6">
-                          <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
-                              {plan.features.map((feature) => (
-                                  <li key={feature} className="flex items-start">
-                                      <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
-                                      <span>{feature}</span>
-                                  </li>
-                              ))}
-                          </ul>
-                          <Button asChild size="lg" className="w-full mt-auto" variant={plan.featured ? 'secondary' : 'default'}>
-                              <Link href={plan.link} aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
-                          </Button>
-                      </CardContent>
-                  </Card>
+                  <AnimatedDiv key={plan.title} delay={index * 150} animation="animate-fade-in-up">
+                    <Card className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full", plan.featured ? 'border-primary shadow-lg' : 'border-border')}>
+                        <CardHeader className={cn("p-6", plan.headerClass)}>
+                            <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
+                            <p className="text-3xl font-bold pt-4">{plan.price}</p>
+                            <CardDescription className={cn(plan.headerClass.includes('text-primary-foreground') || plan.headerClass.includes('text-background') ? "text-inherit/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex flex-col flex-grow p-6">
+                            <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
+                                {plan.features.map((feature) => (
+                                    <li key={feature} className="flex items-start">
+                                        <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
+                                        <span>{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <Button asChild size="lg" className="w-full mt-auto" variant={plan.featured ? 'secondary' : 'default'}>
+                                <Link href={plan.link} aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
+                  </AnimatedDiv>
               ))}
           </div>
-      </section>
+      </AnimatedSection>
 
        {/* About Section */}
       <section id="a-propos" className="max-w-4xl mx-auto scroll-mt-20" aria-labelledby="about-title">
@@ -323,7 +355,7 @@ export default function Home() {
         </header>
 
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
-          <div className="md:col-span-1 flex justify-center animate-fade-in-right">
+          <AnimatedDiv animation="animate-fade-in-right" className="md:col-span-1 flex justify-center">
             <div className="relative w-48 h-48 md:w-64 md:h-64">
                 <Image
                     src="https://placehold.co/400x400.png"
@@ -335,9 +367,9 @@ export default function Home() {
                     priority
                 />
             </div>
-          </div>
+          </AnimatedDiv>
 
-          <div className="md:col-span-2 space-y-6 text-foreground/90 animate-fade-in-left">
+          <AnimatedDiv animation="animate-fade-in-left" className="md:col-span-2 space-y-6 text-foreground/90">
             <h3 className="font-headline text-3xl font-bold text-foreground">
               Passionné par la création d'expériences web performantes et inclusives.
             </h3>
@@ -360,7 +392,7 @@ export default function Home() {
                   </Link>
               </Button>
             </div>
-          </div>
+          </AnimatedDiv>
         </div>
       </section>
 
@@ -374,10 +406,10 @@ export default function Home() {
         </header>
         
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          <div role="region" aria-labelledby="form-title" className="animate-fade-in-right">
+          <AnimatedDiv animation="animate-fade-in-right" role="region" aria-labelledby="form-title">
             <ContactForm />
-          </div>
-          <div className="space-y-6 animate-fade-in-left" role="region" aria-labelledby="other-contact-title">
+          </AnimatedDiv>
+          <AnimatedDiv animation="animate-fade-in-left" className="space-y-6" role="region" aria-labelledby="other-contact-title">
             <h3 id="other-contact-title" className="font-headline text-2xl font-bold">Autres moyens de contact</h3>
             <p className="text-muted-foreground">
               Si vous préférez, vous pouvez aussi me joindre directement par email ou via WhatsApp.
@@ -402,9 +434,11 @@ export default function Home() {
                 </Link>
               </Button>
             </div>
-          </div>
+          </AnimatedDiv>
         </div>
       </section>
     </div>
   );
 }
+
+    

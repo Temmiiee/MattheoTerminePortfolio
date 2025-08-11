@@ -121,6 +121,20 @@ h1, h2, h3, h4, h5, h6 {
       opacity: 1;
     }
   }
+
+  /* Animation classes */
+  .animate-fade-in-down {
+      animation: fade-in-down 0.5s ease-out forwards;
+  }
+  .animate-fade-in-up {
+      transform: translateY(20px);
+  }
+  .animate-fade-in-left {
+      transform: translateX(20px);
+  }
+  .animate-fade-in-right {
+      transform: translateX(-20px);
+  }
 }
 
 @layer base {
@@ -160,3 +174,15 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
   }
 }
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+    
