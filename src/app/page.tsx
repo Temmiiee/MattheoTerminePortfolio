@@ -122,7 +122,7 @@ const pricingPlans = [
     cta: "Demander un devis",
     featured: false,
     link: "/devis",
-    headerClass: "bg-muted text-muted-foreground",
+    headerClass: "bg-accent text-accent-foreground",
   },
 ];
 
@@ -203,7 +203,7 @@ const ProcessSection = () => {
                                     "w-full",
                                     index % 2 === 0 ? "md:col-start-2" : "md:col-start-1 md:row-start-1 md:text-right"
                                 )}>
-                                    <div className="bg-card p-6 rounded-lg shadow-lg border">
+                                     <div className="bg-card p-6 rounded-lg shadow-lg border w-full">
                                         <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
                                         <p className="text-muted-foreground">{step.description}</p>
                                     </div>
@@ -408,5 +408,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
