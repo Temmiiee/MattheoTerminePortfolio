@@ -122,7 +122,7 @@ const pricingPlans = [
     cta: "Demander un devis",
     featured: false,
     link: "/devis",
-    headerClass: "bg-accent text-accent-foreground",
+    headerClass: "bg-foreground text-background",
   },
 ];
 
@@ -295,7 +295,7 @@ export default function Home() {
                           <CardHeader className={cn("p-6", plan.headerClass)}>
                               <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
                               <p className="text-3xl font-bold pt-4">{plan.price}</p>
-                              <CardDescription className={cn(plan.headerClass.includes('primary') || plan.headerClass.includes('accent') ? "text-primary-foreground/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
+                              <CardDescription className={cn(plan.headerClass.includes('primary') || plan.headerClass.includes('accent') || plan.headerClass.includes('foreground') ? "text-primary-foreground/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
                           </CardHeader>
                           <CardContent className="flex flex-col flex-grow p-6">
                               <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
