@@ -202,7 +202,8 @@ const ProcessSection = () => {
                                 <div className={cn(
                                     "ml-6 md:ml-0",
                                     "w-full",
-                                    index % 2 === 0 ? "md:col-start-2" : "md:col-start-1 md:row-start-1 md:text-right"
+                                    "animate-fade-in",
+                                    index % 2 === 0 ? "md:col-start-2 md:animate-fade-in-left" : "md:col-start-1 md:row-start-1 md:text-right md:animate-fade-in-right"
                                 )}>
                                      <div className="bg-card p-6 rounded-lg shadow-lg border w-full">
                                         <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
@@ -289,42 +290,40 @@ export default function Home() {
           <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
           <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
           </header>
-          <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {pricingPlans.map((plan, index) => (
-                      <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
-                          <CardHeader className={cn("p-6", plan.headerClass)}>
-                              <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
-                              <p className="text-3xl font-bold pt-4">{plan.price}</p>
-                              <CardDescription className={cn(plan.headerClass.includes('primary') || plan.headerClass.includes('accent') || plan.headerClass.includes('foreground') ? "text-primary-foreground/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
-                          </CardHeader>
-                          <CardContent className="flex flex-col flex-grow p-6">
-                              <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
-                                  {plan.features.map((feature) => (
-                                      <li key={feature} className="flex items-start">
-                                          <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
-                                          <span>{feature}</span>
-                                      </li>
-                                  ))}
-                              </ul>
-                              <Button asChild size="lg" className="w-full mt-auto" variant={plan.featured ? 'secondary' : 'default'}>
-                                  <Link href={plan.link} aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
-                              </Button>
-                          </CardContent>
-                      </Card>
-                  ))}
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {pricingPlans.map((plan, index) => (
+                  <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
+                      <CardHeader className={cn("p-6", plan.headerClass)}>
+                          <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
+                          <p className="text-3xl font-bold pt-4">{plan.price}</p>
+                          <CardDescription className={cn(plan.headerClass.includes('text-primary-foreground') || plan.headerClass.includes('text-background') ? "text-inherit/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex flex-col flex-grow p-6">
+                          <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
+                              {plan.features.map((feature) => (
+                                  <li key={feature} className="flex items-start">
+                                      <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
+                                      <span>{feature}</span>
+                                  </li>
+                              ))}
+                          </ul>
+                          <Button asChild size="lg" className="w-full mt-auto" variant={plan.featured ? 'secondary' : 'default'}>
+                              <Link href={plan.link} aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
+                          </Button>
+                      </CardContent>
+                  </Card>
+              ))}
           </div>
       </section>
 
        {/* About Section */}
-      <section id="a-propos" className="max-w-4xl mx-auto scroll-mt-20 animate-fade-in" aria-labelledby="about-title">
+      <section id="a-propos" className="max-w-4xl mx-auto scroll-mt-20" aria-labelledby="about-title">
         <header className="text-center mb-12">
           <h2 id="about-title" className="font-headline text-3xl md:text-4xl font-bold text-primary">À propos de moi</h2>
         </header>
 
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
-          <div className="md:col-span-1 flex justify-center">
+          <div className="md:col-span-1 flex justify-center animate-fade-in-right">
             <div className="relative w-48 h-48 md:w-64 md:h-64">
                 <Image
                     src="https://placehold.co/400x400.png"
@@ -338,7 +337,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="md:col-span-2 space-y-6 text-foreground/90">
+          <div className="md:col-span-2 space-y-6 text-foreground/90 animate-fade-in-left">
             <h3 className="font-headline text-3xl font-bold text-foreground">
               Passionné par la création d'expériences web performantes et inclusives.
             </h3>
@@ -366,7 +365,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="max-w-4xl mx-auto scroll-mt-20 animate-fade-in" aria-labelledby="contact-title">
+      <section id="contact" className="max-w-4xl mx-auto scroll-mt-20" aria-labelledby="contact-title">
         <header className="text-center mb-12">
           <h2 id="contact-title" className="font-headline text-3xl md:text-4xl font-bold text-primary">Contactez-moi</h2>
           <p className="mt-4 text-lg text-muted-foreground">
@@ -375,10 +374,10 @@ export default function Home() {
         </header>
         
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          <div role="region" aria-labelledby="form-title">
+          <div role="region" aria-labelledby="form-title" className="animate-fade-in-right">
             <ContactForm />
           </div>
-          <div className="space-y-6" role="region" aria-labelledby="other-contact-title">
+          <div className="space-y-6 animate-fade-in-left" role="region" aria-labelledby="other-contact-title">
             <h3 id="other-contact-title" className="font-headline text-2xl font-bold">Autres moyens de contact</h3>
             <p className="text-muted-foreground">
               Si vous préférez, vous pouvez aussi me joindre directement par email ou via WhatsApp.
