@@ -74,6 +74,7 @@ const pricingPlans = [
     cta: "Choisir cette offre",
     featured: false,
     link: "/devis?siteType=vitrine&designType=template",
+    headerClass: "bg-secondary text-secondary-foreground"
   },
   {
     title: "Site Multi-pages Professionnel",
@@ -89,6 +90,7 @@ const pricingPlans = [
     cta: "Choisir cette offre",
     featured: true,
     link: "/devis?siteType=vitrine&designType=custom",
+    headerClass: "bg-primary text-primary-foreground",
   },
   {
     title: "Application Web",
@@ -104,6 +106,7 @@ const pricingPlans = [
     cta: "Choisir cette offre",
     featured: false,
     link: "/devis?siteType=webapp",
+    headerClass: "bg-accent text-accent-foreground"
   },
   {
     title: "Solution Sur-Mesure",
@@ -119,6 +122,7 @@ const pricingPlans = [
     cta: "Demander un devis",
     featured: false,
     link: "/devis",
+    headerClass: "bg-muted text-muted-foreground",
   },
 ];
 
@@ -281,10 +285,10 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 items-start">
                 {pricingPlans.map((plan, index) => (
                     <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in border-2", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
-                        <CardHeader className="p-6 bg-primary text-primary-foreground">
+                        <CardHeader className={cn("p-6", plan.headerClass)}>
                             <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
-                            <p className="text-3xl font-bold pt-4 text-white">{plan.price}</p>
-                            <CardDescription className="text-primary-foreground/80">{plan.description}</CardDescription>
+                            <p className="text-3xl font-bold pt-4">{plan.price}</p>
+                            <CardDescription className={cn(plan.featured ? "text-primary-foreground/80" : "")}>{plan.description}</CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow p-6">
                             <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
