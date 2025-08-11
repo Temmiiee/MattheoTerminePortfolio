@@ -74,7 +74,7 @@ const pricingPlans = [
     cta: "Choisir cette offre",
     featured: false,
     link: "/devis?siteType=vitrine&designType=template",
-    headerClass: "bg-secondary text-secondary-foreground"
+    headerClass: "bg-muted text-muted-foreground"
   },
   {
     title: "Site Multi-pages Professionnel",
@@ -122,7 +122,7 @@ const pricingPlans = [
     cta: "Demander un devis",
     featured: false,
     link: "/devis",
-    headerClass: "bg-muted text-muted-foreground",
+    headerClass: "bg-secondary text-secondary-foreground",
   },
 ];
 
@@ -147,11 +147,12 @@ const ProcessSection = () => {
         section.addEventListener('mousemove', handleMouseMove);
 
         return () => {
-            section.removeEventListener('mousemove', handleMouseMove);
+            if (section) {
+                section.removeEventListener('mousemove', handleMouseMove);
+            }
         };
     }, [isTouchDevice]);
     
-    // For touch devices, set a default position
     useEffect(() => {
         if (isTouchDevice && sectionRef.current) {
             const rect = sectionRef.current.getBoundingClientRect();
@@ -178,11 +179,11 @@ const ProcessSection = () => {
                 </header>
 
                 <div className="relative">
-                    <div className="absolute left-6 w-0.5 h-full bg-border md:left-1/2 md:-translate-x-1/2" aria-hidden="true"></div>
+                    <div className="absolute left-6 top-0 w-0.5 h-full bg-border md:left-1/2 md:-translate-x-1/2" aria-hidden="true"></div>
                     
                     <div className="space-y-12">
                         {processSteps.map((step, index) => (
-                             <div key={step.title} className="relative flex items-start md:grid md:grid-cols-2 md:gap-x-12 md:items-center">
+                             <div key={step.title} className="relative flex items-start md:grid md:grid-cols-2 md:gap-x-12">
                                 <div className={cn(
                                     "relative flex-shrink-0 z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full",
                                     "md:order-2",
@@ -192,6 +193,7 @@ const ProcessSection = () => {
                                 </div>
                                 <div className={cn(
                                     "ml-6 md:ml-0",
+                                    "w-full", // Ensure card takes full width available
                                     index % 2 === 0 ? "md:col-start-2 md:row-start-1" : "md:col-start-1 md:row-start-1 md:text-right"
                                 )}>
                                     <div className="bg-card p-6 rounded-lg shadow-lg border">
@@ -274,46 +276,46 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-        <section id="tarifs" className="scroll-mt-20 animate-fade-in" aria-labelledby="tarifs-title">
-            <header className="text-center mb-12">
-            <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
-            <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
-            </header>
-            <div className="max-w-5xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                    {pricingPlans.map((plan, index) => (
-                        <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in border-2", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
-                            <CardHeader className={cn("p-6", plan.headerClass)}>
-                                <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
-                                <p className="text-3xl font-bold pt-4">{plan.price}</p>
-                                <CardDescription className={cn(plan.featured ? "text-primary-foreground/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
-                            </CardHeader>
-                            <CardContent className="flex flex-col flex-grow p-6">
-                                <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
-                                    {plan.features.map((feature) => (
-                                        <li key={feature} className="flex items-start">
-                                            <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
-                                            <span>{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                                <Button asChild size="lg" className="w-full mt-auto" variant={plan.featured ? 'secondary' : 'default'}>
-                                    <Link href={plan.link} aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-            </div>
-            <div className="text-center mt-12">
-                <Button asChild size="lg" variant="secondary">
-                    <Link href="/devis" aria-label="Accéder au calculateur de devis">
-                        <FileText className="mr-2 h-5 w-5" />
-                        Personnaliser mon devis
-                    </Link>
-                </Button>
-            </div>
-        </section>
+      <section id="tarifs" className="scroll-mt-20 animate-fade-in" aria-labelledby="tarifs-title">
+          <header className="text-center mb-12">
+          <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
+          <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
+          </header>
+          <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {pricingPlans.map((plan, index) => (
+                      <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in border-2", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
+                          <CardHeader className={cn("p-6", plan.headerClass)}>
+                              <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
+                              <p className="text-3xl font-bold pt-4">{plan.price}</p>
+                              <CardDescription className={cn(plan.headerClass.includes('primary') || plan.headerClass.includes('accent') ? "text-primary-foreground/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
+                          </CardHeader>
+                          <CardContent className="flex flex-col flex-grow p-6">
+                              <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
+                                  {plan.features.map((feature) => (
+                                      <li key={feature} className="flex items-start">
+                                          <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
+                                          <span>{feature}</span>
+                                      </li>
+                                  ))}
+                              </ul>
+                              <Button asChild size="lg" className="w-full mt-auto" variant={plan.featured ? 'secondary' : 'default'}>
+                                  <Link href={plan.link} aria-label={`${plan.cta} pour l'offre ${plan.title}`}>{plan.cta}</Link>
+                              </Button>
+                          </CardContent>
+                      </Card>
+                  ))}
+              </div>
+          </div>
+          <div className="text-center mt-12">
+              <Button asChild size="lg" variant="secondary">
+                  <Link href="/devis" aria-label="Accéder au calculateur de devis">
+                      <FileText className="mr-2 h-5 w-5" />
+                      Personnaliser mon devis
+                  </Link>
+              </Button>
+          </div>
+      </section>
 
        {/* About Section */}
       <section id="a-propos" className="max-w-4xl mx-auto scroll-mt-20 animate-fade-in" aria-labelledby="about-title">
@@ -408,3 +410,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
