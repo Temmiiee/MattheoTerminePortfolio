@@ -184,21 +184,19 @@ const ProcessSection = () => {
                         {processSteps.map((step, index) => (
                             <div key={step.title} className="relative md:grid md:grid-cols-2 md:gap-x-16 md:items-center">
                                 <div className={cn(
-                                    "flex items-center",
+                                    "flex items-start md:items-center",
                                     index % 2 === 0 ? "md:col-start-2" : "md:col-start-1 md:row-start-1 md:justify-end"
                                 )}>
-                                    <div className="flex-shrink-0 relative">
-                                        <div className="absolute md:left-1/2 md:-translate-x-1/2 z-10 flex-shrink-0 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
-                                            <step.icon className="text-primary-foreground h-6 w-6"/>
-                                        </div>
-                                        <div className="ml-8 md:ml-0 pl-6 md:pl-0">
-                                            <div className={cn(
-                                                "bg-card p-6 rounded-lg shadow-lg border w-full",
-                                                index % 2 === 1 && "md:text-right"
-                                            )}>
-                                                <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
-                                                <p className="text-muted-foreground">{step.description}</p>
-                                            </div>
+                                    <div className="flex-shrink-0 z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
+                                        <step.icon className="text-primary-foreground h-6 w-6"/>
+                                    </div>
+                                    <div className={cn(
+                                        "ml-6 md:ml-0 w-full",
+                                        index % 2 === 0 ? "md:pl-16" : "md:pr-16 md:text-right"
+                                    )}>
+                                        <div className="bg-card p-6 rounded-lg shadow-lg border">
+                                            <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
+                                            <p className="text-muted-foreground">{step.description}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -288,7 +286,7 @@ export default function Home() {
                         <CardHeader className={cn("p-6", plan.headerClass)}>
                             <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
                             <p className="text-3xl font-bold pt-4">{plan.price}</p>
-                            <CardDescription className={cn(plan.featured ? "text-primary-foreground/80" : "")}>{plan.description}</CardDescription>
+                            <CardDescription className={cn(plan.featured ? "text-primary-foreground/80" : "text-muted-foreground")}>{plan.description}</CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow p-6">
                             <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
