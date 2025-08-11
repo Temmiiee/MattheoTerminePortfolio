@@ -1,4 +1,5 @@
 
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CodeXml, Gauge, Palette, Accessibility, CheckCircle2, FileText, Search, Rocket, PencilRuler, Server, LifeBuoy } from "lucide-react";
@@ -143,14 +144,14 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="scroll-mt-20" aria-labelledby="services-title">
+      <section id="services" className="scroll-mt-20 animate-fade-in" aria-labelledby="services-title">
         <header className="text-center mb-12">
           <h2 id="services-title" className="font-headline text-3xl md:text-4xl font-bold">Mes services</h2>
           <p className="text-lg text-muted-foreground mt-2">Ce que je peux faire pour vous.</p>
         </header>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service) => (
-            <Card key={service.title} className="text-center hover:shadow-lg transition-shadow duration-300">
+            <Card key={service.title} className="text-center hover:shadow-lg transition-shadow duration-300 hover:-translate-y-1">
               <CardHeader>
                 <div className="mx-auto bg-primary/10 text-primary rounded-full p-4 w-fit mb-4" aria-hidden="true">
                   <service.icon className="w-8 h-8" />
@@ -166,40 +167,27 @@ export default function Home() {
       </section>
 
       {/* Process Section */}
-      <section id="processus" className="scroll-mt-20" aria-labelledby="process-title">
+      <section id="processus" className="scroll-mt-20 animate-fade-in" aria-labelledby="process-title">
         <header className="text-center mb-12">
             <h2 id="process-title" className="font-headline text-3xl md:text-4xl font-bold">Mon Processus de Travail</h2>
             <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Une approche structurée pour garantir la réussite de votre projet.</p>
         </header>
         <div className="relative">
-            {/* The vertical line */}
-            <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-full bg-border" aria-hidden="true"></div>
+            {/* The vertical line for both mobile and desktop */}
+            <div className="absolute top-0 md:left-1/2 md:-translate-x-1/2 left-6 -translate-x-1/2 w-0.5 h-full bg-border" aria-hidden="true"></div>
             
-            <div className="md:space-y-0 space-y-12">
+            <div className="space-y-12">
                 {processSteps.map((step, index) => (
-                    <div key={step.title} className="relative md:grid md:grid-cols-2 md:gap-x-16 md:items-center">
-                        {/* Mobile view: line and icon */}
-                        <div className="md:hidden flex items-start gap-4 mb-4">
-                            <div className="relative pt-1.5">
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-full bg-border" aria-hidden="true"></div>
-                                <div className="z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
-                                    <step.icon className="text-primary-foreground h-6 w-6"/>
-                                </div>
-                            </div>
-                            <div className="pt-2">
-                                <h3 className="font-bold text-primary font-headline text-xl">{step.title}</h3>
-                            </div>
-                        </div>
-
-                        {/* Desktop view: icon */}
-                        <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-10 items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
+                    <div key={step.title} className="relative flex md:grid md:grid-cols-2 md:gap-x-16 items-start md:items-center">
+                       {/* Icon for both mobile and desktop */}
+                        <div className="z-10 flex-shrink-0 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full md:absolute md:top-1/2 md:-translate-y-1/2 md:left-1/2 md:-translate-x-1/2">
                             <step.icon className="text-primary-foreground h-6 w-6"/>
                         </div>
 
                         {/* Content Card */}
-                        <div className={`md:block ${index % 2 === 0 ? 'md:col-start-2' : 'md:col-start-1 md:text-right'}`}>
+                        <div className={`w-full ml-8 md:ml-0 ${index % 2 === 0 ? 'md:col-start-2' : 'md:col-start-1 md:text-right'}`}>
                             <div className="bg-card p-6 rounded-lg shadow-lg border">
-                                <h3 className="hidden md:block font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
+                                <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
                                 <p className="text-muted-foreground">{step.description}</p>
                             </div>
                         </div>
@@ -210,7 +198,7 @@ export default function Home() {
       </section>
       
       {/* Projects Section */}
-      <section id="projets" className="scroll-mt-20" aria-labelledby="projects-title">
+      <section id="projets" className="scroll-mt-20 animate-fade-in" aria-labelledby="projects-title">
         <header className="text-center mb-12">
           <h2 id="projects-title" className="font-headline text-3xl md:text-4xl font-bold">Mes projets</h2>
           <p className="text-lg text-muted-foreground mt-2">Quelques exemples de mon travail.</p>
@@ -223,12 +211,12 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-        <section id="tarifs" className="scroll-mt-20" aria-labelledby="tarifs-title">
+        <section id="tarifs" className="scroll-mt-20 animate-fade-in" aria-labelledby="tarifs-title">
             <header className="text-center mb-12">
             <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
             <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
             </header>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 items-start">
                 {pricingPlans.map((plan) => (
                     <Card key={plan.title} className={`flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${plan.featured ? 'border-primary border-2 shadow-lg' : 'border'}`}>
                         <CardHeader className={`p-6 ${plan.featured ? 'bg-primary text-primary-foreground' : 'bg-muted/30'}`}>
@@ -237,7 +225,7 @@ export default function Home() {
                             <CardDescription className={`${plan.featured ? 'text-primary-foreground/80' : ''}`}>{plan.description}</CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow p-6">
-                            <ul className="space-y-3 mb-6 flex-grow" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
+                            <ul className="space-y-3 mb-6" aria-label={`Fonctionnalités incluses dans l'offre ${plan.title}`}>
                                 {plan.features.map((feature) => (
                                     <li key={feature} className="flex items-start">
                                         <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
@@ -263,7 +251,7 @@ export default function Home() {
         </section>
 
        {/* About Section */}
-      <section id="a-propos" className="max-w-4xl mx-auto scroll-mt-20" aria-labelledby="about-title">
+      <section id="a-propos" className="max-w-4xl mx-auto scroll-mt-20 animate-fade-in" aria-labelledby="about-title">
         <header className="text-center mb-12">
           <h2 id="about-title" className="font-headline text-3xl md:text-4xl font-bold text-primary">À propos de moi</h2>
           <p className="mt-4 text-lg text-muted-foreground">Mon parcours, ma vision et ma passion pour le web.</p>
@@ -312,7 +300,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="max-w-4xl mx-auto scroll-mt-20" aria-labelledby="contact-title">
+      <section id="contact" className="max-w-4xl mx-auto scroll-mt-20 animate-fade-in" aria-labelledby="contact-title">
         <header className="text-center mb-12">
           <h2 id="contact-title" className="font-headline text-3xl md:text-4xl font-bold text-primary">Contactez-moi</h2>
           <p className="mt-4 text-lg text-muted-foreground">
