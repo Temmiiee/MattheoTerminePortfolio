@@ -179,22 +179,26 @@ const ProcessSection = () => {
                 </header>
 
                 <div className="relative">
-                    <div className="absolute left-6 top-0 w-0.5 h-full bg-border md:left-1/2 md:-translate-x-1/2" aria-hidden="true"></div>
+                    {/* Vertical line for mobile */}
+                    <div className="absolute left-6 w-0.5 h-full bg-border md:hidden" aria-hidden="true"></div>
+                    {/* Vertical line for desktop */}
+                    <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-border" aria-hidden="true"></div>
                     
-                    <div className="space-y-12">
+                    <div className="space-y-12 md:space-y-0">
                         {processSteps.map((step, index) => (
-                             <div key={step.title} className="relative flex items-start md:grid md:grid-cols-2 md:gap-x-12">
+                             <div key={step.title} className="relative md:grid md:grid-cols-2 md:gap-x-12 md:items-center">
+                                {/* Icon */}
                                 <div className={cn(
-                                    "relative flex-shrink-0 z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full",
-                                    "md:order-2",
+                                    "relative z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full",
+                                    "md:order-1",
                                     index % 2 === 0 ? "md:col-start-1" : "md:col-start-2"
                                 )}>
                                     <step.icon className="text-primary-foreground h-6 w-6"/>
                                 </div>
+                                {/* Card */}
                                 <div className={cn(
-                                    "ml-6 md:ml-0",
-                                    "w-full", 
-                                    index % 2 === 0 ? "md:col-start-2 md:row-start-1" : "md:col-start-1 md:row-start-1 md:text-right"
+                                    "ml-20 -mt-4 md:ml-0 md:mt-0",
+                                    index % 2 === 0 ? "md:col-start-2" : "md:col-start-1 md:row-start-1 md:text-right"
                                 )}>
                                     <div className="bg-card p-6 rounded-lg shadow-lg border">
                                         <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
@@ -235,7 +239,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="scroll-mt-20" aria-labelledby="services-title">
+      <section id="services" className="scroll-mt-20 animate-fade-in" aria-labelledby="services-title">
         <header className="text-center mb-12">
           <h2 id="services-title" className="font-headline text-3xl md:text-4xl font-bold">Mes services</h2>
           <p className="text-lg text-muted-foreground mt-2">Ce que je peux faire pour vous.</p>
@@ -284,7 +288,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {pricingPlans.map((plan, index) => (
-                      <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in border-2", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
+                      <Card key={plan.title} className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in", plan.featured ? 'border-primary shadow-lg' : 'border-border')} style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'backwards' }}>
                           <CardHeader className={cn("p-6", plan.headerClass)}>
                               <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
                               <p className="text-3xl font-bold pt-4">{plan.price}</p>
@@ -321,21 +325,20 @@ export default function Home() {
       <section id="a-propos" className="max-w-4xl mx-auto scroll-mt-20 animate-fade-in" aria-labelledby="about-title">
         <header className="text-center mb-12">
           <h2 id="about-title" className="font-headline text-3xl md:text-4xl font-bold text-primary">À propos de moi</h2>
-          <p className="mt-4 text-lg text-muted-foreground">Mon parcours, ma vision et ma passion pour le web.</p>
         </header>
 
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
-          <div className="md:col-span-1">
-            <div className="aspect-square rounded-full overflow-hidden shadow-lg mx-auto w-48 h-48 md:w-full md:h-auto">
-              <Image
-                src="https://placehold.co/400x400.png"
-                alt="Photo de Matthéo Termine"
-                width={400}
-                height={400}
-                data-ai-hint="professional portrait"
-                className="w-full h-full object-cover"
-                priority
-              />
+          <div className="md:col-span-1 flex justify-center">
+            <div className="relative w-48 h-48 md:w-64 md:h-64">
+                <Image
+                    src="https://placehold.co/400x400.png"
+                    alt="Photo de Matthéo Termine"
+                    width={400}
+                    height={400}
+                    data-ai-hint="professional portrait"
+                    className="rounded-full object-cover w-full h-full border-4 border-primary shadow-lg"
+                    priority
+                />
             </div>
           </div>
 
