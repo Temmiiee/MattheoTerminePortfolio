@@ -163,11 +163,13 @@ const ProcessSection = () => {
         if (!section || isTouchDevice) return;
 
         const handleMouseMove = (e: MouseEvent) => {
-            const rect = section.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            section.style.setProperty('--x', `${x}px`);
-            section.style.setProperty('--y', `${y}px`);
+            if (section) {
+                const rect = section.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                section.style.setProperty('--x', `${x}px`);
+                section.style.setProperty('--y', `${y}px`);
+            }
         };
 
         section.addEventListener('mousemove', handleMouseMove);
@@ -199,7 +201,7 @@ const ProcessSection = () => {
             )}
             aria-labelledby="process-title"
         >
-            <div ref={sectionRef} className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <header className="text-center mb-12 md:mb-16">
                     <h2 id="process-title" className="font-headline text-3xl md:text-4xl font-bold">Mon Processus de Travail</h2>
                     <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Une approche structurée pour garantir la réussite de votre projet.</p>
@@ -280,7 +282,7 @@ export default function Home() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
              <AnimatedDiv key={service.title} delay={index * 150} animation="animate-fade-in-up">
-                <Card className="text-center hover:shadow-lg transition-shadow duration-300 hover:-translate-y-1 h-full">
+                <Card className="text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105 h-full">
                 <CardHeader>
                     <div className="mx-auto bg-primary/10 text-primary rounded-full p-4 w-fit mb-4" aria-hidden="true">
                     <service.icon className="w-8 h-8" />
@@ -323,7 +325,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {pricingPlans.map((plan, index) => (
                   <AnimatedDiv key={plan.title} delay={index * 150} animation="animate-fade-in-up">
-                    <Card className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full", plan.featured ? 'border-primary shadow-lg' : 'border-border')}>
+                    <Card className={cn("flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-105 h-full", plan.featured ? 'border-primary shadow-lg' : 'border-border')}>
                         <CardHeader className={cn("p-6", plan.headerClass)}>
                             <CardTitle className="font-headline text-2xl">{plan.title}</CardTitle>
                             <p className="text-3xl font-bold pt-4">{plan.price}</p>
