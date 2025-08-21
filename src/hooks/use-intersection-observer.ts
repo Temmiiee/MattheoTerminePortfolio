@@ -8,7 +8,7 @@ type UseIntersectionObserverOptions = {
 };
 
 export function useIntersectionObserver(options: UseIntersectionObserverOptions = {}) {
-    const { threshold = 0.1, root = null, rootMargin = '0px', triggerOnce = false } = options;
+    const { threshold = 0.1, root = null, rootMargin = '0px', triggerOnce = true } = options;
     const [isIntersecting, setIntersecting] = useState(false);
     const ref = useRef<HTMLElement | null>(null);
 

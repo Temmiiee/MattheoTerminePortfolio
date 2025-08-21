@@ -31,22 +31,25 @@ export function Header() {
     }
 
     const handleScroll = () => {
-      const sections = navLinks.map(link => document.querySelector(link.href));
-      const scrollPosition = window.scrollY + 150;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section && (section as HTMLElement).offsetTop <= scrollPosition) {
-          setActiveLink(navLinks[i].href);
-          break;
+      let currentSection = '#accueil';
+      
+      navLinks.forEach(link => {
+        const section = document.querySelector(link.href);
+        if (section) {
+          const sectionTop = (section as HTMLElement).offsetTop;
+          // Use a buffer of 160px for the header height and some margin
+          if (window.scrollY >= sectionTop - 160) {
+            currentSection = link.href;
+          }
         }
-      }
+      });
+
+      setActiveLink(currentSection);
     };
     
-    // Set initial active link on load
-    handleScroll();
-
     document.addEventListener("scroll", handleScroll);
+    handleScroll(); // Set initial state on load
+
     return () => document.removeEventListener("scroll", handleScroll);
   }, [isHomePage, pathname]);
 
