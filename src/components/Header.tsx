@@ -31,7 +31,7 @@ export function Header() {
     }
 
     const handleScroll = () => {
-      let currentSection = '#accueil';
+      let currentSection = '';
       
       navLinks.forEach(link => {
         const section = document.querySelector(link.href);
@@ -44,7 +44,9 @@ export function Header() {
         }
       });
 
-      setActiveLink(currentSection);
+      if (currentSection) {
+        setActiveLink(currentSection);
+      }
     };
     
     document.addEventListener("scroll", handleScroll);
@@ -64,15 +66,6 @@ export function Header() {
   const NavLink = ({ href, label, className }: { href: string, label: string, className?: string }) => {
     const finalHref = isHomePage ? href : `/${href}`;
     const isActive = activeLink === href || activeLink === finalHref;
-    
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-      setSheetOpen(false);
-      if (isHomePage && href.startsWith('#')) {
-        e.preventDefault();
-        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-        setActiveLink(href);
-      }
-    };
 
     return (
       <Link
@@ -82,7 +75,10 @@ export function Header() {
           isActive ? "text-primary font-semibold" : "text-foreground/60",
           className
         )}
-        onClick={handleClick}
+        onClick={() => {
+            setSheetOpen(false);
+            setActiveLink(href);
+        }}
         aria-current={isActive ? "page" : undefined}
       >
         {label}
