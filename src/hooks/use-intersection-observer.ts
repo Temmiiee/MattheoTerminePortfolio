@@ -8,7 +8,7 @@ type UseIntersectionObserverOptions = {
 };
 
 export function useIntersectionObserver(options: UseIntersectionObserverOptions = {}) {
-    const { threshold = 0.1, root = null, rootMargin = '0px', triggerOnce = true } = options;
+    const { threshold = 0.1, root = null, rootMargin = '0px', triggerOnce = false } = options;
     const [isIntersecting, setIntersecting] = useState(false);
     const ref = useRef<HTMLElement | null>(null);
 
@@ -33,18 +33,17 @@ export function useIntersectionObserver(options: UseIntersectionObserverOptions 
             }
         );
 
-        if (ref.current) {
-            observer.observe(ref.current);
+        const currentRef = ref.current;
+        if (currentRef) {
+            observer.observe(currentRef);
         }
 
         return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current);
+            if (currentRef) {
+                observer.unobserve(currentRef);
             }
         };
     }, [threshold, root, rootMargin, triggerOnce]);
 
     return { ref, isIntersecting };
 }
-
-    
