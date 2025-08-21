@@ -129,11 +129,15 @@ const pricingPlans = [
 ];
 
 
-const AnimatedSection = ({ children, className, animation = "fade-in-up" }: { children: React.ReactNode, className?: string, animation?: string }) => {
+const AnimatedSection = ({ children, className }: { children: React.ReactNode, className?: string }) => {
     const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.1 });
 
     return (
-        <section ref={ref} className={cn(className, "transition-all duration-700 ease-out", isIntersecting ? "opacity-100 translate-y-0" : "opacity-0", animation)}>
+        <section ref={ref} className={cn(
+            className, 
+            "transition-opacity duration-700 ease-out", 
+            isIntersecting ? "opacity-100" : "opacity-0"
+        )}>
             {children}
         </section>
     );
@@ -143,7 +147,16 @@ const AnimatedDiv = ({ children, className, animation = "fade-in-up", delay = 0 
     const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
 
     return (
-        <div ref={ref} style={{transitionDelay: `${delay}ms`}} className={cn(className, "transition-all duration-700 ease-out", isIntersecting ? "opacity-100 translate-y-0 translate-x-0" : "opacity-0", animation)}>
+        <div 
+            ref={ref} 
+            style={{transitionDelay: `${delay}ms`}} 
+            className={cn(
+                className, 
+                "transition-all duration-700 ease-out", 
+                isIntersecting ? "opacity-100 translate-y-0 translate-x-0" : "opacity-0", 
+                animation
+            )}
+        >
             {children}
         </div>
     );
@@ -151,41 +164,40 @@ const AnimatedDiv = ({ children, className, animation = "fade-in-up", delay = 0 
 
 
 const ProcessSection = () => {
-    const sectionRef = useRef<HTMLDivElement>(null);
+    const { ref: sectionRef, isIntersecting } = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
     const [isTouchDevice, setIsTouchDevice] = useState(false);
-    const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+    const interactiveBgRef = useRef<HTMLDivElement>(null);
 
 
     useEffect(() => {
         setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-        
-        const section = sectionRef.current;
+    }, []);
+    
+    useEffect(() => {
+        const section = interactiveBgRef.current;
         if (!section || isTouchDevice) return;
 
         const handleMouseMove = (e: MouseEvent) => {
-            if (section) {
-                const rect = section.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                section.style.setProperty('--x', `${x}px`);
-                section.style.setProperty('--y', `${y}px`);
-            }
+            const rect = section.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            section.style.setProperty('--x', `${x}px`);
+            section.style.setProperty('--y', `${y}px`);
         };
 
         section.addEventListener('mousemove', handleMouseMove);
 
         return () => {
-            if (section) {
-                section.removeEventListener('mousemove', handleMouseMove);
-            }
+            section.removeEventListener('mousemove', handleMouseMove);
         };
     }, [isTouchDevice]);
     
     useEffect(() => {
-        if (isTouchDevice && sectionRef.current) {
-            const rect = sectionRef.current.getBoundingClientRect();
-            sectionRef.current.style.setProperty('--x', `${rect.width / 2}px`);
-            sectionRef.current.style.setProperty('--y', `100px`);
+        if (isTouchDevice && interactiveBgRef.current) {
+            const rect = interactiveBgRef.current.getBoundingClientRect();
+            interactiveBgRef.current.style.setProperty('--x', `${rect.width / 2}px`);
+            interactiveBgRef.current.style.setProperty('--y', `100px`);
+            interactiveBgRef.current.classList.add('touch-active');
         }
     }, [isTouchDevice]);
 
@@ -193,55 +205,56 @@ const ProcessSection = () => {
     return (
         <section
             id="processus"
-            ref={ref}
+            ref={sectionRef}
             className={cn(
-                "scroll-mt-20 py-16 md:py-24 rounded-2xl interactive-bg transition-opacity duration-700 ease-out",
-                { "touch-active": isTouchDevice },
+                "scroll-mt-20 transition-opacity duration-700 ease-out",
                 isIntersecting ? "opacity-100" : "opacity-0"
             )}
             aria-labelledby="process-title"
         >
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <header className="text-center mb-12 md:mb-16">
-                    <h2 id="process-title" className="font-headline text-3xl md:text-4xl font-bold">Mon Processus de Travail</h2>
-                    <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Une approche structurée pour garantir la réussite de votre projet.</p>
-                </header>
+            <div ref={interactiveBgRef} className="py-16 md:py-24 rounded-2xl interactive-bg">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <header className="text-center mb-12 md:mb-16">
+                        <h2 id="process-title" className="font-headline text-3xl md:text-4xl font-bold">Mon Processus de Travail</h2>
+                        <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Une approche structurée pour garantir la réussite de votre projet.</p>
+                    </header>
 
-                <div className="relative">
-                    {/* Vertical line for all screens */}
-                    <div className="absolute left-6 md:left-1/2 w-0.5 h-full bg-border -translate-x-1/2" aria-hidden="true"></div>
-                    
-                    <div className="space-y-12">
-                        {processSteps.map((step, index) => (
-                             <div key={step.title} className="relative flex items-start md:grid md:grid-cols-2 md:gap-x-12 md:items-center">
-                                {/* Icon container */}
-                                <div className={cn(
-                                    "flex-shrink-0",
-                                    "md:order-1",
-                                    index % 2 === 0 ? "md:col-start-1" : "md:col-start-2",
-                                    "flex justify-center"
-                                )}>
-                                    <div className="relative z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
-                                        <step.icon className="text-primary-foreground h-6 w-6"/>
-                                    </div>
-                                </div>
-                                
-                                {/* Card */}
-                                 <AnimatedDiv
-                                    animation={index % 2 === 0 ? "animate-fade-in-right" : "animate-fade-in-left"}
-                                    delay={index * 150}
-                                    className={cn(
-                                        "ml-6 md:ml-0",
-                                        "w-full",
-                                        index % 2 === 0 ? "md:col-start-2" : "md:col-start-1 md:row-start-1 md:text-right"
+                    <div className="relative">
+                        {/* Vertical line for all screens */}
+                        <div className="absolute left-6 md:left-1/2 w-0.5 h-full bg-border -translate-x-1/2" aria-hidden="true"></div>
+                        
+                        <div className="space-y-12">
+                            {processSteps.map((step, index) => (
+                                <div key={step.title} className="relative flex items-start md:grid md:grid-cols-2 md:gap-x-12 md:items-center">
+                                    {/* Icon container */}
+                                    <div className={cn(
+                                        "flex-shrink-0",
+                                        "md:order-1",
+                                        index % 2 === 0 ? "md:col-start-1" : "md:col-start-2",
+                                        "flex justify-center"
                                     )}>
-                                     <div className="bg-card p-6 rounded-lg shadow-lg border w-full">
-                                        <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
-                                        <p className="text-muted-foreground">{step.description}</p>
+                                        <div className="relative z-10 flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
+                                            <step.icon className="text-primary-foreground h-6 w-6"/>
+                                        </div>
                                     </div>
-                                </AnimatedDiv>
-                            </div>
-                        ))}
+                                    
+                                    {/* Card */}
+                                    <AnimatedDiv
+                                        animation={index % 2 === 0 ? "animate-fade-in-right" : "animate-fade-in-left"}
+                                        delay={index * 150}
+                                        className={cn(
+                                            "ml-6 md:ml-0",
+                                            "w-full",
+                                            index % 2 === 0 ? "md:col-start-2" : "md:col-start-1 md:row-start-1 md:text-right"
+                                        )}>
+                                        <div className="bg-card p-6 rounded-lg shadow-lg border w-full">
+                                            <h3 className="font-bold text-primary font-headline text-xl mb-2">{step.title}</h3>
+                                            <p className="text-muted-foreground">{step.description}</p>
+                                        </div>
+                                    </AnimatedDiv>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
