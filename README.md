@@ -1,59 +1,6 @@
 # Matthéo Termine - Portfolio Website
 
-A modern, accessible portfolio website for Matthéo Termine, a freelance web integrator specializing in creating fast, SEO-optimized, and RGAA-compliant websites.
-
-## 🚀 Features
-
-- **Modern Design**: Built with Next.js 15 and React 18
-- **Accessibility First**: RGAA compliant with proper semantic HTML and ARIA labels
-- **Performance Optimized**: Fast loading times and SEO optimization
-- **Responsive Design**: Works perfectly on all devices
-- **Interactive Elements**: Smooth animations and interactive components
-- **Contact Forms**: Functional contact form with validation
-- **Quote Calculator**: Interactive pricing calculator for services
-- **AI Integration**: Google Genkit AI integration for enhanced functionality
-
-## 🛠️ Tech Stack
-
-- **Framework**: Next.js 15 with TypeScript
-- **Styling**: Tailwind CSS with custom design system
-- **UI Components**: Radix UI primitives with shadcn/ui
-- **Icons**: Lucide React
-- **Forms**: React Hook Form with Zod validation
-- **AI**: Google Genkit for AI-powered features
-- **Deployment**: Firebase App Hosting
-
-## 🎨 Design System
-
-- **Primary Color**: Deep Indigo (#3F51B5) - Professional and stable
-- **Background**: Light Grayish-Blue (#ECEFF1) - Clean and modern
-- **Accent Color**: Teal (#009688) - For highlights and CTAs
-- **Typography**:
-  - Body: PT Sans (humanist sans-serif)
-  - Headlines: Space Grotesk (modern geometric)
-
-## 📁 Project Structure
-
-```
-src/
-├── app/                    # Next.js app router pages
-│   ├── page.tsx           # Homepage with all sections
-│   ├── layout.tsx         # Root layout with fonts and metadata
-│   ├── globals.css        # Global styles and design tokens
-│   ├── devis/             # Quote calculator page
-│   └── declaration-accessibilite/ # Accessibility statement
-├── components/            # Reusable React components
-│   ├── ui/               # shadcn/ui components
-│   ├── ContactForm.tsx   # Contact form component
-│   ├── Header.tsx        # Navigation header
-│   ├── Footer.tsx        # Site footer
-│   └── ProjectCard.tsx   # Project showcase cards
-├── lib/                  # Utility functions and data
-│   ├── utils.ts         # Utility functions
-│   └── projects.ts      # Project data and types
-├── hooks/               # Custom React hooks
-└── ai/                  # AI integration with Genkit
-```
+A modern, accessible website for Matthéo Termine, a freelance web integrator specializing in creating fast, SEO-optimized, and RGAA-compliant websites.
 
 ## 🚦 Getting Started
 
@@ -76,8 +23,6 @@ src/
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
 - `npm run typecheck` - Run TypeScript type checking
-- `npm run genkit:dev` - Start Genkit AI development server
-- `npm run genkit:watch` - Start Genkit AI with file watching
 
 ## 🎯 Key Sections
 
@@ -99,21 +44,6 @@ src/
 - High contrast color scheme
 - Focus management
 
-## 🔧 Configuration
-
-The project uses several configuration files:
-- `next.config.ts` - Next.js configuration
-- `tailwind.config.ts` - Tailwind CSS customization
-- `tsconfig.json` - TypeScript configuration
-- `components.json` - shadcn/ui configuration
-
 ## 📱 Responsive Design
 
-The website is fully responsive with breakpoints:
-- Mobile: < 768px
-- Tablet: 768px - 1024px
-- Desktop: > 1024px
-
-## 🚀 Deployment
-
-The project is configured for Firebase App Hosting with the `apphosting.yaml` configuration file.
+The website is fully responsive

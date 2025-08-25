@@ -43,9 +43,9 @@ export const projects: Project[] = [
       { name: "Node.js", icon: Cpu },
       { name: "Text Mining APIs", icon: Database },
     ],
-    imageUrl: "/images/projects/tdm-factory.jpg", // Add project screenshot to public/images/projects/
+    imageUrl: "/images/projects/tdm-factory.png",
     dataAiHint: "data analysis",
-    liveLink: "https://tdm-factory.istex.fr", // Replace with actual project URL
-    repoLink: "https://github.com/istex/tdm-factory", // Replace with actual repository URL
+    liveLink: "https://tdm-factory.services.istex.fr/",
+    repoLink: "https://github.com/Inist-CNRS/tdm-factory",
   },
 ];
