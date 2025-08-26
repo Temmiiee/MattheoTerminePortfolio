@@ -1,9 +1,8 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CodeXml, Gauge, Palette, Accessibility, CheckCircle2, FileText, Search, Rocket, PencilRuler, Server, LifeBuoy, Download, Mail, MessageCircle } from "lucide-react";
+import { CodeXml, Gauge, Palette, Accessibility, CheckCircle2, Search, Rocket, PencilRuler, Download, Mail, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/lib/projects";
@@ -38,26 +37,26 @@ const services = [
 ];
 
 const processSteps = [
-    {
-        icon: Search,
-        title: "1. Découverte",
-        description: "Nous discutons de vos objectifs, de votre cible et de vos besoins pour définir les contours de votre projet.",
-    },
-    {
-        icon: PencilRuler,
-        title: "2. Maquettage & Design",
-        description: "Je conçois une maquette visuelle et un design sur-mesure qui reflètent votre identité de marque.",
-    },
-    {
-        icon: CodeXml,
-        title: "3. Développement",
-        description: "Je transforme le design validé en un site web fonctionnel, performant et accessible.",
-    },
-    {
-        icon: Rocket,
-        title: "4. Déploiement",
-        description: "Je m'occupe de la mise en ligne de votre site sur votre hébergement et assure son bon fonctionnement.",
-    },
+  {
+    icon: Search,
+    title: "1. Découverte",
+    description: "Nous discutons de vos objectifs, de votre cible et de vos besoins pour définir les contours de votre projet.",
+  },
+  {
+    icon: PencilRuler,
+    title: "2. Maquettage & Design",
+    description: "Je conçois une maquette visuelle et un design sur-mesure qui reflètent votre identité de marque.",
+  },
+  {
+    icon: CodeXml,
+    title: "3. Développement",
+    description: "Je transforme le design validé en un site web fonctionnel, performant et accessible.",
+  },
+  {
+    icon: Rocket,
+    title: "4. Déploiement",
+    description: "Je m'occupe de la mise en ligne de votre site sur votre hébergement et assure son bon fonctionnement.",
+  },
 ];
 
 const pricingPlans = [
@@ -82,11 +81,11 @@ const pricingPlans = [
     price: "À partir de 1150€",
     description: "Un site complet (WordPress ou code sur-mesure) pour une présence affirmée.",
     features: [
-        "Jusqu'à 5 pages",
-        "Design 100% sur-mesure",
-        "Intégration de contenu (textes, images)",
-        "Formation à la gestion du site",
-        "Support prioritaire",
+      "Jusqu'à 5 pages",
+      "Design 100% sur-mesure",
+      "Intégration de contenu (textes, images)",
+      "Formation à la gestion du site",
+      "Support prioritaire",
     ],
     cta: "Choisir cette offre",
     featured: true,
@@ -127,201 +126,395 @@ const pricingPlans = [
   },
 ];
 
-
 const AnimatedSection = ({ children, className, id, ...props }: { children: React.ReactNode, className?: string, id: string, "aria-labelledby": string }) => {
-    const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.2, rootMargin: '-80px 0px -80px 0px' });
+  const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.2, rootMargin: '-80px 0px -80px 0px' });
 
-    return (
-        <section 
-            id={id}
-            ref={ref} 
-            className={cn(
-                className, 
-                "transition-opacity duration-700 ease-out scroll-mt-20", 
-                isIntersecting ? "opacity-100" : "opacity-0"
-            )}
-            {...props}
-        >
-            {children}
-        </section>
-    );
+  return (
+    <section 
+      id={id}
+      ref={ref} 
+      className={cn(
+        className, 
+        "transition-opacity duration-700 ease-out scroll-mt-20", 
+        isIntersecting ? "opacity-100" : "opacity-0"
+      )}
+      {...props}
+    >
+      {children}
+    </section>
+  );
 };
 
 const AnimatedDiv = ({ children, className, animation = "animate-fade-in-up", delay = 0, ...props }: { children: React.ReactNode, className?: string, animation?: string, delay?: number } & React.HTMLAttributes<HTMLDivElement>) => {
-    const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.2, rootMargin: '-50px 0px -50px 0px', triggerOnce: true });
+  const { ref, isIntersecting } = useIntersectionObserver({ threshold: 0.2, rootMargin: '-50px 0px -50px 0px', triggerOnce: true });
 
-    // Determine initial transform based on animation type
-    const getInitialTransform = (animationType: string) => {
-        if (animationType.includes('fade-in-up')) return 'translateY(50px)';
-        if (animationType.includes('fade-in-down')) return 'translateY(-50px)';
-        if (animationType.includes('fade-in-left')) return 'translateX(-50px)';
-        if (animationType.includes('fade-in-right')) return 'translateX(50px)';
-        return 'translateY(50px)';
-    };
+  const getInitialTransform = (animationType: string) => {
+    if (animationType.includes('fade-in-up')) return 'translateY(50px)';
+    if (animationType.includes('fade-in-down')) return 'translateY(-50px)';
+    if (animationType.includes('fade-in-left')) return 'translateX(-50px)';
+    if (animationType.includes('fade-in-right')) return 'translateX(50px)';
+    return 'translateY(50px)';
+  };
 
-    return (
-        <div
-            ref={ref as React.RefObject<HTMLDivElement>}
-            style={{
-                transitionDelay: `${delay}ms`,
-                opacity: isIntersecting ? 1 : 0,
-                transform: isIntersecting ? 'translate(0, 0)' : getInitialTransform(animation),
-                transition: 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            }}
-            className={cn(className)}
-            {...props}
-        >
-            {children}
-        </div>
-    );
+  return (
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      style={{
+        transitionDelay: `${delay}ms`,
+        opacity: isIntersecting ? 1 : 0,
+        transform: isIntersecting ? 'translate(0, 0)' : getInitialTransform(animation),
+        transition: 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+      }}
+      className={cn(className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
 };
 
-
 const ProcessSection = () => {
-    const { ref: sectionRef, isIntersecting } = useIntersectionObserver({ threshold: 0.2, rootMargin: '-80px 0px -80px 0px', triggerOnce: true });
-    const [isTouchDevice, setIsTouchDevice] = useState(false);
-    const interactiveBgRef = useRef<HTMLDivElement>(null);
+  const { ref: sectionRef, isIntersecting } = useIntersectionObserver({ threshold: 0.2, rootMargin: '-80px 0px -80px 0px', triggerOnce: true });
+  const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [hoveredCardRects, setHoveredCardRects] = useState<DOMRect[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (hoveredCardIndex !== null && cardRefs.current[hoveredCardIndex]) {
+      setHoveredCardRects([cardRefs.current[hoveredCardIndex]!.getBoundingClientRect()]);
+    } else {
+      setHoveredCardRects([]);
+    }
+  }, [hoveredCardIndex]);
 
+  const GalaxyBackground = ({ hoveredCardRects = [] }: { hoveredCardRects?: DOMRect[] }) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
+    const stars = useRef<any[]>([]);
+    const particles = useRef<any[]>([]);
+    const [isHover, setIsHover] = useState(false);
+    const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+    const animationFrameId = useRef<number>(0);
+    const containerRectRef = useRef<DOMRect | null>(null);
+
+    // Initialisation et resize
     useEffect(() => {
-        // This check is to prevent errors during server-side rendering
-        if (typeof window !== 'undefined') {
-            setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+      const updateContainerRect = () => {
+        if (containerRef.current) {
+          containerRectRef.current = containerRef.current.getBoundingClientRect();
         }
+      };
+      updateContainerRect();
+      window.addEventListener('resize', updateContainerRect);
+      return () => window.removeEventListener('resize', updateContainerRect);
     }, []);
-    
+
     useEffect(() => {
-        const section = interactiveBgRef.current;
-        if (!section || isTouchDevice) return;
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const width = Math.round(rect.width);
+      const height = Math.round(rect.height);
+      setDimensions({ width, height });
+      canvas.width = width;
+      canvas.height = height;
+      // Initialisation des étoiles une seule fois
+      if (stars.current.length === 0) {
+        stars.current = Array.from({ length: 100 }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 1.2 + 0.5,
+          color: `rgba(255, 255, 255, ${Math.random() * 0.7 + 0.3})`,
+          glow: Math.random() > 0.7,
+          glowIntensity: Math.random() * 0.5 + 0.5,
+          pulseSpeed: Math.random() * 0.02 + 0.01,
+          pulseOffset: Math.random() * Math.PI * 2,
+          vx: (Math.random() - 0.5) * 0.1,
+          vy: (Math.random() - 0.5) * 0.1,
+        }));
+      }
+    }, [containerRef.current]);
 
-        const handleMouseMove = (e: MouseEvent) => {
-            const rect = section.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            section.style.setProperty('--x', `${x}px`);
-            section.style.setProperty('--y', `${y}px`);
-
-            // Debug: log pour vérifier que les variables sont bien définies
-            console.log(`Mouse position: x=${x}px, y=${y}px`);
-        };
-
-        section.addEventListener('mousemove', handleMouseMove);
-
-        return () => {
-            section.removeEventListener('mousemove', handleMouseMove);
-        };
-    }, [isTouchDevice]);
-    
+    // Animation
     useEffect(() => {
-        if (isTouchDevice && interactiveBgRef.current) {
-            const rect = interactiveBgRef.current.getBoundingClientRect();
-            interactiveBgRef.current.style.setProperty('--x', `${rect.width / 2}px`);
-            interactiveBgRef.current.style.setProperty('--y', `100px`);
-            interactiveBgRef.current.classList.add('touch-active');
+      const canvas = canvasRef.current;
+      if (!canvas || dimensions.width === 0 || dimensions.height === 0) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const draw = () => {
+        ctx.clearRect(0, 0, dimensions.width, dimensions.height);
+        // Fond galaxie
+        ctx.save();
+        ctx.globalAlpha = 1;
+        const grad = ctx.createRadialGradient(
+          dimensions.width / 2,
+          dimensions.height / 2,
+          dimensions.width / 8,
+          dimensions.width / 2,
+          dimensions.height / 2,
+          dimensions.width / 1.2
+        );
+        grad.addColorStop(0, '#0a0a1a');
+        grad.addColorStop(0.5, '#0f0f23');
+        grad.addColorStop(1, '#1a1a2e');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, dimensions.width, dimensions.height);
+        ctx.restore();
+
+        const time = Date.now() * 0.001;
+        stars.current.forEach(star => {
+          star.x += star.vx;
+          star.y += star.vy;
+          if (star.x < 0 || star.x > dimensions.width) star.vx *= -1;
+          if (star.y < 0 || star.y > dimensions.height) star.vy *= -1;
+          let radius = star.r;
+          if (star.glow) {
+            radius = star.r * (1 + Math.sin(time * star.pulseSpeed + star.pulseOffset) * 0.2);
+          }
+          let color = star.color;
+          let shadowBlur = 5;
+          if (isHover && mousePos) {
+            const dx = star.x - mousePos.x;
+            const dy = star.y - mousePos.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              radius = star.r * 2.2;
+              color = 'rgba(120, 180, 255, 0.95)';
+              shadowBlur = 15;
+              const force = 0.05;
+              star.vx += (dx / dist) * force;
+              star.vy += (dy / dist) * force;
+            }
+          }
+          if (hoveredCardRects.length && containerRectRef.current) {
+            hoveredCardRects.forEach(rect => {
+              const cardX = rect.left - containerRectRef.current!.left + rect.width / 2;
+              const cardY = rect.top - containerRectRef.current!.top + rect.height / 2;
+              const dx = star.x - cardX;
+              const dy = star.y - cardY;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 100) {
+                radius = star.r * 2.5;
+                color = 'rgba(255, 100, 200, 0.95)';
+                shadowBlur = 20;
+                const force = 0.03;
+                star.vx += (dx / dist) * force;
+                star.vy += (dy / dist) * force;
+              }
+            });
+          }
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, radius, 0, 2 * Math.PI);
+          ctx.fillStyle = color;
+          ctx.shadowColor = '#fff';
+          ctx.shadowBlur = shadowBlur;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+        particles.current.forEach((particle, index) => {
+          particle.opacity -= 0.02;
+          particle.size += 0.05;
+          if (particle.opacity <= 0) {
+            particles.current.splice(index, 1);
+            return;
+          }
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, 2 * Math.PI);
+          ctx.fillStyle = `rgba(${particle.color}, ${particle.opacity})`;
+          ctx.shadowColor = `rgba(${particle.color}, 0.8)`;
+          ctx.shadowBlur = 10;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+      };
+      const animate = () => {
+        draw();
+        animationFrameId.current = requestAnimationFrame(animate);
+      };
+      animate();
+      return () => {
+        if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
         }
-    }, [isTouchDevice]);
+      };
+    }, [dimensions.width, dimensions.height, isHover, mousePos, hoveredCardRects]);
 
+    // Mouse events
+    useEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas || !containerRectRef.current) return;
+      let lastTime = 0;
+      const particleRate = 50;
+      const handleMouseMove = (e: MouseEvent) => {
+        if (!containerRectRef.current) return;
+        const x = e.clientX - containerRectRef.current.left;
+        const y = e.clientY - containerRectRef.current.top;
+        setMousePos({ x, y });
+        const currentTime = Date.now();
+        if (currentTime - lastTime > particleRate) {
+          particles.current.push({
+            x,
+            y,
+            size: Math.random() * 1.5 + 0.5,
+            opacity: 0.7,
+            color: isHover ? '180, 120, 255' : '200, 200, 255'
+          });
+          lastTime = currentTime;
+        }
+      };
+      const handleMouseEnter = () => setIsHover(true);
+      const handleMouseLeave = () => {
+        setIsHover(false);
+        setMousePos(null);
+      };
+      canvas.addEventListener('mousemove', handleMouseMove);
+      canvas.addEventListener('mouseenter', handleMouseEnter);
+      canvas.addEventListener('mouseleave', handleMouseLeave);
+      return () => {
+        canvas.removeEventListener('mousemove', handleMouseMove);
+        canvas.removeEventListener('mouseenter', handleMouseEnter);
+        canvas.removeEventListener('mouseleave', handleMouseLeave);
+      };
+    }, [isHover]);
 
     return (
-        <section
-            id="processus"
-            ref={sectionRef}
-            className={cn(
-                "scroll-mt-20 transition-opacity duration-700 ease-out",
-                isIntersecting ? "opacity-100" : "opacity-0"
-            )}
-            aria-labelledby="process-title"
-        >
-            <div ref={interactiveBgRef} className="py-12 md:py-16 lg:py-20 rounded-2xl interactive-bg">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <header className="text-center mb-12 md:mb-16">
-                        <h2 id="process-title" className="font-headline text-3xl md:text-4xl font-bold">Mon Processus de Travail</h2>
-                        <p className="text-lg text-foreground/80 mt-2 max-w-2xl mx-auto">Une approche structurée pour garantir la réussite de votre projet.</p>
-                    </header>
+      <canvas
+        ref={canvasRef}
+        width={dimensions.width}
+        height={dimensions.height}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+          borderRadius: '1rem',
+          pointerEvents: 'auto',
+          background: 'transparent',
+          transition: 'background 0.6s cubic-bezier(0.25,0.46,0.45,0.94)',
+        }}
+        aria-hidden="true"
+      />
+    );
+  };
 
-                    <div className="relative max-w-5xl mx-auto">
-                        {/* Vertical line for all screens */}
-                        <div className="absolute left-6 md:left-1/2 top-0 w-0.5 h-full bg-border md:-translate-x-1/2" aria-hidden="true"></div>
+  return (
+    <section
+      id="processus"
+      ref={sectionRef}
+      className={cn(
+        "scroll-mt-20 transition-opacity duration-1000 ease-out",
+        isIntersecting ? "opacity-100" : "opacity-0"
+      )}
+      aria-labelledby="process-title"
+    >
+      <div 
+        ref={containerRef}
+        className="py-12 md:py-16 lg:py-20 rounded-2xl interactive-bg relative overflow-hidden"
+      >
+        <GalaxyBackground hoveredCardRects={hoveredCardRects} />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <header className="text-center mb-12 md:mb-16">
+            <h2 id="process-title" className="font-headline text-3xl md:text-4xl font-bold text-primary">Mon Processus de Travail</h2>
+            <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Une approche structurée pour garantir la réussite de votre projet.</p>
+          </header>
 
-                        <div className="space-y-16">
-                            {processSteps.map((step, index) => (
-                                <div key={step.title} className="relative">
-                                    {/* Mobile layout */}
-                                    <div className="flex items-center md:hidden">
-                                        {/* Icon */}
-                                        <div className="absolute left-0 flex items-center justify-center w-12 h-12 z-10">
-                                            <div className="flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
-                                                <step.icon className="text-primary-foreground h-6 w-6"/>
-                                            </div>
-                                        </div>
-                                        {/* Card */}
-                                        <AnimatedDiv
-                                            animation="animate-fade-in-up"
-                                            delay={index * 150}
-                                            className="ml-16 flex-1">
-                                            <div className="bg-card p-6 rounded-lg shadow-lg border w-full">
-                                                <h3 className="font-bold text-primary font-headline text-xl mb-3">{step.title}</h3>
-                                                <p className="text-foreground/85 leading-relaxed">{step.description}</p>
-                                            </div>
-                                        </AnimatedDiv>
-                                    </div>
+          <div className="relative max-w-5xl mx-auto">
+            <div className="absolute left-6 md:left-1/2 top-0 w-0.5 h-full bg-gradient-to-b from-primary/30 via-primary/50 to-primary/30 md:-translate-x-1/2" aria-hidden="true"></div>
 
-                                    {/* Desktop layout */}
-                                    <div className="hidden md:grid md:grid-cols-2 md:gap-x-16 md:items-center">
-                                        {/* Icon - always centered */}
-                                        <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 z-10">
-                                            <div className="flex items-center justify-center bg-primary shadow-xl w-12 h-12 rounded-full">
-                                                <step.icon className="text-primary-foreground h-6 w-6"/>
-                                            </div>
-                                        </div>
-
-                                        {/* Card - alternating sides */}
-                                        {index % 2 === 0 ? (
-                                            <>
-                                                {/* Left side card */}
-                                                <AnimatedDiv
-                                                    animation="animate-fade-in-up"
-                                                    delay={index * 150}
-                                                    className="pr-8">
-                                                    <div className="bg-card p-6 rounded-lg shadow-lg border w-full text-right">
-                                                        <h3 className="font-bold text-primary font-headline text-xl mb-3">{step.title}</h3>
-                                                        <p className="text-foreground/85 leading-relaxed">{step.description}</p>
-                                                    </div>
-                                                </AnimatedDiv>
-                                                {/* Empty right side */}
-                                                <div></div>
-                                            </>
-                                        ) : (
-                                            <>
-                                                {/* Empty left side */}
-                                                <div></div>
-                                                {/* Right side card */}
-                                                <AnimatedDiv
-                                                    animation="animate-fade-in-up"
-                                                    delay={index * 150}
-                                                    className="pl-8">
-                                                    <div className="bg-card p-6 rounded-lg shadow-lg border w-full">
-                                                        <h3 className="font-bold text-primary font-headline text-xl mb-3">{step.title}</h3>
-                                                        <p className="text-foreground/85 leading-relaxed">{step.description}</p>
-                                                    </div>
-                                                </AnimatedDiv>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+            <div className="space-y-16">
+              {processSteps.map((step, index) => (
+                <div key={step.title} className="relative group">
+                  <div className="flex items-center md:hidden">
+                    <div className="absolute left-0 flex items-center justify-center w-12 h-12 z-10">
+                      <div className="flex items-center justify-center bg-primary shadow-lg w-12 h-12 rounded-full transition-all duration-500 group-hover:scale-110 group-hover:shadow-xl">
+                        <step.icon className="text-primary-foreground h-6 w-6"/>
+                      </div>
                     </div>
+                    <div
+                      className="ml-16 flex-1"
+                      onMouseEnter={() => setHoveredCardIndex(index)}
+                      onMouseLeave={() => setHoveredCardIndex(null)}
+                      ref={(el) => { cardRefs.current[index] = el; }}
+                    >
+                      <div className={cn(
+                        "bg-card/80 backdrop-blur-sm p-6 rounded-lg border w-full transition-all duration-500",
+                        "shadow-lg hover:shadow-xl",
+                        "transform hover:-translate-y-1",
+                        "border-border hover:border-primary/30"
+                      )}>
+                        <h3 className={cn("font-bold font-headline text-xl mb-3 text-primary")}>{step.title}</h3>
+                        <p className={cn("leading-relaxed text-foreground/85")}>{step.description}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="hidden md:grid md:grid-cols-2 md:gap-x-16 md:items-center">
+                    <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 z-10">
+                      <div className="flex items-center justify-center bg-primary shadow-lg w-12 h-12 rounded-full transition-all duration-500 group-hover:scale-110 group-hover:shadow-xl">
+                        <step.icon className="text-primary-foreground h-6 w-6"/>
+                      </div>
+                    </div>
+
+                    {index % 2 === 0 ? (
+                      <>
+                        <div
+                          className="pr-8"
+                          onMouseEnter={() => setHoveredCardIndex(index)}
+                          onMouseLeave={() => setHoveredCardIndex(null)}
+                          ref={(el) => { cardRefs.current[index] = el; }}
+                        >
+                          <div className={cn(
+                            "bg-card/80 backdrop-blur-sm p-6 rounded-lg border w-full text-right transition-all duration-500",
+                            "shadow-lg hover:shadow-xl",
+                            "transform hover:-translate-y-1",
+                            "border-border hover:border-primary/30"
+                          )}>
+                            <h3 className={cn("font-bold font-headline text-xl mb-3 text-primary")}>{step.title}</h3>
+                            <p className={cn("leading-relaxed text-foreground/85")}>{step.description}</p>
+                          </div>
+                        </div>
+                        <div></div>
+                      </>
+                    ) : (
+                      <>
+                        <div></div>
+                        <div
+                          className="pl-8"
+                          onMouseEnter={() => setHoveredCardIndex(index)}
+                          onMouseLeave={() => setHoveredCardIndex(null)}
+                          ref={(el) => { cardRefs.current[index] = el; }}
+                        >
+                          <div className={cn(
+                            "bg-card/80 backdrop-blur-sm p-6 rounded-lg border w-full transition-all duration-500",
+                            "shadow-lg hover:shadow-xl",
+                            "transform hover:-translate-y-1",
+                            "border-border hover:border-primary/30"
+                          )}>
+                            <h3 className={cn("font-bold font-headline text-xl mb-3 text-primary")}>{step.title}</h3>
+                            <p className={cn("leading-relaxed text-foreground/85")}>{step.description}</p>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
+              ))}
             </div>
-        </section>
-    )
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default function Home() {
   return (
     <div className="space-y-4 md:space-y-6">
-      {/* Hero Section */}
       <section id="accueil" className="text-center py-12 md:py-16 lg:py-20 min-h-[80vh] flex flex-col justify-center scroll-mt-20" aria-labelledby="hero-title">
         <AnimatedDiv animation="animate-fade-in-up" delay={0}>
           <h1 id="hero-title" className="font-headline text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-4">
@@ -329,7 +522,7 @@ export default function Home() {
           </h1>
         </AnimatedDiv>
         <AnimatedDiv animation="animate-fade-in-up" delay={200}>
-          <p className="font-headline text-xl md:text-2xl text-foreground/80 mb-6 max-w-3xl mx-auto" role="doc-subtitle">
+          <p className="font-headline text-xl md:text-2xl text-muted-foreground mb-6 max-w-3xl mx-auto" role="doc-subtitle">
             Intégrateur Web Freelance
           </p>
         </AnimatedDiv>
@@ -350,12 +543,11 @@ export default function Home() {
         </AnimatedDiv>
       </section>
 
-      {/* Services Section */}
       <AnimatedSection id="services" className="py-12 md:py-16 lg:py-20 min-h-[85vh] flex flex-col justify-center" aria-labelledby="services-title">
         <AnimatedDiv animation="animate-fade-in-up" delay={0}>
           <header className="text-center mb-16">
             <h2 id="services-title" className="font-headline text-3xl md:text-4xl font-bold">Mes services</h2>
-            <p className="text-lg text-foreground/80 mt-2">Ce que je peux faire pour vous.</p>
+            <p className="text-lg text-muted-foreground mt-2">Ce que je peux faire pour vous.</p>
           </header>
         </AnimatedDiv>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -369,7 +561,7 @@ export default function Home() {
                     <CardTitle className="font-headline text-xl">{service.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-foreground/80">{service.description}</p>
+                    <p className="text-muted-foreground">{service.description}</p>
                 </CardContent>
                 </Card>
             </AnimatedDiv>
@@ -377,14 +569,12 @@ export default function Home() {
         </div>
       </AnimatedSection>
       
-      {/* Process Section */}
       <ProcessSection />
       
-      {/* Projects Section */}
       <AnimatedSection id="projets" aria-labelledby="projects-title">
         <header className="text-center mb-12">
           <h2 id="projects-title" className="font-headline text-3xl md:text-4xl font-bold">Mes projets</h2>
-          <p className="text-lg text-foreground/80 mt-2">Quelques exemples de mon travail.</p>
+          <p className="text-lg text-muted-foreground mt-2">Quelques exemples de mon travail.</p>
         </header>
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
@@ -395,11 +585,10 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* Pricing Section */}
       <AnimatedSection id="tarifs" aria-labelledby="tarifs-title">
           <header className="text-center mb-12">
           <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
-          <p className="text-lg text-foreground/80 mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
+          <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
           </header>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {pricingPlans.map((plan, index) => (
@@ -423,12 +612,11 @@ export default function Home() {
                                 : "text-foreground"
                             )}>{plan.price}</p>
                             <CardDescription className={cn(
-                              // Fonds sombres (primary, accent, foreground) -> texte blanc avec ombre
                               plan.headerClass.includes('bg-primary') ||
                               plan.headerClass.includes('bg-accent') ||
                               plan.headerClass.includes('bg-foreground')
-                                ? "text-on-dark-bg"
-                                : "text-contrast-aa" // Fond clair (secondary) -> texte très sombre pour contraste AA
+                                ? "text-white/90"
+                                : "text-muted-foreground"
                             )}>{plan.description}</CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow p-6">
@@ -436,7 +624,7 @@ export default function Home() {
                                 {plan.features.map((feature) => (
                                     <li key={feature} className="flex items-start">
                                         <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
-                                        <span>{feature}</span>
+                                        <span className="text-foreground/90">{feature}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -450,7 +638,6 @@ export default function Home() {
           </div>
       </AnimatedSection>
 
-       {/* About Section */}
       <section id="a-propos" className="py-12 md:py-16 lg:py-20 scroll-mt-20" aria-labelledby="about-title">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <header className="text-center mb-12 md:mb-16">
@@ -459,7 +646,6 @@ export default function Home() {
           </header>
 
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-            {/* Photo */}
             <AnimatedDiv animation="animate-fade-in-right" className="flex justify-center lg:justify-end">
               <div className="relative">
                 <div className="w-72 h-72 lg:w-80 lg:h-80 relative">
@@ -477,7 +663,6 @@ export default function Home() {
               </div>
             </AnimatedDiv>
 
-            {/* Content */}
             <AnimatedDiv animation="animate-fade-in-left" className="space-y-8 lg:space-y-10">
               <div className="text-center lg:text-left">
                 <h3 className="font-headline text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground leading-tight max-w-2xl mx-auto lg:mx-0">
@@ -510,31 +695,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" className="py-12 md:py-16 lg:py-20 scroll-mt-20" aria-labelledby="contact-title">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <header className="text-center mb-12 md:mb-16">
             <h2 id="contact-title" className="font-headline text-3xl md:text-4xl font-bold text-primary mb-4">Contactez-moi</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
-            <p className="text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Une question, un projet ? N'hésitez pas à me contacter. Je vous répondrai dans les plus brefs délais.
             </p>
           </header>
 
           <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
-            {/* Contact Form */}
             <AnimatedDiv animation="animate-fade-in-up" className="lg:col-span-2" role="region" aria-labelledby="form-title">
               <div className="max-w-2xl mx-auto lg:mx-0">
                 <ContactForm />
               </div>
             </AnimatedDiv>
 
-            {/* Contact Info */}
             <AnimatedDiv animation="animate-fade-in-up" delay={150} className="lg:col-span-1" role="region" aria-labelledby="other-contact-title">
               <div className="space-y-8">
                 <div className="text-center lg:text-left">
                   <h3 id="other-contact-title" className="font-headline text-2xl font-bold mb-4">Autres moyens de contact</h3>
-                  <p className="text-foreground/80 leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     Si vous préférez, vous pouvez aussi me joindre directement par email ou via WhatsApp.
                   </p>
                 </div>
@@ -545,7 +727,7 @@ export default function Home() {
                       <Mail className="mr-4 h-6 w-6 text-primary flex-shrink-0" aria-hidden="true" />
                       <div>
                         <div className="font-semibold text-base text-foreground">Email</div>
-                        <div className="text-foreground/70 text-sm">contact@mattheo-termine.fr</div>
+                        <div className="text-muted-foreground text-sm">contact@mattheo-termine.fr</div>
                       </div>
                     </Link>
                   </Button>
@@ -555,16 +737,15 @@ export default function Home() {
                       <MessageCircle className="mr-4 h-6 w-6 text-accent flex-shrink-0" aria-hidden="true" />
                       <div>
                         <div className="font-semibold text-base text-foreground">WhatsApp</div>
-                        <div className="text-foreground/70 text-sm">Discutons en direct</div>
+                        <div className="text-muted-foreground text-sm">Discutons en direct</div>
                       </div>
                     </Link>
                   </Button>
                 </div>
 
-                {/* Additional info */}
                 <div className="pt-6 border-t border-border/50">
                   <div className="text-center lg:text-left">
-                    <p className="text-sm text-foreground/70 mb-2">Temps de réponse moyen</p>
+                    <p className="text-sm text-muted-foreground mb-2">Temps de réponse moyen</p>
                     <p className="font-semibold text-primary">Moins de 24h</p>
                   </div>
                 </div>
@@ -576,5 +757,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
