@@ -71,23 +71,32 @@ export function Header() {
 
 
   const NavLink = ({ href, label, className }: { href: string, label: string, className?: string }) => {
-    // Always prefix with / to navigate to the homepage sections from other pages
-    const finalHref = href.startsWith("#") ? `/${href}` : href;
+    const isAnchor = href.startsWith("#");
     const isActive = activeLink === href;
-
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      setSheetOpen(false);
+      if (isAnchor) {
+        e.preventDefault();
+        const section = document.querySelector(href);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+          setActiveLink(href);
+          window.history.replaceState(null, "", href);
+        }
+      }
+      // hashchange listener will update activeLink
+    };
     return (
       <Link
-        href={finalHref}
+        href={isAnchor ? href : href}
         className={cn(
           "transition-colors text-lg md:text-sm hover:text-primary",
           isActive ? "text-primary font-semibold" : "text-foreground/60",
           className
         )}
-        onClick={() => {
-            setSheetOpen(false);
-            // No need to manually set active link here, hashchange listener will do it
-        }}
+        onClick={handleClick}
         aria-current={isActive ? "page" : undefined}
+        prefetch
       >
         {label}
       </Link>

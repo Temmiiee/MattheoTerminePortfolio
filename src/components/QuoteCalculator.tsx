@@ -35,18 +35,29 @@ const formSchema = z.object({
   maintenance: z.boolean().default(false).optional(),
   projectDescription: z.string().optional(),
   files: z.any().optional(),
+  name: z.string().min(1, 'Veuillez indiquer votre nom.'),
+  email: z.string().email('Veuillez indiquer un email valide.').min(1, 'Veuillez indiquer votre email.'),
+  phone: z.string().optional(),
+  company: z.string().optional().default(''),
+  technology: z.enum(["react", "vue", "nextjs", "twig", "no-preference"], {
+    required_error: "Veuillez sélectionner une technologie.",
+  }),
+  pages: z.number().min(1, { message: "Veuillez indiquer le nombre de pages estimé." }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 const featureOptions = [
   { id: "blog", label: "Intégration d'un blog / système d'actualités", price: 300 },
-  { id: "gallery", label: "Galerie d'images / Portfolio avancé", price: 200 },
+  { id: "gallery", label: "Galerie d'images / Portfolio avancé", price: 250 },
   { id: "newsletter", label: "Système d'inscription à la newsletter", price: 150 },
   { id: "multi-langue", label: "Configuration pour un site multilingue", price: 450 },
+  { id: "ecommerce-variations", label: "Variations de produits (pour E-commerce)", price: 300 },
   { id: "analytics", label: "Intégration et configuration d'analytics", price: 80 },
+  { id: "user-accounts", label: "Espace utilisateur / authentification", price: 500 },
+  { id: "third-party-integration", label: "Intégration de service tiers (API, etc.)", price: 400 },
+  { id: "admin-panel", label: "Tableau de bord administrateur simple", price: 600 },
 ];
-
 const pricingModel = {
   siteType: {
     vitrine: 350,
@@ -67,32 +78,38 @@ const pricingModel = {
 
 export function QuoteCalculator() {
   const searchParams = useSearchParams();
-  const siteTypeParam = searchParams.get('siteType');
-  const designTypeParam = searchParams.get('designType');
-  const maintenanceParam = searchParams.get('maintenance');
+  const params = useMemo(() => ({
+    siteType: searchParams.get('siteType'),
+    pages: searchParams.get('pages'),
+    designType: searchParams.get('designType'),
+    features: searchParams.get('features')?.split(',') || [],
+    maintenance: searchParams.get('maintenance'),
+    technology: searchParams.get('technology'),
+  }), [searchParams]);
+
+  const defaultValues = useMemo(() => ({
+    siteType: params.siteType === 'vitrine' || params.siteType === 'ecommerce' || params.siteType === 'webapp' ? params.siteType : undefined,
+    designType: params.designType === 'template' || params.designType === 'custom' ? params.designType : undefined,
+    wordpress: false,
+    features: params.features,
+    maintenance: params.maintenance === 'true',
+    name: "",
+    email: "",
+    company: "",
+    phone: "",
+    technology: params.technology === 'react' || params.technology === 'vue' || params.technology === 'nextjs' || params.technology === 'twig' || params.technology === 'no-preference' ? params.technology : undefined,
+    projectDescription: "",
+    pages: params.pages ? parseInt(params.pages) : 1,
+  }), [params]);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      siteType: siteTypeParam === 'vitrine' || siteTypeParam === 'ecommerce' || siteTypeParam === 'webapp' ? siteTypeParam : undefined,
-      designType: designTypeParam === 'template' || designTypeParam === 'custom' ? designTypeParam : undefined,
-      wordpress: false,
-      features: [],
-      maintenance: maintenanceParam === 'true',
-      projectDescription: "",
-    },
+    defaultValues,
   });
 
   useEffect(() => {
-    form.reset({
-        siteType: siteTypeParam === 'vitrine' || siteTypeParam === 'ecommerce' || siteTypeParam === 'webapp' ? siteTypeParam : undefined,
-        designType: designTypeParam === 'template' || designTypeParam === 'custom' ? designTypeParam : undefined,
-        wordpress: false,
-        features: [],
-        maintenance: maintenanceParam === 'true',
-        projectDescription: "",
-    });
-  }, [siteTypeParam, designTypeParam, maintenanceParam, form]);
+    form.reset(defaultValues);
+  }, [defaultValues, form]);
 
 
   const watchedValues = form.watch();
@@ -121,7 +138,8 @@ export function QuoteCalculator() {
     let featurePrice = 0;
     if (finalData.features) {
       finalData.features.forEach((featureId) => {
-        const feature = featureOptions.find(f => f.id === featureId);
+        if (featureId === 'ecommerce-variations' && finalData.siteType !== 'ecommerce') return; // Exclude ecommerce-variations if siteType is not ecommerce
+         const feature = featureOptions.find(f => f.id === featureId);
         if (feature) {
           featurePrice += feature.price;
           details[feature.label] = feature.price;
@@ -134,19 +152,27 @@ export function QuoteCalculator() {
       details["Maintenance & Hébergement"] = maintenance;
     }
     
+    // Multiply base price by the number of pages (minimum 1)
+    const numberOfPages = finalData.pages && finalData.pages > 0 ? finalData.pages : 1;
+    base *= numberOfPages;
+    if (numberOfPages > 1) {
+        details["Nombre de pages"] = base; // Show the total price for pages in details
+    } else if (finalData.siteType) details[`Site ${finalData.siteType}`] = base; // If only one page, keep the original site type price in details
+
     return { total: base + featurePrice, maintenanceCost: maintenance, details };
   }, [watchedValues]);
 
   const onSubmit = (data: FormValues) => {
     // Préparer les données du devis
     const devisData = {
+      name: data.name,
+      email: data.email,
+      company: data.company,
+      phone: data.phone,
       siteType: data.siteType,
-      designType: data.designType,
       pages: data.pages,
       features: data.features || [],
-      timeline: data.timeline,
-      budget: `${totalPrice}€ HT`,
-      projectDescription: data.projectDescription,
+      technology: data.technology,
       wordpress: data.wordpress,
       clientInfo: {
         name: data.name,
@@ -154,11 +180,13 @@ export function QuoteCalculator() {
         company: data.company,
         phone: data.phone,
       },
+      projectDescription: data.projectDescription,
       total: totalPrice,
       maintenanceCost: maintenanceCost,
       details: details
     };
-
+    
+    // TODO: Calculate final price based on pages and other factors here
     // Sauvegarder les données dans localStorage pour la page de validation
     localStorage.setItem('devisData', JSON.stringify(devisData));
 
@@ -222,7 +250,7 @@ export function QuoteCalculator() {
            <FormField
               control={form.control}
               name="wordpress"
-              render={({ field }) => (
+             render={({ field }) => (
                 <FormItem className="flex flex-row items-center space-x-3">
                   <FormControl>
                     <Checkbox
@@ -283,7 +311,7 @@ export function QuoteCalculator() {
           <FormField
             control={form.control}
             name="features"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                  <div className="mb-4">
                     <FormLabel className="text-lg font-semibold">3. Fonctionnalités additionnelles</FormLabel>
@@ -295,6 +323,8 @@ export function QuoteCalculator() {
                 {featureOptions.map((item) => (
                   <FormField
                     key={item.id}
+                    // Only show ecommerce-variations if siteType is ecommerce
+                    // style={{ display: item.id === 'ecommerce-variations' && watchedValues.siteType !== 'ecommerce' ? 'none' : 'flex' }}
                     control={form.control}
                     name="features"
                     render={({ field }) => {
@@ -324,8 +354,11 @@ export function QuoteCalculator() {
                       )
                     }}
                   />
-                ))}
+                ))
+                .filter(item => !(item.key === 'ecommerce-variations' && watchedValues.siteType !== 'ecommerce'))}
                 </div>
+                 {watchedValues.siteType !== 'ecommerce' && watchedValues.features?.includes('ecommerce-variations') && (
+                    <p className="text-sm text-red-500 mt-2">La fonctionnalité "Variations de produits" n'est pertinente que pour un site E-commerce et a été retirée de l'estimation.</p>)}
                 <FormMessage />
               </FormItem>
             )}
@@ -335,7 +368,7 @@ export function QuoteCalculator() {
               control={form.control}
               name="maintenance"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base font-semibold">
                       4. Maintenance & Hébergement (Optionnel)
@@ -353,11 +386,140 @@ export function QuoteCalculator() {
                 </FormItem>
               )}
             />
-            
-            <Separator />
+
+
+          <FormField
+            control={form.control}
+            name="pages"
+
+                <FormLabel className="text-lg font-semibold">5. Nombre de pages estimé (minimum 1)</FormLabel>
+                <FormDescription>
+                  Indiquez le nombre approximatif de pages que vous souhaitez pour votre site.
+                </FormDescription>
+
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field} // Spread field props first
+                    onChange={(e) => field.onChange(e.target.value === '' ? undefined : parseInt(e.target.value))}
+                    min="1"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="technology"
+              <FormItem className="space-y-3">
+                <FormLabel className="text-lg font-semibold">6. Quelle technologie préférez-vous ?</FormLabel>
+                <FormDescription>
+                    Si vous n'avez pas de préférence, je choisirai l'outil le plus adapté à votre projet.
+                </FormDescription>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    className="flex flex-col space-y-2 md:grid md:grid-cols-3 md:gap-4 md:space-y-0"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
+                      <FormControl><RadioGroupItem value="react" /></FormControl>
+                      <FormLabel className="font-normal w-full">React</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
+                      <FormControl><RadioGroupItem value="vue" /></FormControl>
+                      <FormLabel className="font-normal w-full">Vue</FormLabel>
+                    </FormItem>
+                     <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
+                      <FormControl><RadioGroupItem value="nextjs" /></FormControl>
+                      <FormLabel className="font-normal w-full">Next.js</FormLabel>
+                    </FormItem>
+                     <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
+                      <FormControl><RadioGroupItem value="twig" /></FormControl>
+                      <FormLabel className="font-normal w-full">Twig</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
+                      <FormControl><RadioGroupItem value="no-preference" /></FormControl>
+                      <FormLabel className="font-normal w-full">Pas de préférences</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+           <Separator />
+
+            {/* New section for contact information */}
+            <div>
+                <h3 className="text-lg font-semibold">7. Vos coordonnées</h3>
+               <FormDescription>
+                    Ces informations sont nécessaires pour établir le devis formel.
+                </FormDescription>
+            </div>
+            <div className="flex flex-col md:flex-row gap-4">
+             <FormField
+                control={form.control}
+
+                 name="name"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Votre nom <span className="text-red-500">*</span></FormLabel>
+                    <FormControl>
+                    <Input placeholder="Votre nom" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+
+             <FormField
+                control={form.control}
+                 name="email"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Votre email <span className="text-red-500">*</span></FormLabel>
+                    <FormControl>
+                    <Input type="email" placeholder="Votre email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+            </div>
+             <FormField
+                control={form.control}
+                 name="company"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Nom de votre entreprise (Optionnel)</FormLabel>
+                    <FormControl>
+                    <Input placeholder="Nom de votre entreprise" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+             <FormField
+                control={form.control}
+                name="phone"
+                 render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Numéro de téléphone (Optionnel)</FormLabel>
+                    <FormControl>
+                    <Input type="tel" placeholder="Numéro de téléphone" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+             <Separator />
 
             <div>
-                <h3 className="text-lg font-semibold">5. Informations complémentaires</h3>
+                <h3 className="text-lg font-semibold">8. Informations complémentaires</h3>
                 <FormDescription>
                     Ces informations ne modifient pas le tarif mais m'aideront à mieux comprendre votre projet.
                 </FormDescription>
