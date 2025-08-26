@@ -250,7 +250,7 @@ export function QuoteCalculator() {
            <FormField
               control={form.control}
               name="wordpress"
-             render={({ field }) => (
+              render={({ field }) => (
                 <FormItem className="flex flex-row items-center space-x-3">
                   <FormControl>
                     <Checkbox
@@ -391,12 +391,12 @@ export function QuoteCalculator() {
           <FormField
             control={form.control}
             name="pages"
-
+            render={({ field }) => (
+              <FormItem>
                 <FormLabel className="text-lg font-semibold">5. Nombre de pages estimé (minimum 1)</FormLabel>
                 <FormDescription>
                   Indiquez le nombre approximatif de pages que vous souhaitez pour votre site.
                 </FormDescription>
-
                 <FormControl>
                   <Input
                     type="number"
@@ -413,6 +413,7 @@ export function QuoteCalculator() {
           <FormField
             control={form.control}
             name="technology"
+            render={({ field }) => (
               <FormItem className="space-y-3">
                 <FormLabel className="text-lg font-semibold">6. Quelle technologie préférez-vous ?</FormLabel>
                 <FormDescription>
@@ -463,8 +464,7 @@ export function QuoteCalculator() {
             <div className="flex flex-col md:flex-row gap-4">
              <FormField
                 control={form.control}
-
-                 name="name"
+                name="name"
                 render={({ field }) => (
                 <FormItem>
                     <FormLabel>Votre nom <span className="text-red-500">*</span></FormLabel>
@@ -478,7 +478,7 @@ export function QuoteCalculator() {
 
              <FormField
                 control={form.control}
-                 name="email"
+                name="email"
                 render={({ field }) => (
                 <FormItem>
                     <FormLabel>Votre email <span className="text-red-500">*</span></FormLabel>
@@ -492,7 +492,7 @@ export function QuoteCalculator() {
             </div>
              <FormField
                 control={form.control}
-                 name="company"
+                name="company"
                 render={({ field }) => (
                 <FormItem>
                     <FormLabel>Nom de votre entreprise (Optionnel)</FormLabel>
@@ -506,7 +506,7 @@ export function QuoteCalculator() {
              <FormField
                 control={form.control}
                 name="phone"
-                 render={({ field }) => (
+                render={({ field }) => (
                 <FormItem>
                     <FormLabel>Numéro de téléphone (Optionnel)</FormLabel>
                     <FormControl>
