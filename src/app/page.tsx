@@ -176,10 +176,9 @@ const AnimatedDiv = ({ children, className, animation = "animate-fade-in-up", de
 };
 
 // Galaxy Background Component - Reusable animated space background
-const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCardRects?: DOMRect[]; containerRef: React.RefObject<HTMLDivElement> }) => {
+const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCardRects?: DOMRect[]; containerRef: React.RefObject<HTMLDivElement | null> }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
-    
     interface Star {
       x: number;
       y: number;
@@ -192,7 +191,6 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
       vx: number;
       vy: number;
     }
-    
     interface Particle {
       x: number;
       y: number;
@@ -200,9 +198,20 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
       opacity: number;
       color: string;
     }
-    
+    interface Wave {
+      x: number;
+      y: number;
+      radius: number;
+      maxRadius: number;
+      strength: number;
+      alpha: number;
+      colorStops: [string, string];
+      elastic: boolean;
+      progress: number;
+    }
     const stars = useRef<Star[]>([]);
     const particles = useRef<Particle[]>([]);
+    const waves = useRef<Wave[]>([]);
     const [isHover, setIsHover] = useState(false);
     const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
     const animationFrameId = useRef<number>(0);
@@ -245,7 +254,7 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
           vy: (Math.random() - 0.5) * 0.1,
         }));
       }
-    }, [containerRef]);
+    }, [containerRef, dimensions.width, dimensions.height]);
 
     // Animation
     useEffect(() => {
@@ -274,10 +283,42 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
         ctx.fillRect(0, 0, dimensions.width, dimensions.height);
         ctx.restore();
 
+        // Dessin des vagues
+        waves.current.forEach((wave: Wave, waveIdx: number) => {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(wave.x, wave.y, wave.radius, 0, 2 * Math.PI);
+          // Dégradé violet
+          const grad = ctx.createRadialGradient(wave.x, wave.y, wave.radius * 0.7, wave.x, wave.y, wave.radius);
+          grad.addColorStop(0, wave.colorStops[0]);
+          grad.addColorStop(1, wave.colorStops[1]);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 2 + wave.strength * 2 + Math.sin(wave.progress * Math.PI) * 2;
+          ctx.globalAlpha = wave.alpha;
+          ctx.shadowColor = '#a259ff';
+          ctx.shadowBlur = 16;
+          ctx.stroke();
+          ctx.restore();
+        });
+
         const time = Date.now() * 0.001;
-        stars.current.forEach(star => {
+        stars.current.forEach((star: Star) => {
+          // Effet vague sur les étoiles
+          waves.current.forEach((wave: Wave) => {
+            const dx = star.x - wave.x;
+            const dy = star.y - wave.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < wave.radius + 30 && dist > wave.radius - 30) {
+              // Déplacement radial
+              const force = wave.strength * 0.7;
+              star.vx += (dx / dist) * force * 0.2;
+              star.vy += (dy / dist) * force * 0.2;
+            }
+          });
           star.x += star.vx;
           star.y += star.vy;
+          star.vx *= 0.98;
+          star.vy *= 0.98;
           if (star.x < 0 || star.x > dimensions.width) star.vx *= -1;
           if (star.y < 0 || star.y > dimensions.height) star.vy *= -1;
           let radius = star.r;
@@ -324,7 +365,7 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
           ctx.fill();
           ctx.shadowBlur = 0;
         });
-        particles.current.forEach((particle, index) => {
+  particles.current.forEach((particle: Particle, index: number) => {
           particle.opacity -= 0.02;
           particle.size += 0.05;
           if (particle.opacity <= 0) {
@@ -341,6 +382,29 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
         });
       };
       const animate = () => {
+        // Animation des vagues
+        for (let idx = waves.current.length - 1; idx >= 0; idx--) {
+          const wave = waves.current[idx];
+          // Animation élastique
+          if (wave.elastic) {
+            // Vitesse personnalisée pour chaque onde
+            const waveSpeed = wave.speed || (0.005 + wave.strength * 0.001);
+            wave.progress += waveSpeed;
+            // Les ondes rapetissent progressivement et ont un rayon non uniforme
+            const shrink = 1 - wave.progress * (0.45 + Math.random() * 0.15);
+            wave.radius = Math.abs(Math.sin(wave.progress * Math.PI) * wave.maxRadius * shrink);
+            wave.alpha *= 0.99;
+            if (wave.progress >= 1 || wave.alpha < 0.05 || shrink < 0.1) {
+              waves.current.splice(idx, 1);
+            }
+          } else {
+            wave.radius += 3 + wave.strength * 2;
+            wave.alpha *= 0.97;
+            if (wave.radius > wave.maxRadius || wave.alpha < 0.05) {
+              waves.current.splice(idx, 1);
+            }
+          }
+        }
         draw();
         animationFrameId.current = requestAnimationFrame(animate);
       };
@@ -384,31 +448,46 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
         if (!containerRectRef.current) return;
         const x = e.clientX - containerRectRef.current.left;
         const y = e.clientY - containerRectRef.current.top;
-        
-        // Create explosion effect with multiple particles
-        const particleCount = 15;
+        // Ajout de plusieurs petites ondes violettes très lentes et petites
+        const nbWaves = 3;
+        for (let w = 0; w < nbWaves; w++) {
+          const angle = (w / nbWaves) * Math.PI * 2;
+          const offset = 10 + Math.random() * 8;
+          const wx = x + Math.cos(angle) * offset;
+          const wy = y + Math.sin(angle) * offset;
+          waves.current.push({
+            x: wx,
+            y: wy,
+            radius: 0,
+            maxRadius: Math.min(dimensions.width, dimensions.height) * (0.08 + Math.random() * 0.04),
+            strength: 0.32 + Math.random() * 0.18,
+            alpha: 0.7,
+            colorStops: ['#a259ff', '#6c2bd7'],
+            elastic: true,
+            progress: 0,
+          });
+        }
+        // Effet particules violet très léger
+        const particleCount = 6;
         for (let i = 0; i < particleCount; i++) {
           const angle = (i / particleCount) * Math.PI * 2;
-          const velocity = Math.random() * 3 + 2;
-          const distance = Math.random() * 30 + 10;
-          
+          const velocity = Math.random() * 1.2 + 0.3;
+          const distance = Math.random() * 8 + 2;
           particles.current.push({
             x: x + Math.cos(angle) * distance,
             y: y + Math.sin(angle) * distance,
-            size: Math.random() * 2 + 1,
-            opacity: 0.8,
-            color: '255, 215, 100' // Golden explosion color
+            size: Math.random() * 1 + 0.4,
+            opacity: 0.7,
+            color: '162, 89, 255' // violet
           });
         }
-        
-        // Create central burst particles
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 2; i++) {
           particles.current.push({
-            x: x + (Math.random() - 0.5) * 20,
-            y: y + (Math.random() - 0.5) * 20,
-            size: Math.random() * 3 + 1.5,
-            opacity: 1,
-            color: '120, 180, 255' // Blue center color
+            x: x + (Math.random() - 0.5) * 8,
+            y: y + (Math.random() - 0.5) * 8,
+            size: Math.random() * 1.5 + 0.7,
+            opacity: 0.8,
+            color: '108, 43, 215' // violet foncé
           });
         }
       };
@@ -433,10 +512,10 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '100%',
-          height: '100%',
+          width: `${dimensions.width}px`,
+          height: `${dimensions.height}px`,
           zIndex: 0,
-          borderRadius: '1rem',
+          borderRadius: 0,
           pointerEvents: 'auto',
           background: 'transparent',
           transition: 'background 0.6s cubic-bezier(0.25,0.46,0.45,0.94)',
@@ -554,31 +633,39 @@ const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section 
-      id="accueil" 
+    <section
+      id="accueil"
       ref={containerRef}
-      className="text-center py-12 md:py-16 lg:py-20 min-h-screen flex flex-col justify-center scroll-mt-20 relative overflow-hidden rounded-2xl"
+      className="w-full h-screen min-h-screen flex flex-col justify-center items-center scroll-mt-0 relative overflow-hidden"
       aria-labelledby="hero-title"
+      style={{
+        margin: 0,
+        padding: 0,
+        borderRadius: 0,
+        boxSizing: 'border-box',
+        background: 'none',
+      }}
     >
       <GalaxyBackground hoveredCardRects={[]} containerRef={containerRef} />
-      <div className="relative z-10">
+      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center"
+        style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>
         <AnimatedDiv animation="animate-fade-in-up" delay={0}>
-          <h1 id="hero-title" className="font-headline text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+          <h1 id="hero-title" className="font-headline text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg" style={{ pointerEvents: 'none' }}>
             Matthéo Termine
           </h1>
         </AnimatedDiv>
         <AnimatedDiv animation="animate-fade-in-up" delay={200}>
-          <p className="font-headline text-xl md:text-2xl text-white/90 mb-6 max-w-3xl mx-auto drop-shadow-md" role="doc-subtitle">
+          <p className="font-headline text-xl md:text-2xl text-white/90 mb-6 max-w-3xl mx-auto drop-shadow-md" role="doc-subtitle" style={{ pointerEvents: 'none' }}>
             Intégrateur Web Freelance
           </p>
         </AnimatedDiv>
         <AnimatedDiv animation="animate-fade-in-up" delay={400}>
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8 drop-shadow-md">
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8 drop-shadow-md" style={{ pointerEvents: 'none' }}>
             Je réalise des sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.
           </p>
         </AnimatedDiv>
         <AnimatedDiv animation="animate-fade-in-up" delay={600}>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center" style={{ pointerEvents: 'auto' }}>
             <Button asChild size="lg" className="shadow-lg">
               <Link href="#projets" aria-label="Voir mes projets">Mes projets</Link>
             </Button>
