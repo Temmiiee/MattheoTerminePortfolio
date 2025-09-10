@@ -111,3 +111,4 @@ firestore-debug.log
 
 # Backup files
 *.backup
+eslint-report.json
