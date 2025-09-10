@@ -18,7 +18,10 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+// Only apply Sentry configuration if auth token is available
+const hasSentryAuth = process.env.SENTRY_AUTH_TOKEN || process.env.SENTRY_DSN;
+
+export default hasSentryAuth ? withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
@@ -49,4 +52,4 @@ export default withSentryConfig(nextConfig, {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
-});
+}) : nextConfig;

@@ -8,6 +8,7 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/lib/projects";
 import Image from "next/image";
 import { ContactForm } from "@/components/ContactForm";
+import { StructuredData } from "@/components/StructuredData";
 import React, { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { WordpressIcon } from "@/components/icons/WordpressIcon";
@@ -516,6 +517,7 @@ const ProcessSection = () => {
 export default function Home() {
   return (
     <div className="space-y-4 md:space-y-6">
+      <StructuredData />
       <section id="accueil" className="text-center py-12 md:py-16 lg:py-20 min-h-[80vh] flex flex-col justify-center scroll-mt-20" aria-labelledby="hero-title">
         <AnimatedDiv animation="animate-fade-in-up" delay={0}>
           <h1 id="hero-title" className="font-headline text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-4">
@@ -676,7 +678,7 @@ export default function Home() {
                   Je transforme des idées créatives en sites web fonctionnels, que ce soit en écrivant du code sur-mesure ou en personnalisant des solutions WordPress. Mon objectif est de construire des plateformes qui répondent aux besoins de mes clients et qui offrent une expérience utilisateur fluide.
                 </p>
                 <p className="text-center lg:text-left">
-                  Je crois fermement en un web ouvert et accessible. C'est pourquoi j'accorde une importance capitale au respect des standards, à la performance et aux normes d'accessibilité (RGAA). Un bon site, selon moi, est un site rapide, facile à utiliser et qui ne laisse personne de côté.
+                  Je crois fermement en un web ouvert et accessible. C'est pourquoi j'accorde une importance capitale au respect des standards, à la performance et aux normes d&apos;accessibilité (RGAA). Un bon site, selon moi, est un site rapide, facile à utiliser et qui ne laisse personne de côté.
                 </p>
                 <p className="text-center lg:text-left">
                   Constamment en veille technologique, j'aime explorer de nouveaux outils et de nouvelles méthodes pour améliorer la qualité de mon travail et proposer des solutions toujours plus innovantes.

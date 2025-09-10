@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { PT_Sans, Space_Grotesk } from 'next/font/google';
+// Commented out Google Fonts for build environment compatibility
+// import { PT_Sans, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/Header';
@@ -7,23 +8,56 @@ import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import Link from 'next/link';
 
+// Fallback font configuration for build environment
+const ptSans = {
+  variable: '--font-body',
+  style: { fontFamily: 'system-ui, sans-serif' }
+};
+
+const spaceGrotesk = {
+  variable: '--font-space-grotesk', 
+  style: { fontFamily: 'system-ui, sans-serif' }
+};
+
+// Uncomment below and comment out the fallback fonts above when Google Fonts connectivity is available:
+/*
 const ptSans = PT_Sans({
   subsets: ['latin'],
   weight: ['400', '700'],
   variable: '--font-body',
+  display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-space-grotesk',
+  display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
 });
+*/
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://your-domain.com'), // Replace with your actual domain
   title: {
     default: 'Intégrateur Web Freelance – Matthéo Termine',
     template: '%s | Matthéo Termine – Intégrateur Web Freelance',
   },
   description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+  keywords: [
+    'intégrateur web',
+    'développeur freelance',
+    'création site web',
+    'accessibilité RGAA',
+    'SEO',
+    'Next.js',
+    'React',
+    'Matthéo Termine'
+  ],
+  authors: [{ name: 'Matthéo Termine' }],
+  creator: 'Matthéo Termine',
+  publisher: 'Matthéo Termine',
+  category: 'Développement Web',
   icons: {
     icon: '/icon',
     apple: '/apple-icon',
@@ -35,6 +69,20 @@ export const metadata: Metadata = {
     siteName: 'Portfolio Matthéo Termine',
     locale: 'fr_FR',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.jpg', // You'll need to add this image
+        width: 1200,
+        height: 630,
+        alt: 'Matthéo Termine - Intégrateur Web Freelance',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Intégrateur Web Freelance – Matthéo Termine',
+    description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+    images: ['/og-image.jpg'], // You'll need to add this image
   },
   robots: {
     index: true,
@@ -46,6 +94,9 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  },
+  verification: {
+    google: 'your-google-verification-code', // Replace with your actual verification code
   },
 };
 
