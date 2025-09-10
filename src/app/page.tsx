@@ -380,13 +380,47 @@ const GalaxyBackground = ({ hoveredCardRects = [], containerRef }: { hoveredCard
         setIsHover(false);
         setMousePos(null);
       };
+      const handleClick = (e: MouseEvent) => {
+        if (!containerRectRef.current) return;
+        const x = e.clientX - containerRectRef.current.left;
+        const y = e.clientY - containerRectRef.current.top;
+        
+        // Create explosion effect with multiple particles
+        const particleCount = 15;
+        for (let i = 0; i < particleCount; i++) {
+          const angle = (i / particleCount) * Math.PI * 2;
+          const velocity = Math.random() * 3 + 2;
+          const distance = Math.random() * 30 + 10;
+          
+          particles.current.push({
+            x: x + Math.cos(angle) * distance,
+            y: y + Math.sin(angle) * distance,
+            size: Math.random() * 2 + 1,
+            opacity: 0.8,
+            color: '255, 215, 100' // Golden explosion color
+          });
+        }
+        
+        // Create central burst particles
+        for (let i = 0; i < 8; i++) {
+          particles.current.push({
+            x: x + (Math.random() - 0.5) * 20,
+            y: y + (Math.random() - 0.5) * 20,
+            size: Math.random() * 3 + 1.5,
+            opacity: 1,
+            color: '120, 180, 255' // Blue center color
+          });
+        }
+      };
       canvas.addEventListener('mousemove', handleMouseMove);
       canvas.addEventListener('mouseenter', handleMouseEnter);
       canvas.addEventListener('mouseleave', handleMouseLeave);
+      canvas.addEventListener('click', handleClick);
       return () => {
         canvas.removeEventListener('mousemove', handleMouseMove);
         canvas.removeEventListener('mouseenter', handleMouseEnter);
         canvas.removeEventListener('mouseleave', handleMouseLeave);
+        canvas.removeEventListener('click', handleClick);
       };
     }, [isHover]);
 
@@ -523,7 +557,7 @@ const HeroSection = () => {
     <section 
       id="accueil" 
       ref={containerRef}
-      className="text-center py-12 md:py-16 lg:py-20 min-h-[80vh] flex flex-col justify-center scroll-mt-20 relative overflow-hidden rounded-2xl"
+      className="text-center py-12 md:py-16 lg:py-20 min-h-screen flex flex-col justify-center scroll-mt-20 relative overflow-hidden rounded-2xl"
       aria-labelledby="hero-title"
     >
       <GalaxyBackground hoveredCardRects={[]} containerRef={containerRef} />
