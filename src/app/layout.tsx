@@ -118,7 +118,7 @@ export default function RootLayout({
       <body className="font-body antialiased flex flex-col min-h-screen">
         <Link href="#main-content" className="skip-link">Aller au contenu principal</Link>
         <Header />
-        <main id="main-content" className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <main id="main-content" className="flex-grow">
           {children}
         </main>
         <Footer />

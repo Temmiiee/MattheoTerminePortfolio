@@ -982,11 +982,12 @@ const HeroSection = () => {
 
 export default function Home() {
   return (
-    <div className="space-y-4 md:space-y-6">
+    <div>
       <StructuredData />
       <HeroSection />
 
-      <AnimatedSection id="services" className="py-12 md:py-16 lg:py-20 min-h-[85vh] flex flex-col justify-center" aria-labelledby="services-title">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-4 md:space-y-6">
+        <AnimatedSection id="services" className="py-12 md:py-16 lg:py-20 min-h-[85vh] flex flex-col justify-center" aria-labelledby="services-title">
         <AnimatedDiv animation="animate-fade-in-up" delay={0}>
           <header className="text-center mb-16">
             <h2 id="services-title" className="font-headline text-3xl md:text-4xl font-bold">Mes services</h2>
@@ -1197,6 +1198,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }
