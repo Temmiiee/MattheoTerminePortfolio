@@ -24,24 +24,18 @@ import { useSearchParams } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
 
 const formSchema = z.object({
-  siteType: z.enum(["vitrine", "ecommerce", "webapp"], {
-    required_error: "Veuillez sélectionner un type de site.",
-  }),
-  designType: z.enum(["template", "custom"], {
-      required_error: "Veuillez sélectionner un type de design.",
-  }),
+  siteType: z.enum(["vitrine", "ecommerce", "webapp"], "Veuillez sélectionner un type de site."),
+  designType: z.enum(["template", "custom"], "Veuillez sélectionner un type de design."),
   // Suppression du champ wordpress
   features: z.array(z.string()).optional(),
-  maintenance: z.boolean().default(false).optional(),
+  maintenance: z.boolean().default(false),
   projectDescription: z.string().optional(),
   files: z.any().optional(),
   name: z.string().min(1, 'Veuillez indiquer votre nom.'),
   email: z.string().email('Veuillez indiquer un email valide.').min(1, 'Veuillez indiquer votre email.'),
   phone: z.string().optional(),
-  company: z.string().optional().default(''),
-  technology: z.enum(["react", "vue", "nextjs", "twig", "wordpress", "no-preference"], {
-    required_error: "Veuillez sélectionner une technologie.",
-  }),
+  company: z.string().default(''),
+  technology: z.enum(["react", "vue", "nextjs", "twig", "wordpress", "no-preference"], "Veuillez sélectionner une technologie."),
   // Champ pages supprimé
 });
 
@@ -120,10 +114,10 @@ export function QuoteCalculator() {
     files: undefined,
   };
 
-  const form = useForm<FormValues>({
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues,
-  });
+  }) as ReturnType<typeof useForm<FormValues>>;
 
   const watchedValues = form.watch();
 
