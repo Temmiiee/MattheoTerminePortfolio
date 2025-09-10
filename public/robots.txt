@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://your-domain.com/sitemap.xml
+
+# Block sensitive pages
+Disallow: /admin/
+Disallow: /api/
+Disallow: /devis/signature/
+Disallow: /_next/
+Disallow: /*.json$
+
+# Allow specific crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Crawl delay for general bots
+Crawl-delay: 1

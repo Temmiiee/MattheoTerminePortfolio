@@ -38,11 +38,26 @@ const spaceGrotesk = Space_Grotesk({
 */
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://your-domain.com'), // Replace with your actual domain
   title: {
     default: 'Intégrateur Web Freelance – Matthéo Termine',
     template: '%s | Matthéo Termine – Intégrateur Web Freelance',
   },
   description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+  keywords: [
+    'intégrateur web',
+    'développeur freelance',
+    'création site web',
+    'accessibilité RGAA',
+    'SEO',
+    'Next.js',
+    'React',
+    'Matthéo Termine'
+  ],
+  authors: [{ name: 'Matthéo Termine' }],
+  creator: 'Matthéo Termine',
+  publisher: 'Matthéo Termine',
+  category: 'Développement Web',
   icons: {
     icon: '/icon',
     apple: '/apple-icon',
@@ -54,6 +69,20 @@ export const metadata: Metadata = {
     siteName: 'Portfolio Matthéo Termine',
     locale: 'fr_FR',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.jpg', // You'll need to add this image
+        width: 1200,
+        height: 630,
+        alt: 'Matthéo Termine - Intégrateur Web Freelance',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Intégrateur Web Freelance – Matthéo Termine',
+    description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+    images: ['/og-image.jpg'], // You'll need to add this image
   },
   robots: {
     index: true,
@@ -65,6 +94,9 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  },
+  verification: {
+    google: 'your-google-verification-code', // Replace with your actual verification code
   },
 };
 

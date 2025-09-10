@@ -8,6 +8,7 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/lib/projects";
 import Image from "next/image";
 import { ContactForm } from "@/components/ContactForm";
+import { StructuredData } from "@/components/StructuredData";
 import React, { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { WordpressIcon } from "@/components/icons/WordpressIcon";
@@ -516,6 +517,7 @@ const ProcessSection = () => {
 export default function Home() {
   return (
     <div className="space-y-4 md:space-y-6">
+      <StructuredData />
       <section id="accueil" className="text-center py-12 md:py-16 lg:py-20 min-h-[80vh] flex flex-col justify-center scroll-mt-20" aria-labelledby="hero-title">
         <AnimatedDiv animation="animate-fade-in-up" delay={0}>
           <h1 id="hero-title" className="font-headline text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-4">
