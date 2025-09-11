@@ -1017,7 +1017,7 @@ export default function Home() {
 
       <AnimatedSection id="tarifs" aria-labelledby="tarifs-title">
           <header className="text-center mb-12">
-          <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold">Mes Tarifs</h2>
+          <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold text-primary">Mes Tarifs</h2>
           <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
           </header>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto" role="list" aria-label="Liste des offres tarifaires">

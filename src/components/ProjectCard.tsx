@@ -18,6 +18,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           src={project.imageUrl}
           alt={`Image du projet ${project.title}`}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           data-ai-hint={project.dataAiHint}
           className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
         />
