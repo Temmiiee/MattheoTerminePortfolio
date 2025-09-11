@@ -38,30 +38,47 @@ const spaceGrotesk = Space_Grotesk({
 */
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mattheo-termine.fr'), // Updated with proper domain
+  metadataBase: new URL('https://mattheo-termine.fr'),
   title: {
-    default: 'Intégrateur Web Freelance – Matthéo Termine',
+    default: 'Matthéo Termine | Intégrateur Web Freelance spécialisé en Accessibilité RGAA',
     template: '%s | Matthéo Termine – Intégrateur Web Freelance',
   },
-  description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+  description: 'Matthéo Termine, intégrateur web freelance expert en création de sites modernes, accessibles (normes RGAA) et optimisés SEO. Services : sites vitrines, applications web, WordPress. Devis gratuit.',
   keywords: [
-    'intégrateur web',
-    'développeur freelance',
-    'création site web',
+    'intégrateur web freelance',
+    'développeur web France',
+    'création site web accessible',
     'accessibilité RGAA',
-    'SEO',
-    'Next.js',
-    'React',
+    'optimisation SEO',
+    'sites web performants',
+    'Next.js React développeur',
+    'WordPress sur mesure',
     'Matthéo Termine',
-    'développement web France',
-    'site web responsive',
-    'optimisation performance web'
+    'développement web responsif',
+    'audit accessibilité',
+    'conformité WCAG',
+    'intégration web moderne',
+    'freelance développeur',
+    'sites web rapides'
   ],
   authors: [{ name: 'Matthéo Termine', url: 'https://mattheo-termine.fr' }],
   creator: 'Matthéo Termine',
   publisher: 'Matthéo Termine',
   category: 'Développement Web',
-  classification: 'Portfolio professionnel',
+  classification: 'Portfolio professionnel - Services de développement web',
+  applicationName: 'Portfolio Matthéo Termine',
+  referrer: 'origin-when-cross-origin',
+  colorScheme: 'dark light',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#a259ff' },
+    { media: '(prefers-color-scheme: dark)', color: '#a259ff' }
+  ],
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
   icons: {
     icon: '/icon',
     apple: '/apple-icon',
@@ -69,10 +86,10 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.webmanifest',
   openGraph: {
-    title: 'Intégrateur Web Freelance – Matthéo Termine',
-    description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+    title: 'Matthéo Termine | Intégrateur Web Freelance spécialisé en Accessibilité RGAA',
+    description: 'Expert en création de sites web modernes, accessibles (normes RGAA) et optimisés SEO. Services professionnels : sites vitrines, applications web, WordPress sur mesure.',
     url: 'https://mattheo-termine.fr',
-    siteName: 'Portfolio Matthéo Termine',
+    siteName: 'Portfolio Matthéo Termine - Intégrateur Web Freelance',
     locale: 'fr_FR',
     type: 'website',
     images: [
@@ -80,24 +97,27 @@ export const metadata: Metadata = {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'Matthéo Termine - Intégrateur Web Freelance spécialisé en accessibilité et SEO',
+        alt: 'Matthéo Termine - Intégrateur Web Freelance spécialisé en accessibilité RGAA et optimisation SEO',
         type: 'image/svg+xml',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Intégrateur Web Freelance – Matthéo Termine',
-    description: 'Portfolio de Matthéo Termine, intégrateur web freelance. Création de sites web modernes, accessibles (normes RGAA), rapides et optimisés SEO.',
+    title: 'Matthéo Termine | Intégrateur Web Freelance RGAA',
+    description: 'Expert en sites web accessibles et performants. Spécialiste Next.js, React, WordPress. Conformité RGAA et optimisation SEO garanties.',
     images: ['/og-image.svg'],
-    creator: '@mattheo_termine', // Add actual Twitter handle if available
+    creator: '@mattheo_termine',
+    site: '@mattheo_termine',
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
@@ -105,9 +125,20 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://mattheo-termine.fr',
+    languages: {
+      'fr-FR': 'https://mattheo-termine.fr',
+    },
   },
   verification: {
-    google: 'your-google-verification-code', // Replace with actual verification code when available
+    google: 'your-google-verification-code', // Replace with actual verification code
+    yandex: 'your-yandex-verification-code', // Add if needed
+    yahoo: 'your-yahoo-verification-code', // Add if needed
+  },
+  other: {
+    'msapplication-TileColor': '#a259ff',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'format-detection': 'telephone=no',
   },
 };
 
@@ -119,10 +150,15 @@ export default function RootLayout({
   return (
     <html lang="fr" className={cn(ptSans.variable, spaceGrotesk.variable, 'scroll-smooth')}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#a259ff" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+        <meta name="theme-color" content="#a259ff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#a259ff" media="(prefers-color-scheme: dark)" />
         <meta name="color-scheme" content="dark light" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="msapplication-TileColor" content="#a259ff" />
         <link rel="canonical" href="https://mattheo-termine.fr" />
         <style dangerouslySetInnerHTML={{ __html: `
           :root {
@@ -133,8 +169,9 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
         <Link href="#main-content" className="skip-link">Aller au contenu principal</Link>
+        <Link href="#navigation" className="skip-link">Aller à la navigation</Link>
         <Header />
-        <main id="main-content" className="flex-grow">
+        <main id="main-content" className="flex-grow" role="main" aria-label="Contenu principal">
           {children}
         </main>
         <Footer />

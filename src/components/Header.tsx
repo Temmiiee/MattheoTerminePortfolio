@@ -127,7 +127,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav id="navigation" className="hidden md:flex items-center gap-6" role="navigation" aria-label="Navigation principale">
             {navLinks.map((link) => (
               <NavLink key={link.href} {...link} />
             ))}
@@ -137,7 +137,7 @@ export function Header() {
           <div className="md:hidden">
             <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative">
+                <Button variant="ghost" size="icon" className="relative" aria-label="Ouvrir le menu de navigation" aria-expanded={isSheetOpen} aria-controls="mobile-menu">
                   <div className={cn(
                     "transition-transform duration-300",
                     isSheetOpen ? "rotate-90" : "rotate-0"
@@ -161,7 +161,7 @@ export function Header() {
                   </div>
 
                   {/* Navigation */}
-                  <nav className="flex flex-col gap-2 pt-8 flex-1">
+                  <nav id="mobile-menu" className="flex flex-col gap-2 pt-8 flex-1" role="navigation" aria-label="Navigation mobile">
                     {navLinks.map((link, index) => (
                       <div
                         key={link.href}

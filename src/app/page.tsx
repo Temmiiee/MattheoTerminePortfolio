@@ -974,8 +974,8 @@ export default function Home() {
         <AnimatedSection id="services" className="py-12 md:py-16 lg:py-20 min-h-[85vh] flex flex-col justify-center" aria-labelledby="services-title">
         <AnimatedDiv animation="animate-fade-in-up" delay={0}>
           <header className="text-center mb-16">
-            <h2 id="services-title" className="font-headline text-3xl md:text-4xl font-bold">Mes services</h2>
-            <p className="text-lg text-muted-foreground mt-2">Ce que je peux faire pour vous.</p>
+            <h2 id="services-title" className="font-headline text-3xl md:text-4xl font-bold text-foreground">Mes services</h2>
+            <p className="text-lg text-rgaa-secondary mt-2">Ce que je peux faire pour vous.</p>
           </header>
         </AnimatedDiv>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" role="list" aria-label="Liste des services proposés">
@@ -1001,8 +1001,8 @@ export default function Home() {
       
       <AnimatedSection id="projets" aria-labelledby="projects-title">
         <header className="text-center mb-12">
-          <h2 id="projects-title" className="font-headline text-3xl md:text-4xl font-bold">Mes projets</h2>
-          <p className="text-lg text-muted-foreground mt-2">Quelques exemples de mon travail.</p>
+          <h2 id="projects-title" className="font-headline text-3xl md:text-4xl font-bold text-foreground">Mes projets</h2>
+          <p className="text-lg text-rgaa-secondary mt-2">Quelques exemples de mon travail.</p>
         </header>
         <div className="grid md:grid-cols-2 gap-8" role="list" aria-label="Liste des projets réalisés">
           {projects.map((project, index) => (
@@ -1018,7 +1018,7 @@ export default function Home() {
       <AnimatedSection id="tarifs" aria-labelledby="tarifs-title">
           <header className="text-center mb-12">
           <h2 id="tarifs-title" className="font-headline text-3xl md:text-4xl font-bold text-primary">Mes Tarifs</h2>
-          <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
+          <p className="text-lg text-rgaa-secondary mt-2 max-w-2xl mx-auto">Des offres claires et adaptées à vos besoins. Pour une estimation plus précise, utilisez le calculateur de devis.</p>
           </header>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto" role="list" aria-label="Liste des offres tarifaires">
               {pricingPlans.map((plan, index) => (
@@ -1054,7 +1054,7 @@ export default function Home() {
                                 {plan.features.map((feature) => (
                                     <li key={feature} className="flex items-start">
                                         <CheckCircle2 className="h-5 w-5 text-accent mr-2.5 mt-0.5 shrink-0" aria-hidden="true" />
-                                        <span className="text-foreground/90">{feature}</span>
+                                        <span className="text-rgaa-primary">{feature}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -1130,7 +1130,7 @@ export default function Home() {
           <header className="text-center mb-12 md:mb-16">
             <h2 id="contact-title" className="font-headline text-3xl md:text-4xl font-bold text-primary mb-4">Contactez-moi</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-6"></div>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-rgaa-secondary max-w-2xl mx-auto leading-relaxed">
               Une question, un projet ? N&apos;hésitez pas à me contacter. Je vous répondrai dans les plus brefs délais.
             </p>
           </header>
@@ -1146,7 +1146,7 @@ export default function Home() {
               <div className="space-y-8">
                 <div className="text-center lg:text-left">
                   <h3 id="other-contact-title" className="font-headline text-2xl font-bold mb-4">Autres moyens de contact</h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-rgaa-secondary leading-relaxed">
                     Si vous préférez, vous pouvez aussi me joindre directement par email ou via WhatsApp.
                   </p>
                 </div>

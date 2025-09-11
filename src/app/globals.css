@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5, h6 {
     --secondary-foreground: 222 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 216 12% 35%; /* Improved contrast ratio */
+    --muted-foreground: 215 25% 27%; /* Enhanced contrast ratio for WCAG AA compliance */
 
     --accent: 258 89% 76%; /* #b866ff - lighter violet for accent */
     --accent-foreground: 0 0% 100%;
@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5, h6 {
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215.4 16.3% 65%; /* Improved contrast ratio for dark mode */
+    --muted-foreground: 210 40% 85%; /* Enhanced contrast ratio for dark mode WCAG AA compliance */
 
     --accent: 258 89% 76%; /* #b866ff */
     --accent-foreground: 0 0% 100%;
@@ -182,6 +182,8 @@ h1, h2, h3, h4, h5, h6 {
   /* Enhanced focus styles for better accessibility - unified approach */
   *:focus-visible {
     @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+    /* Enhanced focus shadow for better visibility */
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary)), 0 0 8px hsla(258, 89%, 66%, 0.3);
   }
 
   button:focus-visible,
@@ -190,7 +192,7 @@ h1, h2, h3, h4, h5, h6 {
   textarea:focus-visible,
   select:focus-visible {
     @apply ring-2 ring-primary ring-offset-2 ring-offset-background;
-    box-shadow: 0 0 0 4px hsla(258, 89%, 66%, 0.2);
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary)), 0 0 8px hsla(258, 89%, 66%, 0.4);
   }
 
   /* Ensure sufficient contrast for interactive elements */
@@ -375,25 +377,39 @@ h1, h2, h3, h4, h5, h6 {
     rgba(0, 0, 0, 0.4);
 }
 
-/* High contrast text for different backgrounds */
-.text-on-dark-bg {
-  color: rgba(255, 255, 255, 0.95);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+/* Enhanced text contrast utilities for better readability */
+.text-high-contrast {
+  color: hsl(210, 20%, 15%); /* Very dark for maximum readability on light backgrounds */
 }
 
-.text-on-light-bg {
-  color: rgba(15, 23, 42, 0.85); /* slate-900 with opacity for better contrast */
+.text-high-contrast-dark {
+  color: hsl(210, 40%, 95%); /* Very light for maximum readability on dark backgrounds */
 }
 
-/* Ensure minimum contrast ratios for RGAA compliance */
-.text-contrast-aa {
-  /* For normal text: minimum 4.5:1 contrast ratio */
-  color: hsl(222, 84%, 5%); /* Very dark blue-black */
+/* RGAA compliant text colors for different contexts */
+.text-rgaa-primary {
+  color: hsl(215, 25%, 17%); /* 7:1 contrast ratio for primary text */
 }
 
-.text-contrast-aa-large {
-  /* For large text: minimum 3:1 contrast ratio */
-  color: hsl(222, 47%, 11%); /* Dark blue-gray */
+.text-rgaa-secondary {
+  color: hsl(215, 20%, 25%); /* 5:1 contrast ratio for secondary text */
+}
+
+.text-rgaa-muted {
+  color: hsl(215, 15%, 35%); /* 4.5:1 contrast ratio for muted text */
+}
+
+/* Dark mode variants */
+.dark .text-rgaa-primary {
+  color: hsl(210, 40%, 90%);
+}
+
+.dark .text-rgaa-secondary {
+  color: hsl(210, 35%, 80%);
+}
+
+.dark .text-rgaa-muted {
+  color: hsl(210, 30%, 70%);
 }
 
 /* Ensure interactive elements have sufficient contrast and smooth transitions */
