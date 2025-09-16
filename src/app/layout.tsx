@@ -68,17 +68,6 @@ export const metadata: Metadata = {
   classification: 'Portfolio professionnel - Services de développement web',
   applicationName: 'Portfolio Matthéo Termine',
   referrer: 'origin-when-cross-origin',
-  colorScheme: 'dark light',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#a259ff' },
-    { media: '(prefers-color-scheme: dark)', color: '#a259ff' }
-  ],
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   icons: {
     icon: '/icon',
     apple: '/apple-icon',
@@ -140,6 +129,13 @@ export const metadata: Metadata = {
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'format-detection': 'telephone=no',
   },
+};
+
+export const viewport = {
+  colorScheme: 'dark',
+  themeColor: '#0a0a1a',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
