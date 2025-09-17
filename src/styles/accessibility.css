@@ -1,0 +1,98 @@
+/* =============================================================================
+   ACCESSIBILITY & FOCUS STYLES
+   ============================================================================= */
+
+/* Enhanced focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary)), 0 0 8px hsla(258, 89%, 66%, 0.3);
+  --tw-ring-color: hsl(var(--primary));
+  --tw-ring-offset-color: hsl(var(--background));
+  --tw-ring-offset-width: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary)), 0 0 8px hsla(258, 89%, 66%, 0.4);
+  --tw-ring-color: hsl(var(--primary));
+  --tw-ring-offset-color: hsl(var(--background));
+  --tw-ring-offset-width: 2px;
+}
+
+  /* Skip link for screen readers */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: -999;
+  }
+
+  .skip-link:focus,
+  .skip-link:active {
+    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--primary));
+    left: auto;
+    top: auto;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    z-index: 9999;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable all custom animations */
+  .hero-title-enhanced,
+  .hero-title-shimmer,
+  .service-card-featured,
+  .floating-particle,
+  .typing-effect {
+    animation: none !important;
+  }
+
+  /* Ensure all elements are visible */
+  .hero-title span,
+  .animate-fade-in-up,
+  .animate-fade-in-down,
+  .animate-fade-in-left,
+  .animate-fade-in-right,
+  .animate-stagger-fade-in {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Remove typing effect styling */
+  .typing-effect {
+    width: auto !important;
+    border-right: none !important;
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+}

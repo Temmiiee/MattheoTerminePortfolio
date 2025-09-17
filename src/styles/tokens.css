@@ -1,0 +1,119 @@
+/* =============================================================================
+   DESIGN TOKENS - CSS CUSTOM PROPERTIES
+   ============================================================================= */
+
+:root {
+    /* Light mode colors - optimized for contrast */
+    --background: 0 0% 100%;
+    --foreground: 222 84% 4.9%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 222 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 4.9%;
+
+    --primary: 258 89% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 84% 15%;
+
+    --muted: 210 40% 94%;
+    --muted-foreground: 215 25% 20%;
+
+    --accent: 258 89% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 31% 85%;
+    --input: 214 31% 90%;
+    --ring: 258 89% 50%;
+
+    /* Chart colors */
+    --chart-1: 12 76% 45%;
+    --chart-2: 173 58% 30%;
+    --chart-3: 197 37% 20%;
+    --chart-4: 43 74% 50%;
+    --chart-5: 27 87% 55%;
+
+    /* Pricing card colors */
+    --pricing-basic: 142 71% 45%;
+    --pricing-basic-foreground: 0 0% 100%;
+    --pricing-premium: 258 89% 50%;
+    --pricing-premium-foreground: 0 0% 100%;
+    --pricing-pro: 217 91% 60%;
+    --pricing-pro-foreground: 0 0% 100%;
+    --pricing-enterprise: 25 95% 53%;
+    --pricing-enterprise-foreground: 0 0% 100%;
+
+    --radius: 0.5rem;
+}
+
+.dark {
+    /* Dark mode colors - optimized for contrast */
+    --background: 222 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 84% 6%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 84% 5%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 258 89% 70%;
+    --primary-foreground: 222 84% 4.9%;
+
+    --secondary: 217 33% 20%;
+    --secondary-foreground: 210 40% 95%;
+
+    --muted: 217 33% 18%;
+    --muted-foreground: 210 40% 80%;
+
+    --accent: 258 89% 75%;
+    --accent-foreground: 222 84% 4.9%;
+
+    --destructive: 0 63% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 217 33% 25%;
+    --input: 217 33% 22%;
+    --ring: 258 89% 70%;
+
+    /* Chart colors - dark mode */
+    --chart-1: 220 70% 60%;
+    --chart-2: 160 60% 55%;
+    --chart-3: 30 80% 65%;
+    --chart-4: 280 65% 70%;
+    --chart-5: 340 75% 65%;
+
+    /* Pricing card colors - dark mode */
+    --pricing-basic: 142 71% 50%;
+    --pricing-basic-foreground: 0 0% 100%;
+    --pricing-premium: 258 89% 70%;
+    --pricing-premium-foreground: 222 84% 4.9%;
+    --pricing-pro: 217 91% 65%;
+    --pricing-pro-foreground: 0 0% 100%;
+    --pricing-enterprise: 25 95% 58%;
+    --pricing-enterprise-foreground: 0 0% 100%;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --primary: 258 89% 40%;
+    --ring: 258 89% 40%;
+    --foreground: 0 0% 0%;
+    --muted-foreground: 0 0% 15%;
+  }
+
+  .dark {
+    --primary: 258 89% 80%;
+    --ring: 258 89% 80%;
+    --foreground: 0 0% 100%;
+    --muted-foreground: 0 0% 90%;
+  }
+}

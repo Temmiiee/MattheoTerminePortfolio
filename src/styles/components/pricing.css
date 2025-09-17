@@ -1,0 +1,60 @@
+/* =============================================================================
+   PRICING CARDS COMPONENTS
+   ============================================================================= */
+
+/* Pricing card color utilities */
+.bg-pricing-basic {
+  background-color: hsl(var(--pricing-basic));
+}
+
+.text-pricing-basic-foreground {
+  color: hsl(var(--pricing-basic-foreground));
+}
+
+.bg-pricing-premium {
+  background-color: hsl(var(--pricing-premium));
+}
+
+.text-pricing-premium-foreground {
+  color: hsl(var(--pricing-premium-foreground));
+}
+
+.bg-pricing-pro {
+  background-color: hsl(var(--pricing-pro));
+}
+
+.text-pricing-pro-foreground {
+  color: hsl(var(--pricing-pro-foreground));
+}
+
+.bg-pricing-enterprise {
+  background-color: hsl(var(--pricing-enterprise));
+}
+
+.text-pricing-enterprise-foreground {
+  color: hsl(var(--pricing-enterprise-foreground));
+}
+
+/* Pricing card layout */
+.pricing-card-header {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.pricing-card-title {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.pricing-card-price {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.pricing-card-description {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}

@@ -1,0 +1,53 @@
+/* =============================================================================
+   BASE STYLES & TYPOGRAPHY
+   ============================================================================= */
+
+* {
+  border-color: hsl(var(--border));
+}
+
+  /* Prevent white flash on load */
+  html {
+    background-color: #0a0a1a;
+  }
+
+  html:not(.dark) {
+    background-color: #ffffff;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-body), sans-serif;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    animation: fadeInBody 0.3s ease-out forwards;
+  }
+
+  /* Galaxy background for dark mode only */
+  .dark body {
+    background: linear-gradient(
+      to bottom,
+      #0a0a1a 0%,
+      #0f0f23 30%,
+      #1a1a2e 60%,
+      #0d1117 100%
+    );
+  }
+
+  /* Typography */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-headline), sans-serif;
+  }
+
+  @keyframes fadeInBody {
+    to {
+      opacity: 1;
+    }
+  }

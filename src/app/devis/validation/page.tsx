@@ -52,15 +52,33 @@ function DevisValidationContent() {
     if (!devisRef.current || !devisData) return;
     try {
       const pdf = new jsPDF('p', 'mm', 'a4');
+      
+      // Configuration optimisée pour le PDF avec taille correcte
       await pdf.html(devisRef.current, {
-        margin: [10, 10, 10, 10],
-        autoPaging: true,
+        margin: [8, 8, 8, 8],
+        autoPaging: 'text',
         html2canvas: {
-          scale: 1.5,
+          scale: 0.6,
           useCORS: true,
-          backgroundColor: '#fff',
+          backgroundColor: '#ffffff',
+          letterRendering: true,
+          allowTaint: false,
+          removeContainer: true,
+          logging: false,
+          height: 1122, // Hauteur A4 en pixels (794 * 1.414)
+          width: 794,   // Largeur A4 en pixels
         },
+        width: 194, // Largeur en mm pour A4 (210 - marges)
+        windowWidth: 794,
+        x: 0,
+        y: 0,
+        callback: function(pdf) {
+          // Ajuster la taille si nécessaire
+          const pageCount = pdf.internal.getNumberOfPages();
+          console.log(`PDF généré avec ${pageCount} page(s)`);
+        }
       });
+      
       pdf.save(`Devis_${devisNumber}_${devisData.clientInfo.name.replace(/\s+/g, '_')}.pdf`);
     } catch (error) {
       console.error('Erreur lors de la génération du PDF:', error);
@@ -72,16 +90,26 @@ function DevisValidationContent() {
     if (!devisData || !devisRef.current) return;
     setIsSubmitting(true);
     try {
-      // Générer le PDF du devis
+      // Générer le PDF du devis avec configuration optimisée
       const pdf = new jsPDF('p', 'mm', 'a4');
       await pdf.html(devisRef.current, {
-        margin: [10, 10, 10, 10],
-        autoPaging: true,
+        margin: [8, 8, 8, 8],
+        autoPaging: 'text',
         html2canvas: {
-          scale: 1.5,
+          scale: 0.6,
           useCORS: true,
-          backgroundColor: '#fff',
+          backgroundColor: '#ffffff',
+          letterRendering: true,
+          allowTaint: false,
+          removeContainer: true,
+          logging: false,
+          height: 1122,
+          width: 794,
         },
+        width: 194,
+        windowWidth: 794,
+        x: 0,
+        y: 0,
       });
       const pdfBlob = pdf.output('blob');
       // Envoyer le PDF par email au prestataire
@@ -138,35 +166,87 @@ function DevisValidationContent() {
         </div>
 
         {/* Devis Document */}
-        <div ref={devisRef} className="mb-8 border border-black bg-white p-0 print:p-0">
-          <div className="border-b border-black p-8 pb-4 flex justify-between items-start bg-white">
-            <div>
-              <h2 className="text-2xl font-bold text-black">DEVIS</h2>
-              <div className="mt-4 space-y-1 text-black">
-                <p className="font-semibold">Prestataire :</p>
-                <p> Matthéo Termine</p>
-                <p>Intégrateur Web Freelance</p>
-                <p>Email: contact@mattheo-termine.fr</p>
-                <p>SIRET: XXXXXXXXX</p>
+        <div 
+          ref={devisRef} 
+          className="mb-8 bg-white" 
+          style={{ 
+            fontFamily: 'Arial, sans-serif', 
+            fontSize: '12px', 
+            lineHeight: '1.4', 
+            color: '#000000',
+            maxWidth: '794px',
+            width: '794px',
+            margin: '0 auto',
+            padding: '16px',
+            boxSizing: 'border-box'
+          }}
+        >
+          <div 
+            className="p-4 bg-white" 
+            style={{ 
+              borderBottom: '2px solid #e5e7eb', 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'flex-start',
+              marginBottom: '0'
+            }}
+          >
+            <div style={{ flex: '1' }}>
+              <h2 
+                style={{ 
+                  color: '#000000', 
+                  fontSize: '20px', 
+                  margin: '0 0 12px 0',
+                  fontWeight: 'bold'
+                }}
+              >
+                DEMANDE DE PROJET
+              </h2>
+              <div style={{ fontSize: '10px', lineHeight: '1.3' }}>
+                <p style={{ margin: '0', fontWeight: 'bold', color: '#000' }}>Prestataire :</p>
+                <p style={{ margin: '1px 0', color: '#000' }}>Matthéo Termine</p>
+                <p style={{ margin: '1px 0', color: '#000' }}>Intégrateur Web Freelance</p>
+                <p style={{ margin: '1px 0', color: '#000' }}>Email: contact@mattheo-termine.fr</p>
+                <p style={{ margin: '1px 0', color: '#000' }}>Site: https://mattheo-termine.fr</p>
               </div>
             </div>
-            <div className="text-right text-black">
-              <p><strong>Numéro de devis:</strong> {devisNumber}</p>
-              <p><strong>Date:</strong> {today}</p>
+            <div style={{ textAlign: 'right', fontSize: '10px', lineHeight: '1.3' }}>
+              <p style={{ margin: '1px 0', color: '#000' }}><strong>Numéro:</strong> {devisNumber}</p>
+              <p style={{ margin: '1px 0', color: '#000' }}><strong>Date:</strong> {today}</p>
+              <p style={{ margin: '6px 0 0 0', color: '#dc2626', fontWeight: 'bold', fontSize: '9px' }}>
+                DOCUMENT NON CONTRACTUEL
+              </p>
             </div>
           </div>
-          <div className="p-8 bg-white text-black">
+          <div style={{ padding: '16px', backgroundColor: '#ffffff', color: '#000000' }}>
             {/* Informations client */}
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold mb-4 text-black">Client</h3>
-              <div className="space-y-1">
-                <p><strong>Nom :</strong> {devisData.clientInfo.name}</p>
+            <div style={{ marginBottom: '20px' }}>
+              <h3 style={{ 
+                fontSize: '16px', 
+                fontWeight: 'bold', 
+                marginBottom: '12px', 
+                color: '#1f2937',
+                borderBottom: '1px solid #d1d5db',
+                paddingBottom: '4px'
+              }}>
+                INFORMATIONS CLIENT
+              </h3>
+              <div style={{ fontSize: '12px', lineHeight: '1.5' }}>
+                <p style={{ margin: '4px 0', color: '#000' }}>
+                  <strong>Nom :</strong> {devisData.clientInfo.name}
+                </p>
                 {devisData.clientInfo.company && (
-                  <p><strong>Entreprise :</strong> {devisData.clientInfo.company}</p>
+                  <p style={{ margin: '4px 0', color: '#000' }}>
+                    <strong>Entreprise :</strong> {devisData.clientInfo.company}
+                  </p>
                 )}
-                <p><strong>Email :</strong> {devisData.clientInfo.email}</p>
+                <p style={{ margin: '4px 0', color: '#000' }}>
+                  <strong>Email :</strong> {devisData.clientInfo.email}
+                </p>
                 {devisData.clientInfo.phone && (
-                  <p><strong>Téléphone :</strong> {devisData.clientInfo.phone}</p>
+                  <p style={{ margin: '4px 0', color: '#000' }}>
+                    <strong>Téléphone :</strong> {devisData.clientInfo.phone}
+                  </p>
                 )}
               </div>
             </div>

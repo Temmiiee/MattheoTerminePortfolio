@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import Link from 'next/link';
 
 // Fallback font configuration for build environment
@@ -144,7 +145,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={cn(ptSans.variable, spaceGrotesk.variable, 'scroll-smooth')}>
+    <html lang="fr" className={cn(ptSans.variable, spaceGrotesk.variable, 'scroll-smooth')} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
         <meta name="theme-color" content="#a259ff" media="(prefers-color-scheme: light)" />
@@ -156,22 +157,58 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="msapplication-TileColor" content="#a259ff" />
         <link rel="canonical" href="https://mattheo-termine.fr" />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else if (theme === 'light') {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {
+                document.documentElement.classList.add('dark');
+              }
+            })();
+          `
+        }} />
         <style dangerouslySetInnerHTML={{ __html: `
           :root {
             --font-pt-sans: ${ptSans.style.fontFamily};
             --font-space-grotesk: ${spaceGrotesk.style.fontFamily};
           }
+          /* Éviter le flash blanc */
+          html {
+            background-color: #0a0a1a;
+            color-scheme: dark;
+          }
+          html.dark {
+            background-color: #0a0a1a;
+          }
+          html:not(.dark) {
+            background-color: #ffffff;
+            color-scheme: light;
+          }
         `}} />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
-        <Link href="#main-content" className="skip-link">Aller au contenu principal</Link>
-        <Link href="#navigation" className="skip-link">Aller à la navigation</Link>
-        <Header />
-        <main id="main-content" className="flex-grow" role="main" aria-label="Contenu principal">
-          {children}
-        </main>
-        <Footer />
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+          suppressHydrationWarning
+        >
+          <Link href="#main-content" className="skip-link">Aller au contenu principal</Link>
+          <Link href="#navigation" className="skip-link">Aller à la navigation</Link>
+          <Header />
+          <main id="main-content" className="flex-grow" role="main" aria-label="Contenu principal">
+            {children}
+          </main>
+          <Footer />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

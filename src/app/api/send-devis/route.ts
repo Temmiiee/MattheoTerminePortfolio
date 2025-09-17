@@ -71,17 +71,20 @@ export async function POST(request: NextRequest) {
         <meta charset="utf-8">
         <title>Nouveau Devis - ${devisNumber}</title>
         <style>
-          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-          .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-          .header { background: #3F51B5; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-          .content { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; }
-          .section { margin-bottom: 20px; }
-          .section h3 { color: #3F51B5; border-bottom: 2px solid #3F51B5; padding-bottom: 5px; }
-          .client-info { background: white; padding: 15px; border-radius: 5px; margin: 10px 0; }
-          .features { background: white; padding: 15px; border-radius: 5px; }
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #ffffff; }
+          .container { max-width: 800px; margin: 0 auto; padding: 20px; background: #ffffff; }
+          .header { background: #2563eb; color: #ffffff; padding: 24px; }
+          .content { background: #ffffff; padding: 24px; }
+          .section { margin-bottom: 24px; }
+          .section h3 { color: #333333; border-bottom: 2px solid #2563eb; padding-bottom: 8px; margin-top: 0; font-size: 18px; }
+          .client-info { background: #f8f9fa; padding: 16px; margin: 12px 0; }
+          .features { background: #f8f9fa; padding: 16px; }
           .features ul { margin: 0; padding-left: 20px; }
-          .total { background: #009688; color: white; padding: 15px; border-radius: 5px; text-align: center; font-size: 18px; font-weight: bold; }
-          .footer { background: #333; color: white; padding: 15px; text-align: center; border-radius: 0 0 8px 8px; }
+          .features li { margin-bottom: 6px; color: #333333; }
+          .total { background: #2563eb; color: #ffffff; padding: 20px; text-align: center; font-size: 20px; font-weight: bold; }
+          .footer { background: #333333; color: #ffffff; padding: 20px; text-align: center; }
+          p { margin: 10px 0; color: #333333; }
+          strong { color: #333333; font-weight: 600; }
         </style>
       </head>
       <body>
@@ -156,12 +159,16 @@ export async function POST(request: NextRequest) {
           <meta charset="utf-8">
           <title>Confirmation Devis</title>
           <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #3F51B5; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-            .content { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; }
-            .footer { background: #333; color: white; padding: 15px; text-align: center; border-radius: 0 0 8px 8px; }
-            .highlight { background: #009688; color: white; padding: 10px; border-radius: 5px; text-align: center; margin: 15px 0; }
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #ffffff; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; background: #ffffff; }
+            .header { background: #2563eb; color: #ffffff; padding: 24px; text-align: center; }
+            .content { background: #ffffff; padding: 24px; }
+            .footer { background: #333333; color: #ffffff; padding: 20px; text-align: center; }
+            .highlight { background: #2563eb; color: #ffffff; padding: 16px; text-align: center; margin: 20px 0; font-weight: bold; font-size: 16px; }
+            p { margin: 12px 0; color: #333333; }
+            ul { margin: 12px 0; padding-left: 20px; }
+            li { margin-bottom: 6px; color: #333333; }
+            strong { color: #333333; font-weight: 600; }
           </style>
         </head>
         <body>

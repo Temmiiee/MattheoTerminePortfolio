@@ -1,0 +1,26 @@
+/* =============================================================================
+   NAVIGATION COMPONENTS
+   ============================================================================= */
+
+/* Navigation links */
+.nav-link {
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: hsl(var(--primary));
+}
+
+.nav-link.active {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
+
+/* Menu item staggered animations */
+.menu-item-1 { animation-delay: 0.1s; }
+.menu-item-2 { animation-delay: 0.15s; }
+.menu-item-3 { animation-delay: 0.2s; }
+.menu-item-4 { animation-delay: 0.25s; }
+.menu-item-5 { animation-delay: 0.3s; }
+.menu-item-6 { animation-delay: 0.35s; }
+.menu-item-7 { animation-delay: 0.4s; }

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Code2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { href: "#accueil", label: "Accueil" },
@@ -131,10 +132,12 @@ export function Header() {
             {navLinks.map((link) => (
               <NavLink key={link.href} {...link} />
             ))}
+            <ThemeToggle />
           </nav>
 
           {/* Mobile Navigation */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
             <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative" aria-label="Ouvrir le menu de navigation" aria-expanded={isSheetOpen} aria-controls="mobile-menu">
