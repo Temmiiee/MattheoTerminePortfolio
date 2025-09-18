@@ -57,19 +57,19 @@ function DevisValidationContent() {
         margin: [10, 10, 10, 10],
         autoPaging: 'text',
         html2canvas: {
-          scale: 0.8, // Augmenté pour une meilleure qualité
+          scale: 0.75, // Réduit légèrement pour éviter les erreurs
           useCORS: true,
           backgroundColor: '#ffffff',
           letterRendering: true,
           allowTaint: false,
           removeContainer: true,
           logging: false,
-          height: 1400, // Ajusté pour A4
-          width: 1000,   // Ajusté pour A4
-          foreignObjectRendering: true
+          height: 1200, // Ajusté pour éviter les erreurs
+          width: 900,   // Ajusté pour éviter les erreurs
+          foreignObjectRendering: false // Désactivé pour éviter les erreurs de base64
         },
         width: 190, // Largeur en mm pour A4 (210 - marges)
-        windowWidth: 1000,
+        windowWidth: 900,
         x: 0,
         y: 0,
         callback: function(pdf: jsPDF) {
@@ -96,19 +96,19 @@ function DevisValidationContent() {
         margin: [10, 10, 10, 10],
         autoPaging: 'text',
         html2canvas: {
-          scale: 0.8, // Augmenté pour une meilleure qualité
+          scale: 0.75, // Réduit légèrement pour éviter les erreurs
           useCORS: true,
           backgroundColor: '#ffffff',
           letterRendering: true,
           allowTaint: false,
           removeContainer: true,
           logging: false,
-          height: 1400,
-          width: 1000,
-          foreignObjectRendering: true
+          height: 1200,
+          width: 900,
+          foreignObjectRendering: false // Désactivé pour éviter les erreurs de base64
         },
         width: 190,
-        windowWidth: 1000,
+        windowWidth: 900,
         x: 0,
         y: 0,
       });
