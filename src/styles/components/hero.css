@@ -2,6 +2,16 @@
    HERO SECTION COMPONENTS
    ============================================================================= */
 
+/* Interactive Galaxy Styles */
+.interactive-galaxy {
+  cursor: crosshair;
+  transition: cursor 0.3s ease;
+}
+
+.interactive-galaxy:hover {
+  cursor: pointer;
+}
+
 /* Hero title variants */
 .hero-title {
   opacity: 1;
@@ -29,22 +39,32 @@
 
 .hero-glow {
   text-shadow: 
-    0 0 10px rgba(255, 255, 255, 0.5),
-    0 0 20px rgba(255, 255, 255, 0.3), 
-    0 0 30px rgba(255, 255, 255, 0.2),
-    0 0 40px hsla(var(--primary), 0.3);
+    0 0 5px rgba(255, 255, 255, 0.3),
+    0 0 10px rgba(255, 255, 255, 0.2), 
+    0 0 15px hsla(var(--primary), 0.2);
 }
 
-/* Hero content - animations handled by React components */
+/* Typing effect */
+.typing-container {
+  position: relative;
+  display: inline-block;
+}
 
-/* Typing effect for subtitle */
-.typing-effect {
-  overflow: hidden;
-  border-right: 3px solid hsl(var(--primary));
-  white-space: nowrap;
-  animation: typing 2s steps(30, end) forwards, blink-caret 1s step-end infinite;
-  animation-delay: 1.8s;
-  width: 0;
+.typing-cursor {
+  display: inline-block;
+  background-color: hsl(var(--primary));
+  margin-left: 2px;
+  width: 3px;
+  animation: blink-cursor 1s infinite;
+}
+
+@keyframes blink-cursor {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
 }
 
 /* Enhanced button effects */

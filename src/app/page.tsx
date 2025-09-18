@@ -13,7 +13,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { WordpressIcon } from "@/components/icons/WordpressIcon";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
-import { useSequentialAnimation } from "@/hooks/use-sequential-animation";
+import { InteractiveGalaxy } from "@/components/InteractiveGalaxy";
 
 const services = [
   {
@@ -136,10 +136,15 @@ const AnimatedSection = ({ children, className, id, ...props }: {
   id: string, 
   "aria-labelledby"?: string 
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
   const { ref, isIntersecting } = useIntersectionObserver({ 
     threshold: 0.2, 
     rootMargin: '-50px 0px -100px 0px' 
   });
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <section 
@@ -148,7 +153,7 @@ const AnimatedSection = ({ children, className, id, ...props }: {
       className={cn(
         className, 
         "transition-all duration-1000 ease-out scroll-mt-20", 
-        isIntersecting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        !isMounted ? "opacity-100 translate-y-0" : (isIntersecting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")
       )}
       {...props}
     >
@@ -168,11 +173,16 @@ const AnimatedDiv = ({
   className?: string, 
   delay?: number 
 } & React.HTMLAttributes<HTMLDivElement>) => {
+  const [isMounted, setIsMounted] = useState(false);
   const { ref, isIntersecting } = useIntersectionObserver({ 
     threshold: 0.3, 
     rootMargin: '-30px 0px -100px 0px', 
     triggerOnce: true 
   });
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <div
@@ -182,9 +192,9 @@ const AnimatedDiv = ({
       }}
       className={cn(
         "transition-all duration-800 ease-out",
-        isIntersecting 
+        !isMounted ? "opacity-100 translate-y-0 scale-100" : (isIntersecting 
           ? "opacity-100 translate-y-0 scale-100" 
-          : "opacity-0 translate-y-6 scale-95",
+          : "opacity-0 translate-y-6 scale-95"),
         className
       )}
       {...props}
@@ -194,44 +204,184 @@ const AnimatedDiv = ({
   );
 };
 
+// Composant About avec animation depuis le centre
+const AboutSection = () => {
+  const [photoVisible, setPhotoVisible] = useState(false);
+  const [contentVisible, setContentVisible] = useState(false);
+  const { ref, isIntersecting } = useIntersectionObserver({
+    threshold: 0.3,
+    rootMargin: '-50px 0px -100px 0px',
+    triggerOnce: true,
+  });
+
+  useEffect(() => {
+    if (isIntersecting) {
+      // Animation séquentielle beaucoup plus lente
+      setTimeout(() => setPhotoVisible(true), 800);
+      setTimeout(() => setContentVisible(true), 1200);
+    }
+  }, [isIntersecting]);
+
+  return (
+    <section ref={ref} className="about-section py-24" aria-labelledby="about-title">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 id="about-title" className="text-3xl md:text-4xl font-bold mb-4">
+            À propos de moi
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Développeur passionné par la création d'expériences web exceptionnelles
+          </p>
+        </div>
+
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Photo - Animation depuis le centre vers la gauche */}
+            <div className="flex justify-center lg:justify-end">
+              <div 
+                className={cn(
+                  "about-photo-container transition-all duration-2000 ease-out",
+                  photoVisible 
+                    ? "opacity-100 translate-x-0 scale-100" 
+                    : "opacity-0 translate-x-32 scale-75"
+                )}
+              >
+                <div className="relative">
+                  <Image
+                    src="/images/mattheo-termine-photo.png"
+                    alt="Mattheo Termine - Intégrateur web freelance"
+                    width={300}
+                    height={300}
+                    className="about-photo rounded-full border-4 border-white shadow-2xl"
+                    priority
+                  />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/20 to-accent/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contenu - Animation depuis le centre vers la droite */}
+            <div 
+              className={cn(
+                "about-content transition-all duration-2000 ease-out",
+                contentVisible 
+                  ? "opacity-100 translate-x-0 scale-100" 
+                  : "opacity-0 -translate-x-32 scale-75"
+              )}
+            >
+              <div className="about-text space-y-6 text-lg leading-relaxed text-muted-foreground">
+                <p>
+                  Passionné par la création d'expériences web performantes et inclusives. 
+                  Je transforme des idées créatives en sites web fonctionnels, que ce soit en 
+                  écrivant du code sur-mesure ou en personnalisant des solutions WordPress.
+                </p>
+                
+                <p>
+                  Mon objectif est de construire des plateformes qui répondent aux besoins de 
+                  mes clients et qui offrent une expérience utilisateur fluide.
+                </p>
+                
+                <p>
+                  Je crois fermement en un web ouvert et accessible. C'est pourquoi j'accorde 
+                  une importance capitale au respect des standards, à la performance et aux 
+                  normes d'accessibilité (RGAA). Un bon site, selon moi, est un site rapide, 
+                  facile à utiliser et qui ne laisse personne de côté.
+                </p>
+                
+                <p>
+                  Constamment en veille technologique, j'aime explorer de nouveaux outils et 
+                  de nouvelles méthodes pour améliorer la qualité de mon travail et proposer 
+                  des solutions toujours plus innovantes.
+                </p>
+              </div>
+
+              <div className={cn(
+                "mt-8 transition-all duration-1000 ease-out",
+                contentVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+              style={{ transitionDelay: "400ms" }}
+              >
+                <Button asChild size="lg" className="cv-button group">
+                  <Link href="/cv-mattheo-termine.pdf" target="_blank" rel="noopener noreferrer">
+                    <Download className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                    Télécharger mon CV
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // Composant Hero avec animations améliorées
 const HeroSection = () => {
+  const [nameVisible, setNameVisible] = useState(false);
   const [titleVisible, setTitleVisible] = useState(false);
   const [subtitleVisible, setSubtitleVisible] = useState(false);
   const [descriptionVisible, setDescriptionVisible] = useState(false);
   const [buttonsVisible, setButtonsVisible] = useState(false);
+  const [typingText, setTypingText] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+
+  const fullText = "Intégrateur web freelance";
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setTitleVisible(true), 200),
-      setTimeout(() => setSubtitleVisible(true), 600),
-      setTimeout(() => setDescriptionVisible(true), 1000),
-      setTimeout(() => setButtonsVisible(true), 1400),
+      setTimeout(() => setNameVisible(true), 200),
+      setTimeout(() => setTitleVisible(true), 800),
+      setTimeout(() => setSubtitleVisible(true), 2000),
+      setTimeout(() => setDescriptionVisible(true), 2400),
+      setTimeout(() => setButtonsVisible(true), 2800),
     ];
 
     return () => timers.forEach(clearTimeout);
   }, []);
 
+  // Animation de typing pour le sous-titre
+  useEffect(() => {
+    if (!titleVisible) return;
+
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setTypingText(fullText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+        // Arrêter le curseur clignotant après l'animation
+        setTimeout(() => setShowCursor(false), 1000);
+      }
+    }, 80);
+
+    return () => clearInterval(typingInterval);
+  }, [titleVisible, fullText]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Arrière-plan galaxie interactif */}
+      <InteractiveGalaxy />
+      
       <div className="container mx-auto px-4 text-center relative z-10">
-        {/* Titre principal avec animation lettre par lettre */}
+        {/* Nom principal avec animation */}
         <h1 className={cn(
-          "text-4xl md:text-6xl lg:text-7xl font-bold mb-6 transition-all duration-1000",
-          titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          "text-5xl md:text-7xl lg:text-8xl font-bold mb-4 transition-all duration-1000 hero-glow",
+          nameVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
-          <span className="hero-title-enhanced hero-glow">
-            {"Intégrateur web Freelance".split("").map((char, index) => (
+          <span className="hero-title-enhanced">
+            {"Mattheo Termine".split("").map((char, index) => (
               <span
-                key={index}
+                key={`name-${index}`}
                 className={cn(
                   "inline-block transition-all duration-700 ease-out",
-                  titleVisible 
+                  nameVisible 
                     ? "opacity-100 translate-y-0 rotate-0" 
                     : "opacity-0 translate-y-12 rotate-12"
                 )}
                 style={{
-                  transitionDelay: `${index * 50 + 200}ms`,
+                  transitionDelay: `${index * 80 + 200}ms`,
                 }}
               >
                 {char === " " ? "\u00A0" : char}
@@ -240,7 +390,18 @@ const HeroSection = () => {
           </span>
         </h1>
 
-        {/* Sous-titre */}
+        {/* Sous-titre avec effet de typing */}
+        <div className={cn(
+          "text-2xl md:text-3xl lg:text-4xl font-semibold mb-8 transition-all duration-800 min-h-[3rem] flex items-center justify-center",
+          titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        )}>
+          <span className="typing-container text-primary">
+            {typingText}
+            {showCursor && <span className="typing-cursor">|</span>}
+          </span>
+        </div>
+
+        {/* Description */}
         <p className={cn(
           "text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto transition-all duration-800",
           subtitleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -248,7 +409,7 @@ const HeroSection = () => {
           Création de sites web modernes, performants et accessibles pour développer votre présence en ligne
         </p>
 
-        {/* Description */}
+        {/* Sous-description */}
         <p className={cn(
           "text-lg text-muted-foreground mb-12 max-w-2xl mx-auto transition-all duration-800",
           descriptionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -279,26 +440,74 @@ const HeroSection = () => {
 };
 
 export default function Home() {
-  const { ref: servicesRef, visibleItems: visibleServices } = useSequentialAnimation({
-    itemCount: services.length,
-    delay: 200,
-    stagger: 150,
+  // États pour les animations des sections
+  const [servicesVisible, setServicesVisible] = useState<boolean[]>(new Array(services.length).fill(false));
+  const [processVisible, setProcessVisible] = useState<boolean[]>(new Array(processSteps.length).fill(false));
+  const [pricingVisible, setPricingVisible] = useState<boolean[]>(new Array(pricingPlans.length).fill(false));
+
+
+
+  // Hooks pour déclencher les animations des sections
+  const { ref: servicesObserverRef, isIntersecting: servicesIntersecting } = useIntersectionObserver({
     threshold: 0.2,
+    rootMargin: '-50px 0px -100px 0px',
+    triggerOnce: true,
   });
 
-  const { ref: processRef, visibleItems: visibleProcess } = useSequentialAnimation({
-    itemCount: processSteps.length,
-    delay: 200,
-    stagger: 200,
+  const { ref: processObserverRef, isIntersecting: processIntersecting } = useIntersectionObserver({
     threshold: 0.2,
+    rootMargin: '-50px 0px -100px 0px',
+    triggerOnce: true,
   });
 
-  const { ref: pricingRef, visibleItems: visiblePricing } = useSequentialAnimation({
-    itemCount: pricingPlans.length,
-    delay: 200,
-    stagger: 150,
+  const { ref: pricingObserverRef, isIntersecting: pricingIntersecting } = useIntersectionObserver({
     threshold: 0.2,
+    rootMargin: '-50px 0px -100px 0px',
+    triggerOnce: true,
   });
+
+  // Déclencher les animations séquentielles
+  useEffect(() => {
+    if (servicesIntersecting) {
+      services.forEach((_, index) => {
+        setTimeout(() => {
+          setServicesVisible(prev => {
+            const newState = [...prev];
+            newState[index] = true;
+            return newState;
+          });
+        }, index * 150);
+      });
+    }
+  }, [servicesIntersecting]);
+
+  useEffect(() => {
+    if (processIntersecting) {
+      processSteps.forEach((_, index) => {
+        setTimeout(() => {
+          setProcessVisible(prev => {
+            const newState = [...prev];
+            newState[index] = true;
+            return newState;
+          });
+        }, index * 200);
+      });
+    }
+  }, [processIntersecting]);
+
+  useEffect(() => {
+    if (pricingIntersecting) {
+      pricingPlans.forEach((_, index) => {
+        setTimeout(() => {
+          setPricingVisible(prev => {
+            const newState = [...prev];
+            newState[index] = true;
+            return newState;
+          });
+        }, index * 150);
+      });
+    }
+  }, [pricingIntersecting]);
 
   return (
     <>
@@ -319,7 +528,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div ref={servicesRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div ref={servicesObserverRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
@@ -327,7 +536,7 @@ export default function Home() {
                   key={index} 
                   className={cn(
                     "service-card transition-all duration-700 ease-out",
-                    visibleServices[index] 
+                    servicesVisible[index] 
                       ? "opacity-100 translate-y-0 scale-100" 
                       : "opacity-0 translate-y-8 scale-95"
                   )}
@@ -352,7 +561,7 @@ export default function Home() {
       </AnimatedSection>
 
       {/* Process Section */}
-      <AnimatedSection id="process" className="py-24" aria-labelledby="process-title">
+      <AnimatedSection id="process" className="process-section py-24" aria-labelledby="process-title">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 id="process-title" className="text-3xl md:text-4xl font-bold mb-4">
@@ -363,26 +572,37 @@ export default function Home() {
             </p>
           </div>
           
-          <div ref={processRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div ref={processObserverRef} className="process-timeline">
+            {/* Particules flottantes décoratives */}
+            <div className="floating-particle"></div>
+            <div className="floating-particle"></div>
+            <div className="floating-particle"></div>
+            
             {processSteps.map((step, index) => {
               const Icon = step.icon;
+              const isLeft = index % 2 === 0;
               return (
-                <AnimatedDiv 
+                <div 
                   key={index} 
-                  delay={index * 200}
                   className={cn(
-                    "text-center transition-all duration-700 ease-out",
-                    visibleProcess[index] 
+                    "process-step transition-all duration-700 ease-out",
+                    isLeft ? "left" : "right",
+                    processVisible[index] 
                       ? "opacity-100 translate-y-0" 
                       : "opacity-0 translate-y-8"
                   )}
+                  style={{
+                    transitionDelay: `${index * 200}ms`,
+                  }}
                 >
-                  <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Icon className="w-8 h-8 text-primary" />
+                  <div className="process-icon">
+                    <Icon className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
-                  <p className="text-muted-foreground">{step.description}</p>
-                </AnimatedDiv>
+                  <div className="process-content">
+                    <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -401,14 +621,14 @@ export default function Home() {
             </p>
           </div>
           
-          <div ref={pricingRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div ref={pricingObserverRef} className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {pricingPlans.map((plan, index) => (
               <Card 
                 key={index} 
                 className={cn(
                   "relative transition-all duration-700 ease-out",
                   plan.featured && "ring-2 ring-primary shadow-lg scale-105",
-                  visiblePricing[index] 
+                  pricingVisible[index] 
                     ? "opacity-100 translate-y-0 scale-100" 
                     : "opacity-0 translate-y-8 scale-95"
                 )}
@@ -466,7 +686,7 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.slice(0, 6).map((project, index) => (
-              <AnimatedDiv key={project.id} delay={index * 100}>
+              <AnimatedDiv key={`project-${project.id}-${index}`} delay={index * 100}>
                 <ProjectCard project={project} />
               </AnimatedDiv>
             ))}
@@ -481,6 +701,9 @@ export default function Home() {
           </div>
         </div>
       </AnimatedSection>
+
+      {/* About Section */}
+      <AboutSection />
 
       {/* Contact Section */}
       <AnimatedSection id="contact" className="py-24 bg-secondary/30" aria-labelledby="contact-title">

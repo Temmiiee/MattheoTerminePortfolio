@@ -1,39 +1,40 @@
-import Script from 'next/script'
+import Script from "next/script";
 
 export function StructuredData() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Matthéo Termine",
-    "jobTitle": "Intégrateur Web Freelance",
-    "description": "Spécialiste en création de sites web modernes, accessibles (normes RGAA) et optimisés SEO. Expert en Next.js, React, WordPress et développement web sur mesure.",
-    "url": "https://mattheo-termine.fr",
-    "image": "https://mattheo-termine.fr/images/mattheo-termine-photo.png",
-    "email": "contact@mattheo-termine.fr",
-    "telephone": "+33XXXXXXXXX", // Replace with actual phone when available
-    "sameAs": [
+    name: "Matthéo Termine",
+    jobTitle: "Intégrateur Web Freelance",
+    description:
+      "Spécialiste en création de sites web modernes, accessibles (normes RGAA) et optimisés SEO. Expert en Next.js, React, WordPress et développement web sur mesure.",
+    url: "https://mattheo-termine.fr",
+    image: "https://mattheo-termine.fr/images/mattheo-termine-photo.png",
+    email: "contact@mattheo-termine.fr",
+    telephone: "+33XXXXXXXXX", // Replace with actual phone when available
+    sameAs: [
       "https://github.com/Temmiiee",
-      "https://linkedin.com/in/mattheo-termine" // Replace with actual LinkedIn
+      "https://linkedin.com/in/mattheo-termine", // Replace with actual LinkedIn
     ],
-    "address": {
+    address: {
       "@type": "PostalAddress",
-      "addressCountry": "FR",
-      "addressLocality": "France"
+      addressCountry: "FR",
+      addressLocality: "France",
     },
-    "hasOccupation": {
+    hasOccupation: {
       "@type": "Occupation",
-      "name": "Intégrateur Web Freelance",
-      "occupationLocation": {
+      name: "Intégrateur Web Freelance",
+      occupationLocation: {
         "@type": "Country",
-        "name": "France"
+        name: "France",
       },
-      "estimatedSalary": {
+      estimatedSalary: {
         "@type": "MonetaryAmountDistribution",
-        "name": "À partir de 550€ par projet",
-        "currency": "EUR"
-      }
+        name: "À partir de 550€ par projet",
+        currency: "EUR",
+      },
     },
-    "knowsAbout": [
+    knowsAbout: [
       "Développement Web",
       "Next.js",
       "React",
@@ -48,135 +49,140 @@ export function StructuredData() {
       "CSS3",
       "Responsive Design",
       "Performance Web",
-      "UX/UI Design"
+      "UX/UI Design",
     ],
-    "alumniOf": {
+    alumniOf: {
       "@type": "EducationalOrganization",
-      "name": "Formation en développement web"
-    }
-  }
+      name: "Formation en développement web",
+    },
+  };
 
   const organizationData = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": "Matthéo Termine - Intégrateur Web Freelance",
-    "description": "Services de développement web freelance : création de sites vitrines, applications web, e-commerce. Spécialiste en accessibilité RGAA et optimisation SEO.",
-    "url": "https://mattheo-termine.fr",
-    "image": "https://mattheo-termine.fr/og-image.svg",
-    "logo": "https://mattheo-termine.fr/icon",
-    "email": "contact@mattheo-termine.fr",
-    "provider": {
+    name: "Matthéo Termine - Intégrateur Web Freelance",
+    description:
+      "Services de développement web freelance : création de sites vitrines, applications web, e-commerce. Spécialiste en accessibilité RGAA et optimisation SEO.",
+    url: "https://mattheo-termine.fr",
+    image: "https://mattheo-termine.fr/og-image.svg",
+    logo: "https://mattheo-termine.fr/icon",
+    email: "contact@mattheo-termine.fr",
+    provider: {
       "@type": "Person",
-      "name": "Matthéo Termine"
+      name: "Matthéo Termine",
     },
-    "areaServed": {
+    areaServed: {
       "@type": "Country",
-      "name": "France"
+      name: "France",
     },
-    "serviceType": "Développement Web",
-    "priceRange": "550€ - 2500€+",
-    "paymentAccepted": ["Virement bancaire", "Chèque"],
-    "hasOfferCatalog": {
+    serviceType: "Développement Web",
+    priceRange: "550€ - 2500€+",
+    paymentAccepted: ["Virement bancaire", "Chèque"],
+    hasOfferCatalog: {
       "@type": "OfferCatalog",
-      "name": "Services de Développement Web",
-      "itemListElement": [
+      name: "Services de Développement Web",
+      itemListElement: [
         {
           "@type": "Offer",
-          "name": "Site Vitrine Classique",
-          "description": "Site vitrine avec design basé sur un template personnalisé. Design moderne et responsive.",
-          "price": "550",
-          "priceCurrency": "EUR",
-          "itemOffered": {
+          name: "Site Vitrine Classique",
+          description:
+            "Site vitrine avec design basé sur un template personnalisé. Design moderne et responsive.",
+          price: "550",
+          priceCurrency: "EUR",
+          itemOffered: {
             "@type": "Service",
-            "name": "Site Vitrine Classique",
-            "serviceType": "Création de site web"
-          }
-        },
-        {
-          "@type": "Offer", 
-          "name": "Site Sur-Mesure / Landing Page",
-          "description": "Site sur-mesure ou landing page avec design unique, adapté à vos besoins spécifiques.",
-          "price": "1150",
-          "priceCurrency": "EUR",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Site Sur-Mesure",
-            "serviceType": "Développement web personnalisé"
-          }
+            name: "Site Vitrine Classique",
+            serviceType: "Création de site web",
+          },
         },
         {
           "@type": "Offer",
-          "name": "Application Web",
-          "description": "Solution complète pour les projets complexes nécessitant des fonctionnalités sur mesure.",
-          "price": "2500",
-          "priceCurrency": "EUR",
-          "itemOffered": {
+          name: "Site Sur-Mesure / Landing Page",
+          description:
+            "Site sur-mesure ou landing page avec design unique, adapté à vos besoins spécifiques.",
+          price: "1150",
+          priceCurrency: "EUR",
+          itemOffered: {
             "@type": "Service",
-            "name": "Application Web",
-            "serviceType": "Développement d'application web"
-          }
-        }
-      ]
+            name: "Site Sur-Mesure",
+            serviceType: "Développement web personnalisé",
+          },
+        },
+        {
+          "@type": "Offer",
+          name: "Application Web",
+          description:
+            "Solution complète pour les projets complexes nécessitant des fonctionnalités sur mesure.",
+          price: "2500",
+          priceCurrency: "EUR",
+          itemOffered: {
+            "@type": "Service",
+            name: "Application Web",
+            serviceType: "Développement d'application web",
+          },
+        },
+      ],
     },
-    "aggregateRating": {
+    aggregateRating: {
       "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "10"
-    }
-  }
+      ratingValue: "5",
+      reviewCount: "10",
+    },
+  };
 
   const webSiteData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Matthéo Termine - Portfolio",
-    "description": "Portfolio professionnel de Matthéo Termine, intégrateur web freelance spécialisé en sites modernes et accessibles.",
-    "url": "https://mattheo-termine.fr",
-    "inLanguage": "fr-FR",
-    "author": {
+    name: "Matthéo Termine - Portfolio",
+    description:
+      "Portfolio professionnel de Matthéo Termine, intégrateur web freelance spécialisé en sites modernes et accessibles.",
+    url: "https://mattheo-termine.fr",
+    inLanguage: "fr-FR",
+    author: {
       "@type": "Person",
-      "name": "Matthéo Termine"
+      name: "Matthéo Termine",
     },
-    "publisher": {
+    publisher: {
       "@type": "Person",
-      "name": "Matthéo Termine"
+      name: "Matthéo Termine",
     },
-    "potentialAction": {
+    potentialAction: {
       "@type": "SearchAction",
-      "target": "https://mattheo-termine.fr/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
+      target: "https://mattheo-termine.fr/search?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  };
 
   const breadcrumbData = {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList", 
-    "itemListElement": [
+    "@type": "BreadcrumbList",
+    itemListElement: [
       {
         "@type": "ListItem",
-        "position": 1,
-        "name": "Accueil",
-        "item": "https://mattheo-termine.fr"
+        position: 1,
+        name: "Accueil",
+        item: "https://mattheo-termine.fr",
       },
       {
         "@type": "ListItem",
-        "position": 2,
-        "name": "Services",
-        "item": "https://mattheo-termine.fr#services"
+        position: 2,
+        name: "Services",
+        item: "https://mattheo-termine.fr#services",
       },
       {
         "@type": "ListItem",
-        "position": 3,
-        "name": "Projets",
-        "item": "https://mattheo-termine.fr#projets"
+        position: 3,
+        name: "Projets",
+        item: "https://mattheo-termine.fr#projets",
       },
       {
-        "@type": "ListItem", 
-        "position": 4,
-        "name": "Contact",
-        "item": "https://mattheo-termine.fr#contact"
-      }
-    ]
-  }
+        "@type": "ListItem",
+        position: 4,
+        name: "Contact",
+        item: "https://mattheo-termine.fr#contact",
+      },
+    ],
+  };
 
   return (
     <>
@@ -209,5 +215,5 @@ export function StructuredData() {
         }}
       />
     </>
-  )
+  );
 }

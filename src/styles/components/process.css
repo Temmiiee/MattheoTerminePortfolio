@@ -1,0 +1,355 @@
+/* =============================================================================
+   PROCESS SECTION COMPONENTS
+   ============================================================================= */
+
+/* Section background with animated pattern */
+.process-section {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--background)) 0%,
+    hsl(var(--secondary)) 100%
+  );
+  overflow: hidden;
+}
+
+.process-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+      circle at 20% 50%,
+      hsla(var(--primary), 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      hsla(var(--accent), 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 80%,
+      hsla(var(--primary), 0.05) 0%,
+      transparent 50%
+    );
+  animation: float-background 20s ease-in-out infinite;
+}
+
+@keyframes float-background {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+.process-timeline {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+/* Ligne centrale améliorée avec animation */
+.process-timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    hsl(var(--primary)) 10%,
+    hsl(var(--accent)) 50%,
+    hsl(var(--primary)) 90%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  z-index: 1;
+  border-radius: 2px;
+  box-shadow: 0 0 10px hsla(var(--primary), 0.3);
+}
+
+/* Points lumineux sur la ligne */
+.process-timeline::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 80px,
+    hsl(var(--primary)) 85px,
+    hsl(var(--primary)) 95px,
+    transparent 100px
+  );
+  transform: translateX(-50%);
+  z-index: 2;
+  border-radius: 4px;
+  animation: pulse-dots 3s ease-in-out infinite;
+}
+
+@keyframes pulse-dots {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+.process-step {
+  position: relative;
+  margin-bottom: 5rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.process-step:last-child {
+  margin-bottom: 0;
+}
+
+.process-step.left {
+  padding-right: 55%;
+}
+
+.process-step.right {
+  padding-left: 55%;
+  text-align: right;
+}
+
+.process-step.right .process-content {
+  text-align: left;
+}
+
+/* Icône améliorée sans numéro */
+.process-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--card)) 0%,
+    hsl(var(--background)) 100%
+  );
+  border: 3px solid hsl(var(--primary));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 0 0 0 0 hsla(var(--primary), 0.4);
+}
+
+.process-step:hover .process-icon {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15),
+    0 0 0 10px hsla(var(--primary), 0.2);
+  border-color: hsl(var(--accent));
+}
+
+/* Contenu amélioré */
+.process-content {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--card)) 0%,
+    hsl(var(--background)) 100%
+  );
+  border: 1px solid hsl(var(--border));
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.process-step:hover .process-content {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  border-color: hsla(var(--primary), 0.3);
+}
+
+/* Flèches améliorées */
+.process-content::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 18px solid transparent;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.process-step.left .process-content::before {
+  right: -36px;
+  border-left-color: hsl(var(--card));
+}
+
+.process-step.right .process-content::before {
+  left: -36px;
+  border-right-color: hsl(var(--card));
+}
+
+/* Effet de particules flottantes */
+.process-content::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    hsla(var(--primary), 0.1),
+    hsla(var(--accent), 0.1),
+    hsla(var(--primary), 0.1)
+  );
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.process-step:hover .process-content::after {
+  opacity: 1;
+}
+
+/* Particules flottantes décoratives */
+.process-section .floating-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: hsl(var(--primary));
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float-particle 15s linear infinite;
+}
+
+.process-section .floating-particle:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.process-section .floating-particle:nth-child(2) {
+  top: 60%;
+  right: 15%;
+  animation-delay: 5s;
+}
+
+.process-section .floating-particle:nth-child(3) {
+  top: 80%;
+  left: 20%;
+  animation-delay: 10s;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100px) translateX(50px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Animation de progression sur la ligne */
+.process-timeline .progress-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 6px;
+  height: 0;
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--accent)),
+    hsl(var(--primary))
+  );
+  transform: translateX(-50%);
+  z-index: 2;
+  border-radius: 3px;
+  animation: progress-fill 3s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes progress-fill {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+/* Responsive design amélioré */
+@media (max-width: 768px) {
+  .process-timeline::before {
+    left: 40px;
+    transform: none;
+    width: 3px;
+  }
+
+  .process-timeline::after {
+    left: 40px;
+    transform: none;
+    width: 6px;
+  }
+
+  .process-step.left,
+  .process-step.right {
+    padding-left: 100px;
+    padding-right: 1rem;
+    text-align: left;
+  }
+
+  .process-step.right .process-content {
+    text-align: left;
+  }
+
+  .process-icon {
+    left: 40px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+  }
+
+  .process-content::before {
+    display: none;
+  }
+
+  .process-content {
+    padding: 2rem;
+  }
+
+  .process-section .floating-particle {
+    display: none;
+  }
+}

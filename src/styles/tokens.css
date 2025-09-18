@@ -99,7 +99,6 @@
     --pricing-enterprise: 25 95% 58%;
     --pricing-enterprise-foreground: 0 0% 100%;
   }
-}
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
