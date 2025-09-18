@@ -234,7 +234,7 @@ const AboutSection = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Photo - Animation depuis le centre vers la gauche */}
             <div className="flex justify-center lg:justify-end">
@@ -255,7 +255,6 @@ const AboutSection = () => {
                     className="about-photo rounded-full border-4 border-white shadow-2xl"
                     priority
                   />
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/20 to-accent/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
               </div>
             </div>

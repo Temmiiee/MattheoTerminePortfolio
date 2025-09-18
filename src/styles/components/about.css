@@ -14,7 +14,10 @@
 .about-photo-container::before {
   content: '';
   position: absolute;
-  inset: -8px;
+  top: -8px;
+  left: -16px;
+  right: 16px;
+  bottom: -8px;
   background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--accent)));
   border-radius: 50%;
   z-index: -1;
@@ -35,6 +38,7 @@
 
 .about-photo {
   transition: all 0.3s ease;
+  margin-right: 2rem;
 }
 
 .about-photo:hover {
@@ -48,7 +52,7 @@
 .about-content::before {
   content: '';
   position: absolute;
-  left: -2rem;
+  left: -1rem;
   top: 0;
   bottom: 0;
   width: 4px;
