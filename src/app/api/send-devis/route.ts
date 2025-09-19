@@ -48,20 +48,98 @@ export async function POST(request: NextRequest) {
         <meta charset="utf-8">
         <title>Nouveau Devis - ${devisNumber}</title>
         <style>
-          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #ffffff; }
-          .container { max-width: 800px; margin: 0 auto; padding: 20px; background: #ffffff; }
-          .header { background: #2563eb; color: #ffffff; padding: 24px; }
-          .content { background: #ffffff; padding: 24px; }
-          .section { margin-bottom: 24px; }
-          .section h3 { color: #333333; border-bottom: 2px solid #2563eb; padding-bottom: 8px; margin-top: 0; font-size: 18px; }
-          .client-info { background: #f8f9fa; padding: 16px; margin: 12px 0; }
-          .features { background: #f8f9fa; padding: 16px; }
-          .features ul { margin: 0; padding-left: 20px; }
-          .features li { margin-bottom: 6px; color: #333333; }
-          .total { background: #2563eb; color: #ffffff; padding: 20px; text-align: center; font-size: 20px; font-weight: bold; }
-          .footer { background: #333333; color: #ffffff; padding: 20px; text-align: center; }
-          p { margin: 10px 0; color: #333333; }
-          strong { color: #333333; font-weight: 600; }
+          body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #1f2937; 
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+          }
+          .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          }
+          .header { 
+            background: #1e40af; 
+            color: #ffffff; 
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+          }
+          .header h1 {
+            margin: 0 0 15px 0;
+            font-size: 28px;
+            font-weight: 700;
+          }
+          .content { 
+            background: #ffffff; 
+            padding: 30px;
+            border-left: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+          }
+          .section { 
+            margin-bottom: 30px; 
+          }
+          .section h3 { 
+            color: #1e40af; 
+            border-bottom: 2px solid #1e40af; 
+            padding-bottom: 10px; 
+            margin-top: 0; 
+            font-size: 20px;
+            font-weight: 600;
+          }
+          .client-info { 
+            background: #f8fafc; 
+            padding: 20px; 
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #1e40af;
+          }
+          .features { 
+            background: #f8fafc; 
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1e40af;
+          }
+          .features ul { 
+            margin: 15px 0; 
+            padding-left: 20px; 
+          }
+          .features li { 
+            margin-bottom: 8px; 
+            color: #1f2937; 
+          }
+          .total { 
+            background: #1e40af; 
+            color: #ffffff; 
+            padding: 25px; 
+            text-align: center; 
+            font-size: 22px; 
+            font-weight: 700;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(30, 64, 175, 0.2);
+          }
+          .footer { 
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%); 
+            color: #ffffff; 
+            padding: 25px; 
+            text-align: center;
+            border-radius: 0 0 12px 12px;
+          }
+          p { 
+            margin: 12px 0; 
+            color: #1f2937;
+            line-height: 1.6;
+          }
+          strong { 
+            color: #111827; 
+            font-weight: 700; 
+          }
         </style>
       </head>
       <body>
@@ -128,6 +206,8 @@ export async function POST(request: NextRequest) {
     const mailOptionsToClient = {
       from: process.env.SMTP_FROM || 'noreply@mattheo-termine.fr',
       to: devisData.clientInfo.email,
+      // Copie au prestataire
+      cc: 'mattheotermine104@gmail.com',
       subject: `Votre demande de projet #${devisNumber} a bien été reçue !`,
       html: `
         <!DOCTYPE html>
@@ -135,16 +215,72 @@ export async function POST(request: NextRequest) {
         <head>
           <meta charset="utf-8">
           <title>Confirmation Devis</title>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #ffffff; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; background: #ffffff; }
-            .header { background: #2563eb; color: #ffffff; padding: 24px; text-align: center; }
-            .content { background: #ffffff; padding: 24px; }
-            .footer { background: #333333; color: #ffffff; padding: 20px; text-align: center; }
-            .highlight { background: #2563eb; color: #ffffff; padding: 16px; text-align: center; margin: 20px 0; font-weight: bold; font-size: 16px; }
-            p { margin: 12px 0; color: #333333; }
-            li { margin-bottom: 6px; color: #333333; }
-            strong { color: #333333; font-weight: 600; }
+        <style>
+            body { 
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+              line-height: 1.6; 
+              color: #1f2937;
+              background-color: #f8fafc;
+              margin: 0;
+              padding: 0;
+            }
+            .container { 
+              max-width: 600px; 
+              margin: 0 auto; 
+              padding: 20px;
+              background: #ffffff;
+              border-radius: 12px;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            }
+            .header { 
+              background: #1e40af; 
+              color: #ffffff; 
+              padding: 30px; 
+              text-align: center;
+              border-radius: 12px 12px 0 0;
+            }
+            .header h1 {
+              margin: 0 0 15px 0;
+              font-size: 24px;
+              font-weight: 700;
+            }
+            .content { 
+              background: #ffffff; 
+              padding: 30px;
+              border-left: 1px solid #e5e7eb;
+              border-right: 1px solid #e5e7eb;
+            }
+            .footer { 
+              background: linear-gradient(135deg, #374151 0%, #1f2937 100%); 
+              color: #ffffff; 
+              padding: 25px; 
+              text-align: center;
+              border-radius: 0 0 12px 12px;
+            }
+            .highlight { 
+              background: #1e40af; 
+              color: #ffffff; 
+              padding: 20px; 
+              text-align: center; 
+              margin: 25px 0; 
+              font-weight: 700; 
+              font-size: 18px;
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(30, 64, 175, 0.2);
+            }
+            p { 
+              margin: 15px 0; 
+              color: #1f2937;
+              line-height: 1.6;
+            }
+            li { 
+              margin-bottom: 8px; 
+              color: #1f2937; 
+            }
+            strong { 
+              color: #111827; 
+              font-weight: 700; 
+            }
           </style>
         </head>
         <body>

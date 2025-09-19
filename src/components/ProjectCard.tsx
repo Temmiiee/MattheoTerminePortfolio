@@ -41,25 +41,25 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <p className="mt-2 text-white/95 text-contrast-enhanced">{project.description}</p>
         </div>
 
-        <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-             <div className="flex gap-2">
-                {project.liveLink && (
-                    <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
-                        <Link href={project.liveLink} target="_blank">
-                            <ExternalLink className="mr-2 h-4 w-4" /> Voir le site
-                        </Link>
-                    </Button>
-                )}
-                {project.repoLink && (
-                    <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
-                        <Link href={project.repoLink} target="_blank">
-                            <Github className="mr-2 h-4 w-4" /> Code source
-                        </Link>
-                    </Button>
-                )}
-            </div>
-            <p className="text-white/95 text-sm mt-4 text-contrast-enhanced">{project.longDescription}</p>
-        </div>
+    <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col">
+      <p className="text-white/95 text-sm mb-4 text-contrast-enhanced">{project.longDescription}</p>
+      <div className="flex gap-2 mt-auto">
+        {project.liveLink && (
+          <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
+            <Link href={project.liveLink} target="_blank">
+              <ExternalLink className="mr-2 h-4 w-4" /> Voir le site
+            </Link>
+          </Button>
+        )}
+        {project.repoLink && (
+          <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
+            <Link href={project.repoLink} target="_blank">
+              <Github className="mr-2 h-4 w-4" /> Code source
+            </Link>
+          </Button>
+        )}
+      </div>
+    </div>
       </div>
     </Card>
   );

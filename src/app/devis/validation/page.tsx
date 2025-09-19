@@ -121,56 +121,56 @@ function generateDevisPDF(pdf: jsPDF, devisData: DevisData, devisNumber: string)
   }
 
   if (devisData.maintenance) {
-    pdf.text('Maintenance & Hébergement: Inclus (49€ HT/mois)', margin + 5, currentY + 26);
+    pdf.text('Maintenance & Hebergement: Inclus (49 EUR HT/mois)', margin + 5, currentY + 26);
   }
 
   currentY += 45;
 
   // Features Section if any
   if (devisData.features && devisData.features.length > 0) {
-    pdf.setFontSize(14);
+    pdf.setFontSize(12);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('FONCTIONNALITÉS SPÉCIALES', margin, currentY);
-    currentY += 8;
+    pdf.text('FONCTIONNALITES SPECIALES', margin, currentY);
+    currentY += 6;
 
     devisData.features.forEach((feature) => {
-      pdf.setFontSize(10);
+      pdf.setFontSize(9);
       pdf.setFont('helvetica', 'normal');
-      pdf.text(`• ${feature}`, margin + 5, currentY);
-      currentY += 6;
+      pdf.text(`\u2022 ${feature}`, margin + 5, currentY);
+      currentY += 5;
     });
     
-    currentY += 5;
+    currentY += 3;
   }
 
   // Project Description if provided
   if (devisData.projectDescription) {
-    if (currentY > 230) {
+    if (currentY > 240) {
       pdf.addPage();
       currentY = margin;
     }
     
-    pdf.setFontSize(14);
+    pdf.setFontSize(12);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('DESCRIPTION DÉTAILLÉE', margin, currentY);
-    currentY += 8;
+    pdf.text('DESCRIPTION DETAILLEE', margin, currentY);
+    currentY += 6;
 
-    pdf.setFontSize(10);
+    pdf.setFontSize(9);
     pdf.setFont('helvetica', 'normal');
-    currentY = addText(`"${devisData.projectDescription}"`, margin + 5, currentY, contentWidth - 10);
-    currentY += 10;
+    currentY = addText(`"${devisData.projectDescription}"`, margin + 5, currentY, contentWidth - 10, 9);
+    currentY += 6;
   }
 
   // Pricing Section
-  if (currentY > 220) {
+  if (currentY > 240) {
     pdf.addPage();
     currentY = margin;
   }
 
-  pdf.setFontSize(14);
+  pdf.setFontSize(12);
   pdf.setFont('helvetica', 'bold');
-  pdf.text('CONDITIONS FINANCIÈRES', margin, currentY);
-  currentY += 8;
+  pdf.text('CONDITIONS FINANCIERES', margin, currentY);
+  currentY += 6;
 
   // Total price box
   pdf.setFillColor(lightBlue[0], lightBlue[1], lightBlue[2]);
@@ -181,54 +181,54 @@ function generateDevisPDF(pdf: jsPDF, devisData: DevisData, devisNumber: string)
   pdf.setFontSize(16);
   pdf.setFont('helvetica', 'bold');
   pdf.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-  pdf.text(`Total du projet: ${devisData.total}€ HT`, margin + 5, currentY + 8);
+  pdf.text(`Total du projet: ${devisData.total} EUR HT`, margin + 5, currentY + 8);
 
   currentY += 25;
 
   // Payment terms
   pdf.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
-  pdf.setFontSize(12);
+  pdf.setFontSize(11);
   pdf.setFont('helvetica', 'bold');
-  pdf.text('Modalités de paiement:', margin, currentY);
+  pdf.text('Modalites de paiement:', margin, currentY);
+  currentY += 6;
+
+  pdf.setFontSize(9);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text(`\u2022 Acompte a la signature: 30% (${Math.round(devisData.total * 0.3)} EUR)`, margin + 5, currentY);
+  currentY += 5;
+  pdf.text(`\u2022 Solde a la livraison: 70% (${Math.round(devisData.total * 0.7)} EUR)`, margin + 5, currentY);
   currentY += 8;
 
-  pdf.setFontSize(10);
-  pdf.setFont('helvetica', 'normal');
-  pdf.text(`• Acompte à la signature: 30% (${Math.round(devisData.total * 0.3)}€)`, margin + 5, currentY);
-  currentY += 6;
-  pdf.text(`• Solde à la livraison: 70% (${Math.round(devisData.total * 0.7)}€)`, margin + 5, currentY);
-  currentY += 10;
-
   if (devisData.maintenance) {
-    pdf.text('• Maintenance: facturation mensuelle selon convenance', margin + 5, currentY);
-    currentY += 10;
+    pdf.text('\u2022 Maintenance: facturation mensuelle selon convenance', margin + 5, currentY);
+    currentY += 8;
   }
 
   // Important notice
-  if (currentY > 250) {
+  if (currentY > 260) {
     pdf.addPage();
     currentY = margin;
   }
 
   pdf.setFillColor(254, 252, 232);
-  pdf.rect(margin, currentY - 3, contentWidth, 30, 'F');
+  pdf.rect(margin, currentY - 2, contentWidth, 20, 'F');
   pdf.setDrawColor(234, 179, 8);
-  pdf.rect(margin, currentY - 3, contentWidth, 30, 'S');
+  pdf.rect(margin, currentY - 2, contentWidth, 20, 'S');
 
-  pdf.setFontSize(12);
+  pdf.setFontSize(11);
   pdf.setFont('helvetica', 'bold');
   pdf.setTextColor(146, 64, 14);
-  pdf.text('⚠️ DOCUMENT NON CONTRACTUEL', margin + 5, currentY + 8);
+  pdf.text('DOCUMENT NON CONTRACTUEL', margin + 5, currentY + 6);
 
-  pdf.setFontSize(9);
+  pdf.setFontSize(8);
   pdf.setFont('helvetica', 'normal');
   pdf.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
   currentY = addText(
-    'Ce document est une pré-étude indicative. Il ne constitue pas un devis légal. Le prestataire vous enverra un devis officiel après validation du projet.',
+    'Ce document est une pre-etude indicative. Il ne constitue pas un devis legal. Le prestataire vous enverra un devis officiel apres validation du projet.',
     margin + 5,
-    currentY + 15,
+    currentY + 10,
     contentWidth - 10,
-    9
+    8
   );
 
   // Footer
@@ -320,7 +320,7 @@ function DevisValidationContent() {
   const today = new Date().toLocaleDateString('fr-FR');
 
   return (
-    <div className="min-h-screen bg-white py-12">
+    <div className="min-h-screen bg-background py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -330,8 +330,8 @@ function DevisValidationContent() {
               Retour au calculateur
             </Link>
           </Button>
-          <h1 className="text-3xl font-bold text-center mb-2 text-black">Demande de projet</h1>
-          <p className="text-center text-gray-700">
+          <h1 className="text-3xl font-bold text-center mb-2">Demande de projet</h1>
+          <p className="text-center text-muted-foreground">
             Vérifiez les détails de votre demande avant envoi.<br />
             Ce document est une pré-étude indicative et non un devis contractuel.
           </p>
@@ -474,7 +474,7 @@ function DevisValidationContent() {
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
               }}>
-                🎯 RÉSUMÉ DU PROJET
+                  🎯 RESUME DU PROJET
               </h3>
               <div style={{ 
                 backgroundColor: '#f8fafc',
@@ -535,7 +535,7 @@ function DevisValidationContent() {
                     marginBottom: '12px'
                   }}>
                     <p style={{ margin: '0 0 8px 0', fontSize: '13px' }}>
-                      <strong style={{ color: '#1e40af' }}>Fonctionnalités spéciales :</strong>
+                      <strong style={{ color: '#1e40af' }}>Fonctionnalites speciales :</strong>
                     </p>
                     <ul style={{ margin: '0', paddingLeft: '16px', fontSize: '13px', color: '#1a1a1a' }}>
                       {devisData.features.map((feature, index) => (
@@ -554,7 +554,7 @@ function DevisValidationContent() {
                     marginBottom: '12px'
                   }}>
                     <p style={{ margin: '0', fontSize: '13px' }}>
-                      <strong style={{ color: '#1e40af' }}>Description détaillée :</strong><br />
+                      <strong style={{ color: '#1e40af' }}>Description detaillee :</strong><br />
                       <span style={{ fontSize: '13px', color: '#1a1a1a', fontStyle: 'italic' }}>
                         &ldquo;{devisData.projectDescription}&rdquo;
                       </span>
@@ -570,9 +570,9 @@ function DevisValidationContent() {
                     border: '1px solid #10b981'
                   }}>
                     <p style={{ margin: '0', fontSize: '13px' }}>
-                      <strong style={{ color: '#059669' }}>🔧 Maintenance & Hébergement :</strong><br />
+                      <strong style={{ color: '#059669' }}>🔧 Maintenance & Hebergement :</strong><br />
                       <span style={{ fontSize: '14px', color: '#1a1a1a' }}>
-                        Inclus (49€ HT / mois)
+                        Inclus (49 EUR HT / mois)
                       </span>
                     </p>
                   </div>
@@ -669,7 +669,7 @@ function DevisValidationContent() {
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
               }}>
-                💰 CONDITIONS FINANCIÈRES
+                💰 CONDITIONS FINANCIERES
               </h3>
               
               {/* Tableau récapitulatif des coûts */}
@@ -712,7 +712,7 @@ function DevisValidationContent() {
                       padding: '6px 12px',
                       borderRadius: '4px'
                     }}>
-                      {devisData.total} €
+                      {devisData.total} EUR
                     </span>
                   </div>
                   
@@ -727,7 +727,7 @@ function DevisValidationContent() {
                       border: '1px solid #e2e8f0'
                     }}>
                       <span style={{ fontSize: '14px', fontWeight: '600', color: '#1a1a1a' }}>
-                        🔧 Maintenance & Hébergement (HT)
+                        🔧 Maintenance & Hebergement (HT)
                       </span>
                       <span style={{ 
                         fontSize: '16px', 
@@ -737,7 +737,7 @@ function DevisValidationContent() {
                         padding: '4px 8px',
                         borderRadius: '4px'
                       }}>
-                        49€ / mois
+                        49 EUR / mois
                       </span>
                     </div>
                   )}
@@ -759,7 +759,7 @@ function DevisValidationContent() {
                   display: 'flex',
                   alignItems: 'center'
                 }}>
-                  💳 MODALITÉS DE PAIEMENT
+                  💳 MODALITES DE PAIEMENT
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                   <div style={{ 
@@ -769,10 +769,10 @@ function DevisValidationContent() {
                     border: '1px solid #eab308'
                   }}>
                     <p style={{ margin: '0', fontSize: '13px', fontWeight: '600', color: '#92400e' }}>
-                      1️⃣ Acompte à la signature
+                      1️⃣ Acompte a la signature
                     </p>
                     <p style={{ margin: '4px 0 0 0', fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>
-                      30% ({Math.round(devisData.total * 0.3)} €)
+                      30% ({Math.round(devisData.total * 0.3)} EUR)
                     </p>
                   </div>
                   <div style={{ 
@@ -782,10 +782,10 @@ function DevisValidationContent() {
                     border: '1px solid #eab308'
                   }}>
                     <p style={{ margin: '0', fontSize: '13px', fontWeight: '600', color: '#92400e' }}>
-                      2️⃣ Solde à la livraison
+                      2️⃣ Solde a la livraison
                     </p>
                     <p style={{ margin: '4px 0 0 0', fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>
-                      70% ({Math.round(devisData.total * 0.7)} €)
+                      70% ({Math.round(devisData.total * 0.7)} EUR)
                     </p>
                   </div>
                 </div>

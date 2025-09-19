@@ -1,9 +1,13 @@
 "use client";
+// Wrapper pour usage dans une Suspense boundary
+export function QuoteCalculatorWrapper(props: Omit<QuoteCalculatorProps, "searchParams">) {
+  const searchParams = useSearchParams();
+  return <QuoteCalculator {...props} searchParams={searchParams} />;
+}
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -22,6 +26,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   siteType: z.enum(
@@ -44,12 +49,16 @@ const formSchema = z.object({
   phone: z.string().optional(),
   company: z.string().default(""),
   technology: z.enum(
-    ["react", "vue", "nextjs", "twig", "wordpress", "no-preference"],
+    ["react", "vue", "nextjs", "wordpress", "no-preference"],
     "Veuillez sélectionner une technologie."
   ),
 });
 
 type FormValues = z.infer<typeof formSchema>;
+
+export interface QuoteCalculatorProps {
+  onFormChange?: (values: FormValues) => void;
+}
 
 const featureOptions = [
   {
@@ -69,11 +78,6 @@ const featureOptions = [
     price: 450,
   },
   {
-    id: "ecommerce-variations",
-    label: "Variations de produits (pour E-commerce)",
-    price: 300,
-  },
-  {
     id: "analytics",
     label: "Intégration et configuration d'analytics",
     price: 80,
@@ -90,7 +94,7 @@ const featureOptions = [
   },
   {
     id: "admin-panel",
-    label: "Tableau de bord administrateur simple",
+    label: "Tableau de bord administrateur",
     price: 600,
   },
 ];
@@ -111,11 +115,10 @@ const pricingModel = {
   maintenance: 49,
 };
 
-export function QuoteCalculator() {
+export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorProps & { searchParams?: ReturnType<typeof useSearchParams> }) {
   const [isDragActive, setIsDragActive] = useState(false);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const searchParams = useSearchParams();
   const params = useMemo(
     () => ({
       siteType: searchParams?.get("siteType"),
@@ -148,7 +151,6 @@ export function QuoteCalculator() {
       params.technology === "react" ||
       params.technology === "vue" ||
       params.technology === "nextjs" ||
-      params.technology === "twig" ||
       params.technology === "wordpress" ||
       params.technology === "no-preference"
         ? (params.technology as FormValues["technology"])
@@ -162,52 +164,16 @@ export function QuoteCalculator() {
     defaultValues,
   }) as ReturnType<typeof useForm<FormValues>>;
 
-  const watchedValues = form.watch();
+  // Abonnement à form.watch pour éviter la boucle infinie
+  React.useEffect(() => {
+    if (!onFormChange) return;
+    const subscription = form.watch((values) => {
+      onFormChange(values as FormValues);
+    });
+    return () => subscription.unsubscribe();
+  }, [form, onFormChange]);
 
-  const {
-    total: totalPrice,
-    maintenanceCost,
-    details,
-  } = useMemo(() => {
-    let base = 0;
-    const details: Record<string, number> = {};
-    const siteType = watchedValues.siteType || "vitrine";
-    const designType = watchedValues.designType || "template";
-    if (siteType) {
-      const price = pricingModel.siteType[siteType];
-      base += price;
-      details[`Site ${siteType}`] = price;
-    }
-    if (designType) {
-      const price = pricingModel.designType[designType];
-      base += price;
-      details[`Design ${designType}`] = price;
-    }
-    let featurePrice = 0;
-    if (watchedValues.features) {
-      watchedValues.features.forEach((featureId) => {
-        if (featureId === "ecommerce-variations" && siteType !== "ecommerce")
-          return;
-        const feature = featureOptions.find((f) => f.id === featureId);
-        if (feature) {
-          featurePrice += feature.price;
-          details[feature.label] = feature.price;
-        }
-      });
-    }
-    const maintenance = watchedValues.maintenance
-      ? pricingModel.maintenance
-      : 0;
-    if (maintenance > 0) {
-      details["Maintenance & Hébergement"] = maintenance;
-    }
-    return {
-      total: base + featurePrice,
-      maintenanceCost: maintenance,
-      details,
-    };
-  }, [watchedValues]);
-
+  // On expose la fonction de soumission pour le composant d'estimation
   const onSubmit = (data: FormValues) => {
     const devisData = {
       siteType: data.siteType,
@@ -225,75 +191,112 @@ export function QuoteCalculator() {
         phone: data.phone,
       },
       projectDescription: data.projectDescription,
-      total: totalPrice,
-      details: details,
     };
     localStorage.setItem("devisData", JSON.stringify(devisData));
     window.location.href = "/devis/validation";
   };
 
   return (
-    <div className="space-y-8">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="siteType"
-            render={({ field }) => (
-              <FormItem className="space-y-3">
-                <FormLabel className="text-lg font-semibold">
-                  1. Quel type de site souhaitez-vous ?
-                </FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    className="flex flex-col space-y-2"
-                  >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ml-12">
+            <FormField
+              control={form.control}
+              name="siteType"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel className="text-lg font-semibold">
+                    1. Quel type de site souhaitez-vous ?
+                  </FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="flex flex-col space-y-2"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <FormItem className={cn(
+                          "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
+                          field.value === "vitrine" ? "border-primary bg-primary/5" : "border-border"
+                        )}>
+                          <FormControl>
+                            <RadioGroupItem value="vitrine" className="sr-only" />
+                          </FormControl>
+                          <FormLabel className="font-normal w-full cursor-pointer">
+                            <span className="font-bold block">Site Vitrine</span>
+                            <span className="text-sm text-muted-foreground">
+                              Présenter votre activité et vos services.
+                            </span>
+                          </FormLabel>
+                          <div className="ml-auto">
+                            <div className={cn(
+                              "w-4 h-4 rounded-full border-2 relative",
+                              field.value === "vitrine" ? "border-primary bg-primary" : "border-muted-foreground"
+                            )}>
+                              <div className={cn(
+                                "absolute inset-1 rounded-full bg-white transition-opacity duration-200",
+                                field.value === "vitrine" ? "opacity-100" : "opacity-0"
+                              )}></div>
+                            </div>
+                          </div>
+                        </FormItem>
+                        <FormItem className={cn(
+                          "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
+                          field.value === "ecommerce" ? "border-primary bg-primary/5" : "border-border"
+                        )}>
+                          <FormControl>
+                            <RadioGroupItem value="ecommerce" className="sr-only" />
+                          </FormControl>
+                          <FormLabel className="font-normal w-full cursor-pointer">
+                            <span className="font-bold block">E-commerce</span>
+                            <span className="text-sm text-muted-foreground">
+                              Vendre des produits en ligne (base).
+                            </span>
+                          </FormLabel>
+                          <div className="ml-auto">
+                            <div className={cn(
+                              "w-4 h-4 rounded-full border-2 relative",
+                              field.value === "ecommerce" ? "border-primary bg-primary" : "border-muted-foreground"
+                            )}>
+                              <div className={cn(
+                                "absolute inset-1 rounded-full bg-white transition-opacity duration-200",
+                                field.value === "ecommerce" ? "opacity-100" : "opacity-0"
+                              )}></div>
+                            </div>
+                          </div>
+                        </FormItem>
+                      </div>
+                      <FormItem className={cn(
+                        "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
+                        field.value === "webapp" ? "border-primary bg-primary/5" : "border-border"
+                      )}>
                         <FormControl>
-                          <RadioGroupItem value="vitrine" />
+                          <RadioGroupItem value="webapp" className="sr-only" />
                         </FormControl>
-                        <FormLabel className="font-normal w-full">
-                          <span className="font-bold block">Site Vitrine</span>
+                        <FormLabel className="font-normal w-full cursor-pointer">
+                          <span className="font-bold block">Application Web</span>
                           <span className="text-sm text-muted-foreground">
-                            Présenter votre activité et vos services.
+                            Projet complexe avec des fonctionnalités sur mesure
+                            (SaaS, plateforme, etc.).
                           </span>
                         </FormLabel>
+                        <div className="ml-auto">
+                          <div className={cn(
+                            "w-4 h-4 rounded-full border-2 relative",
+                            field.value === "webapp" ? "border-primary bg-primary" : "border-muted-foreground"
+                          )}>
+                            <div className={cn(
+                              "absolute inset-1 rounded-full bg-white transition-opacity duration-200",
+                              field.value === "webapp" ? "opacity-100" : "opacity-0"
+                            )}></div>
+                          </div>
+                        </div>
                       </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
-                        <FormControl>
-                          <RadioGroupItem value="ecommerce" />
-                        </FormControl>
-                        <FormLabel className="font-normal w-full">
-                          <span className="font-bold block">E-commerce</span>
-                          <span className="text-sm text-muted-foreground">
-                            Vendre des produits en ligne (base).
-                          </span>
-                        </FormLabel>
-                      </FormItem>
-                    </div>
-                    <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
-                      <FormControl>
-                        <RadioGroupItem value="webapp" />
-                      </FormControl>
-                      <FormLabel className="font-normal w-full">
-                        <span className="font-bold block">Application Web</span>
-                        <span className="text-sm text-muted-foreground">
-                          Projet complexe avec des fonctionnalités sur mesure
-                          (SaaS, plateforme, etc.).
-                        </span>
-                      </FormLabel>
-                    </FormItem>
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Suppression du champ WordPress */}
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
           <FormField
             control={form.control}
@@ -309,11 +312,14 @@ export function QuoteCalculator() {
                     value={field.value}
                     className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4"
                   >
-                    <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
+                    <FormItem className={cn(
+                      "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
+                      field.value === "template" ? "border-primary bg-primary/5" : "border-border"
+                    )}>
                       <FormControl>
-                        <RadioGroupItem value="template" />
+                        <RadioGroupItem value="template" className="sr-only" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full">
+                      <FormLabel className="font-normal w-full cursor-pointer">
                         <span className="font-bold block">
                           Design basé sur un template
                         </span>
@@ -323,12 +329,26 @@ export function QuoteCalculator() {
                           personnalisation légère.
                         </span>
                       </FormLabel>
+                      <div className="ml-auto">
+                        <div className={cn(
+                          "w-4 h-4 rounded-full border-2 relative",
+                          field.value === "template" ? "border-primary bg-primary" : "border-muted-foreground"
+                        )}>
+                          <div className={cn(
+                            "absolute inset-1 rounded-full bg-white transition-opacity duration-200",
+                            field.value === "template" ? "opacity-100" : "opacity-0"
+                          )}></div>
+                        </div>
+                      </div>
                     </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 has-[:checked]:border-primary">
+                    <FormItem className={cn(
+                      "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
+                      field.value === "custom" ? "border-primary bg-primary/5" : "border-border"
+                    )}>
                       <FormControl>
-                        <RadioGroupItem value="custom" />
+                        <RadioGroupItem value="custom" className="sr-only" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full">
+                      <FormLabel className="font-normal w-full cursor-pointer">
                         <span className="font-bold block">
                           Design sur mesure
                         </span>
@@ -338,6 +358,17 @@ export function QuoteCalculator() {
                           adapté à vos besoins spécifiques.
                         </span>
                       </FormLabel>
+                      <div className="ml-auto">
+                        <div className={cn(
+                          "w-4 h-4 rounded-full border-2 relative",
+                          field.value === "custom" ? "border-primary bg-primary" : "border-muted-foreground"
+                        )}>
+                          <div className={cn(
+                            "absolute inset-1 rounded-full bg-white transition-opacity duration-200",
+                            field.value === "custom" ? "opacity-100" : "opacity-0"
+                          )}></div>
+                        </div>
+                      </div>
                     </FormItem>
                   </RadioGroup>
                 </FormControl>
@@ -360,60 +391,57 @@ export function QuoteCalculator() {
                     intégrer.
                   </FormDescription>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {featureOptions
-                    .map((item) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {featureOptions.map((item) => {
+                    // Définir les fonctionnalités optionnel gratuite selon le type de site
+                    let forcedIncluded = false;
+                    let displayPrice = item.price;
+                    let info = "";
+                    const currentValues = form.getValues();
+                    if (currentValues.siteType === "webapp" && item.id === "user-accounts") {
+                      forcedIncluded = true;
+                      displayPrice = 0;
+                      info = "(inclus d'office)";
+                    }
+                    // Ajoutez ici d'autres règles si besoin
+                    return (
                       <FormField
                         key={item.id}
                         control={form.control}
                         name="features"
-                        render={({ field }) => {
-                          return (
-                            <FormItem
-                              key={item.id}
-                              className="flex flex-row items-start space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary"
-                            >
-                              <FormControl>
-                                <Checkbox
-                                  checked={field.value?.includes(item.id)}
-                                  onCheckedChange={(checked) => {
-                                    return checked
-                                      ? field.onChange([
-                                          ...(field.value || []),
-                                          item.id,
-                                        ])
-                                      : field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== item.id
-                                          )
-                                        );
-                                  }}
-                                />
-                              </FormControl>
-                              <FormLabel className="font-normal w-full">
-                                {item.label}
-                              </FormLabel>
-                            </FormItem>
-                          );
-                        }}
+                        render={({ field }) => (
+                          <FormItem
+                            key={item.id}
+                            className="flex flex-row items-start space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item.id) || forcedIncluded}
+                                onCheckedChange={(checked) => {
+                                  if (forcedIncluded) return;
+                                  return checked
+                                    ? field.onChange([
+                                        ...(field.value || []),
+                                        item.id,
+                                      ])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== item.id
+                                        )
+                                      );
+                                }}
+                                disabled={forcedIncluded}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal w-full">
+                              {item.label} <span className="text-muted-foreground">- {displayPrice}€ {info}</span>
+                            </FormLabel>
+                          </FormItem>
+                        )}
                       />
-                    ))
-                    .filter(
-                      (item) =>
-                        !(
-                          item.key === "ecommerce-variations" &&
-                          watchedValues.siteType !== "ecommerce"
-                        )
-                    )}
+                    );
+                  })}
                 </div>
-                {watchedValues.siteType !== "ecommerce" &&
-                  watchedValues.features?.includes("ecommerce-variations") && (
-                    <p className="text-sm text-red-500 mt-2">
-                      La fonctionnalité &quot;Variations de produits&quot;
-                      n&apos;est pertinente que pour un site E-commerce et a été
-                      retirée de l&apos;estimation.
-                    </p>
-                  )}
                 <FormMessage />
               </FormItem>
             )}
@@ -429,8 +457,8 @@ export function QuoteCalculator() {
                     4. Maintenance & Hébergement (Optionnel)
                   </FormLabel>
                   <FormDescription>
-                    Souscrire à l&apos;offre de maintenance mensuelle pour la
-                    tranquillité d&apos;esprit.
+                    Souscrire à l&apos;offre de maintenance mensuelle pour la tranquillité d&apos;esprit.<br />
+                    <span className="font-semibold text-primary">Prix : {pricingModel.maintenance}€ / mois</span>
                   </FormDescription>
                 </div>
                 <FormControl>
@@ -442,8 +470,6 @@ export function QuoteCalculator() {
               </FormItem>
             )}
           />
-
-          {/* Champ Nombre de pages estimé supprimé */}
 
           <FormField
             control={form.control}
@@ -487,12 +513,6 @@ export function QuoteCalculator() {
                     </FormItem>
                     <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
                       <FormControl>
-                        <RadioGroupItem value="twig" />
-                      </FormControl>
-                      <FormLabel className="font-normal w-full">Twig</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
-                      <FormControl>
                         <RadioGroupItem value="wordpress" />
                       </FormControl>
                       <FormLabel className="font-normal w-full">
@@ -523,7 +543,7 @@ export function QuoteCalculator() {
               Ces informations sont nécessaires pour établir le devis formel.
             </FormDescription>
           </div>
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col md:flex-row gap-6">
             <FormField
               control={form.control}
               name="name"
@@ -743,36 +763,7 @@ export function QuoteCalculator() {
               );
             }}
           />
-
-          <div className="mt-8 py-6">
-            <h3 className="text-2xl font-bold font-headline text-center">
-              Estimation du devis
-            </h3>
-            <div className="mt-4 bg-secondary p-6 rounded-lg text-center">
-              <>
-                <p className="text-4xl font-bold text-primary">
-                  {totalPrice !== null ? totalPrice : 0} €{" "}
-                  <span className="text-lg font-normal text-muted-foreground">
-                    HT
-                  </span>
-                </p>
-                {maintenanceCost > 0 && (
-                  <p className="text-xl font-semibold text-primary mt-2">
-                    + {maintenanceCost} € / mois
-                  </p>
-                )}
-                <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-                  Cette estimation est à titre indicatif. Elle évolue en
-                  fonction de vos choix.
-                </p>
-                <Button type="submit" size="lg" className="mt-6">
-                  Valider le devis
-                </Button>
-              </>
-            </div>
-          </div>
         </form>
       </Form>
-    </div>
   );
 }

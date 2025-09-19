@@ -37,7 +37,7 @@ export const projects: Project[] = [
     slug: "tdm-factory",
     title: "TDM Factory",
     description: "Une application de fouille de texte (text mining) pour analyser divers types de corpus.",
-    longDescription: "TDM Factory est une application web puissante de fouille de texte qui permet aux chercheurs et analystes de lancer des traitements sur de grands volumes de données. Elle supporte divers formats de fichiers, incluant les fichiers texte bruts, les PDF, et les corpus scientifiques tabulaires (CSV, Excel). De plus, elle s'intègre avec l'API IstexSearch pour analyser directement des résultats de recherche. L'interface a été pensée pour être intuitive, même pour un utilisateur non-technique.",
+    longDescription: "TDM Factory est une application web de fouille de texte qui permet aux chercheurs et analystes de lancer des traitements sur de grands volumes de données. Elle supporte divers formats de fichiers, incluant les fichiers texte bruts, les PDF, et les corpus scientifiques tabulaires (CSV, Excel). De plus, elle s'intègre avec l'API IstexSearch pour analyser directement des résultats de recherche. L'interface a été pensée pour être intuitive, même pour un utilisateur non-technique.",
     technologies: [
       { name: "React", icon: CodeXml },
       { name: "Node.js", icon: Cpu },
@@ -47,5 +47,18 @@ export const projects: Project[] = [
     dataAiHint: "data analysis",
     liveLink: "https://tdm-factory.services.istex.fr/",
     repoLink: "https://github.com/Inist-CNRS/tdm-factory",
+  },
+  {
+    slug: "mimoo-portfolio",
+    title: "Mimoo Portfolio",
+    description: "Un portfolio artistique avec un thème nature et illustrations.",
+    longDescription: "Mimoo Portfolio est un site vitrine artistique mettant en avant des créations originales dans un univers nature, doux et coloré. Le design est pensé pour valoriser les œuvres et offrir une navigation immersive et poétique.",
+    technologies: [
+      { name: "HTML/CSS", icon: CodeXml },
+      { name: "JavaScript", icon: CodeXml }
+    ],
+    imageUrl: "/images/projects/mimoo-portfolio.jpg",
+    dataAiHint: "nature art portfolio",
+    liveLink: "https://temmiiee.github.io/Mimoo-portfolio/",
   },
 ];

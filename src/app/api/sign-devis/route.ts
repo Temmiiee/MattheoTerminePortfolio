@@ -33,18 +33,104 @@ export async function POST(request: NextRequest) {
         <meta charset="utf-8">
         <title>Devis Signé - ${devisId}</title>
         <style>
-          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-          .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-          .header { background: #10b981; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-          .content { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; }
-          .signature-box { background: white; padding: 15px; border-radius: 5px; margin: 15px 0; text-align: center; }
-          .signature-img { max-width: 300px; border: 1px solid #ddd; border-radius: 5px; }
-          .client-info { background: white; padding: 15px; border-radius: 5px; margin: 10px 0; }
-          .action-buttons { text-align: center; margin: 20px 0; }
-          .btn { display: inline-block; padding: 12px 24px; margin: 0 10px; text-decoration: none; border-radius: 5px; font-weight: bold; }
-          .btn-accept { background: #10b981; color: white; }
-          .btn-reject { background: #ef4444; color: white; }
-          .footer { background: #333; color: white; padding: 15px; text-align: center; border-radius: 0 0 8px 8px; }
+          body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #1f2937; 
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+          }
+          .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          }
+          .header { 
+            background: linear-gradient(135deg, #a259ff 0%, #8b3ff0 100%); 
+            color: white; 
+            padding: 30px; 
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+          }
+          .header h1 {
+            margin: 0 0 15px 0;
+            font-size: 28px;
+            font-weight: 700;
+          }
+          .content { 
+            background: #ffffff; 
+            padding: 30px; 
+            border-left: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+          }
+          .signature-box { 
+            background: #f8fafc; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 20px 0; 
+            text-align: center;
+            border: 1px solid #e5e7eb;
+          }
+          .signature-img { 
+            max-width: 300px; 
+            border: 2px solid #a259ff; 
+            border-radius: 8px; 
+            padding: 10px;
+            background: white;
+          }
+          .client-info { 
+            background: #f8fafc; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 15px 0;
+            border-left: 4px solid #a259ff;
+          }
+          .action-buttons { 
+            text-align: center; 
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 8px;
+          }
+          .btn { 
+            display: inline-block; 
+            padding: 14px 28px; 
+            margin: 0 10px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s;
+          }
+          .btn-accept { 
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+            color: white;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+          }
+          .btn-reject { 
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); 
+            color: white;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+          }
+          .footer { 
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%); 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+            border-radius: 0 0 12px 12px;
+          }
+          .warning-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #f59e0b;
+          }
         </style>
       </head>
       <body>
@@ -81,7 +167,7 @@ export async function POST(request: NextRequest) {
               </a>
             </div>
 
-            <div style="background: #fef3c7; padding: 15px; border-radius: 5px; margin: 15px 0;">
+            <div class="warning-box">
               <p><strong>⏰ Important :</strong> Répondez rapidement au client pour maintenir une bonne relation commerciale.</p>
             </div>
           </div>
@@ -103,13 +189,79 @@ export async function POST(request: NextRequest) {
         <meta charset="utf-8">
         <title>Devis Signé - Confirmation</title>
         <style>
-          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-          .header { background: #3F51B5; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-          .content { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; }
-          .footer { background: #333; color: white; padding: 15px; text-align: center; border-radius: 0 0 8px 8px; }
-          .highlight { background: #10b981; color: white; padding: 15px; border-radius: 5px; text-align: center; margin: 15px 0; }
-          .timeline { background: white; padding: 15px; border-radius: 5px; margin: 15px 0; }
+          body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #1f2937;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+          }
+          .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          }
+          .header { 
+            background: linear-gradient(135deg, #a259ff 0%, #8b3ff0 100%); 
+            color: white; 
+            padding: 30px; 
+            text-align: center; 
+            border-radius: 12px 12px 0 0;
+          }
+          .header h1 {
+            margin: 0 0 15px 0;
+            font-size: 24px;
+            font-weight: 700;
+          }
+          .content { 
+            background: #ffffff; 
+            padding: 30px;
+            border-left: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+          }
+          .footer { 
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%); 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+            border-radius: 0 0 12px 12px;
+          }
+          .highlight { 
+            background: linear-gradient(135deg, #a259ff 0%, #8b3ff0 100%); 
+            color: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            text-align: center; 
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(162, 89, 255, 0.2);
+          }
+          .highlight h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+          }
+          .timeline { 
+            background: #f8fafc; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 20px 0;
+            border-left: 4px solid #a259ff;
+          }
+          .timeline h3 {
+            color: #a259ff;
+            margin-top: 0;
+          }
+          .timeline ol {
+            margin: 15px 0;
+            padding-left: 20px;
+          }
+          .timeline li {
+            margin: 8px 0;
+            color: #4b5563;
+          }
         </style>
       </head>
       <body>

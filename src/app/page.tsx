@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CodeXml, Gauge, Palette, Accessibility, CheckCircle2, Search, Rocket, PencilRuler, Download, Mail, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -57,7 +57,7 @@ const processSteps = [
   {
     icon: Rocket,
     title: "4. Déploiement",
-    description: "Je m'occupe de la mise en ligne de votre site sur votre hébergement et assure son bon fonctionnement.",
+    description: "Je mets votre site en ligne sur l’hébergement choisi (le vôtre ou celui que je gère pour vous), et je veille à ce qu’il soit sécurisé, rapide et accessible dès sa mise en service.",
   },
 ];
 
@@ -297,12 +297,32 @@ const AboutSection = () => {
               )}
               style={{ transitionDelay: "400ms" }}
               >
-                <Button asChild size="lg" className="cv-button group">
-                  <Link href="/cv-mattheo-termine.pdf" target="_blank" rel="noopener noreferrer">
-                    <Download className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                    Télécharger mon CV
-                  </Link>
-                </Button>
+              <Button asChild size="lg" className="cv-button group">
+                <Link
+                  href="/cv-mattheo-termine.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Voir mon CV dans une nouvelle fenêtre"
+                  className="flex items-center justify-center gap-2"
+                >
+                  Voir mon CV
+                    {/* Icône d'ouverture dans une nouvelle fenêtre */}
+                    <svg
+                      className="w-5 h-5 text-black"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                </Link>
+              </Button>
               </div>
             </div>
           </div>
@@ -600,64 +620,176 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      <AnimatedSection id="pricing" className="py-24 bg-secondary/30" aria-labelledby="pricing-title">
+      <AnimatedSection 
+        id="pricing" 
+        className="py-24 bg-secondary/30" 
+        aria-labelledby="pricing-title"
+        aria-describedby="pricing-description"
+      >
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 id="pricing-title" className="text-3xl md:text-4xl font-bold mb-4">
-              Mes Tarifs
+          <header className="text-center mb-16">
+            <h2 id="pricing-title" className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              Mes Tarifs de Création de Sites Web
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Des solutions adaptées à tous les budgets, de la vitrine simple à l&apos;application complexe
+            <p id="pricing-description" className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Des solutions adaptées à tous les budgets, de la vitrine simple à l&apos;application complexe. 
+              Tarifs transparents pour développeur web freelance spécialisé en accessibilité RGAA.
             </p>
+          </header>
+          
+          <div 
+            ref={pricingObserverRef as React.RefObject<HTMLDivElement>} 
+            className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+            role="group"
+            aria-label="Offres tarifaires de création de sites web"
+            style={{ paddingTop: '2rem', overflow: 'visible' }}
+          >
+            {pricingPlans.map((plan, index) => {
+              const planId = `pricing-plan-${index + 1}`;
+              const isBasic = index === 0;
+              const isPremium = plan.featured;
+              const isPro = index === 2;
+              const isEnterprise = index === 3;
+              
+              return (
+                <article 
+                  key={index}
+                  id={planId}
+                  className={cn(
+                    "relative transition-all duration-700 ease-out bg-card border border-border rounded-lg flex flex-col",
+                    "hover:shadow-xl hover:-translate-y-1",
+                    plan.featured && "ring-2 ring-primary shadow-lg scale-105",
+                    pricingVisible[index] 
+                      ? "opacity-100 translate-y-0 scale-100" 
+                      : "opacity-0 translate-y-8 scale-95"
+                  )}
+                  style={{
+                    transitionDelay: `${index * 150}ms`,
+                    zIndex: plan.featured ? 10 : 1,
+                    overflow: 'visible'
+                  }}
+                  role="region"
+                  aria-labelledby={`${planId}-title`}
+                  aria-describedby={`${planId}-description ${planId}-features`}
+                >
+                  {plan.featured && (
+                    <div 
+                      className="absolute left-1/2 transform -translate-x-1/2" 
+                      style={{ 
+                        top: '-12px',
+                        zIndex: 50
+                      }}
+                    >
+                      <span 
+                        className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium shadow-lg border-2 border-white"
+                        aria-label="Offre la plus populaire"
+                        style={{ 
+                          position: 'relative',
+                          display: 'inline-block',
+                          whiteSpace: 'nowrap',
+                          boxShadow: '0 4px 12px rgba(162, 89, 255, 0.3)'
+                        }}
+                      >
+                        🌟 Populaire
+                      </span>
+                    </div>
+                  )}
+                  
+                  <header className={cn(
+                    "pricing-card-header p-6 text-center border-b border-border",
+                    isBasic && "bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20",
+                    isPremium && "bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20",
+                    isPro && "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20",
+                    isEnterprise && "bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20"
+                  )}>
+                    <h3 id={`${planId}-title`} className={cn(
+                      "pricing-card-title text-xl font-bold mb-3",
+                      isBasic && "text-emerald-700 dark:text-emerald-300",
+                      isPremium && "text-purple-700 dark:text-purple-300",
+                      isPro && "text-blue-700 dark:text-blue-300",
+                      isEnterprise && "text-orange-700 dark:text-orange-300"
+                    )}>
+                      {plan.title}
+                    </h3>
+                    <div className={cn(
+                      "pricing-card-price text-3xl font-bold mb-3",
+                      isBasic && "text-emerald-800 dark:text-emerald-200",
+                      isPremium && "text-purple-800 dark:text-purple-200",
+                      isPro && "text-blue-800 dark:text-blue-200",
+                      isEnterprise && "text-orange-800 dark:text-orange-200"
+                    )}>
+                      <span aria-label={`Prix: ${plan.price}`}>{plan.price}</span>
+                    </div>
+                    <p id={`${planId}-description`} className="pricing-card-description text-sm text-muted-foreground leading-relaxed">
+                      {plan.description}
+                    </p>
+                  </header>
+                  
+                  <div className="p-6 flex flex-col flex-1">
+                    <h4 className="sr-only">Fonctionnalités incluses dans l&apos;offre {plan.title}</h4>
+                    <ul 
+                      id={`${planId}-features`}
+                      className="space-y-3 mb-6 flex-1"
+                      role="list"
+                      aria-label={`Fonctionnalités de l'offre ${plan.title}`}
+                    >
+                      {plan.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-start gap-3" role="listitem">
+                          <CheckCircle2 
+                            className={cn(
+                              "w-5 h-5 mt-0.5 flex-shrink-0",
+                              isBasic && "text-emerald-600 dark:text-emerald-400",
+                              isPremium && "text-purple-600 dark:text-purple-400",
+                              isPro && "text-blue-600 dark:text-blue-400",
+                              isEnterprise && "text-orange-600 dark:text-orange-400"
+                            )}
+                            aria-hidden="true"
+                          />
+                          <span className="text-sm text-card-foreground leading-relaxed">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <div className="mt-auto">
+                      <Button 
+                        asChild 
+                        className={cn(
+                          "w-full font-semibold transition-all duration-300",
+                          isBasic && "bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-emerald-500 dark:hover:bg-emerald-600",
+                          isPremium && "bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-500 dark:hover:bg-purple-600",
+                          isPro && "bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600",
+                          isEnterprise && "bg-orange-600 hover:bg-orange-700 text-white dark:bg-orange-500 dark:hover:bg-orange-600"
+                        )}
+                        variant={plan.featured ? "default" : "secondary"}
+                      >
+                        <Link 
+                          href={plan.link}
+                          aria-label={`${plan.cta} - Offre ${plan.title} à ${plan.price}`}
+                          className="flex items-center justify-center gap-2 px-4 py-2"
+                        >
+                          {plan.cta}
+                          <span aria-hidden="true">→</span>
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
           
-          <div ref={pricingObserverRef as React.RefObject<HTMLDivElement>} className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <Card 
-                key={index} 
-                className={cn(
-                  "relative transition-all duration-700 ease-out",
-                  plan.featured && "ring-2 ring-primary shadow-lg scale-105",
-                  pricingVisible[index] 
-                    ? "opacity-100 translate-y-0 scale-100" 
-                    : "opacity-0 translate-y-8 scale-95"
-                )}
-                style={{
-                  transitionDelay: `${index * 150}ms`,
-                }}
-              >
-                {plan.featured && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
-                      Populaire
-                    </span>
-                  </div>
-                )}
-                
-                <CardHeader className={plan.headerClass}>
-                  <CardTitle className="text-xl">{plan.title}</CardTitle>
-                  <div className="text-2xl font-bold">{plan.price}</div>
-                  <CardDescription className="text-sm opacity-90">
-                    {plan.description}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent className="pt-6">
-                  <ul className="space-y-3 mb-6">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <Button asChild className="w-full" variant={plan.featured ? "default" : "outline"}>
-                    <Link href={plan.link}>{plan.cta}</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="text-center mt-12 p-6 bg-muted/50 rounded-lg max-w-3xl mx-auto">
+            <h3 className="text-lg font-semibold mb-3 text-foreground">💡 Besoin d&apos;un conseil personnalisé ?</h3>
+            <p className="text-muted-foreground mb-4">
+              Tous mes tarifs incluent l&apos;optimisation SEO, la conformité RGAA (accessibilité), 
+              et un suivi personnalisé. Chaque projet est unique, n&apos;hésitez pas à me contacter 
+              pour une estimation précise et gratuite.
+            </p>
+            <Button asChild variant="outline" className="font-medium">
+              <Link href="#contact" aria-label="Contacter Matthéo Termine pour un devis personnalisé">
+                📞 Discutons de votre projet
+              </Link>
+            </Button>
           </div>
         </div>
       </AnimatedSection>
@@ -681,13 +813,16 @@ export default function Home() {
             ))}
           </div>
           
-          <div className="text-center mt-12">
-            <Button asChild variant="outline" size="lg">
-              <Link href="/projets">
-                Voir tous mes projets
-              </Link>
-            </Button>
-          </div>
+          {projects.length > 3 && (
+            <div className="text-center mt-12">
+              <Button asChild variant="outline" size="lg">
+                {/* Page à rajouter quand j'aurais d'autres projets */}
+                <Link href="/projets">
+                  Voir tous mes projets
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
       </AnimatedSection>
 
