@@ -68,7 +68,14 @@ export async function GET(
 
 // Fonction pour envoyer la notification de statut
 async function sendStatusNotification(devis: { clientInfo: { name: string; email: string }; devisNumber: string; siteType: string; total: string; createdAt: string }, status: 'approved' | 'rejected') {
-  const transporter = createEmailTransporter();
+  let transporter;
+  try {
+    transporter = createEmailTransporter();
+  } catch (transporterError) {
+    console.error('Erreur de configuration SMTP pour notification:', transporterError);
+    throw transporterError; // Re-throw pour que l'appelant puisse gérer l'erreur
+  }
+  
   const statusText = status === 'approved' ? 'Approuvé' : 'Refusé';
   const statusEmoji = status === 'approved' ? '✅' : '❌';
   

@@ -22,49 +22,107 @@ export const createProviderEmailTemplate = (devisData: DevisEmailData, baseUrl: 
     ${getEmailBaseStyles()}
     .admin-section {
       background-color: #f0f9ff !important;
-      padding: 20px !important;
-      margin: 20px 0 !important;
+      padding: 25px !important;
+      margin: 25px 0 !important;
       border: 2px solid #2563eb !important;
+      border-radius: 8px !important;
       text-align: center !important;
+    }
+    .admin-section h3 {
+      color: #2563eb !important;
+      margin-bottom: 15px !important;
+      margin-top: 0 !important;
+      font-size: 18px !important;
+    }
+    .admin-section p {
+      color: #374151 !important;
+      margin-bottom: 20px !important;
     }
     .admin-button {
       display: inline-block !important;
-      padding: 12px 24px !important;
-      margin: 10px !important;
+      padding: 14px 28px !important;
+      margin: 8px !important;
       text-decoration: none !important;
       border-radius: 6px !important;
       font-weight: bold !important;
       text-align: center !important;
+      font-size: 16px !important;
+      border: none !important;
+      cursor: pointer !important;
     }
     .btn-approve {
       background-color: #16a34a !important;
       color: #ffffff !important;
     }
+    .btn-approve:hover {
+      background-color: #15803d !important;
+    }
     .btn-reject {
       background-color: #dc2626 !important;
       color: #ffffff !important;
     }
+    .btn-reject:hover {
+      background-color: #b91c1c !important;
+    }
     .client-info { 
-      background-color: #f8f9fa !important; 
-      padding: 20px !important; 
-      margin: 15px 0 !important;
-      border: 1px solid #e9ecef !important;
+      background-color: #f8fafc !important; 
+      padding: 25px !important; 
+      margin: 20px 0 !important;
+      border: 1px solid #e5e7eb !important;
       border-left: 4px solid #2563eb !important;
+      border-radius: 6px !important;
+    }
+    .client-info h3 {
+      color: #2563eb !important;
+      margin-top: 0 !important;
+      margin-bottom: 15px !important;
+      font-size: 18px !important;
+    }
+    .client-info p {
+      color: #374151 !important;
+      margin: 8px 0 !important;
+    }
+    .client-info strong {
+      color: #1f2937 !important;
     }
     .features { 
-      background-color: #f8f9fa !important; 
-      padding: 20px !important;
-      border: 1px solid #e9ecef !important;
+      background-color: #f8fafc !important; 
+      padding: 25px !important;
+      margin: 20px 0 !important;
+      border: 1px solid #e5e7eb !important;
       border-left: 4px solid #2563eb !important;
+      border-radius: 6px !important;
+    }
+    .features h3 {
+      color: #2563eb !important;
+      margin-top: 0 !important;
+      margin-bottom: 15px !important;
+      font-size: 18px !important;
+    }
+    .features p {
+      color: #374151 !important;
+      margin: 8px 0 !important;
+    }
+    .features strong {
+      color: #1f2937 !important;
+    }
+    .features ul {
+      margin: 10px 0 !important;
+      padding-left: 20px !important;
+    }
+    .features li {
+      color: #374151 !important;
+      margin: 5px 0 !important;
     }
     .total { 
       background-color: #2563eb !important; 
       color: #ffffff !important; 
-      padding: 25px !important; 
+      padding: 30px !important; 
       text-align: center !important; 
-      font-size: 22px !important; 
+      font-size: 24px !important; 
       font-weight: bold !important;
-      margin: 20px 0 !important;
+      margin: 25px 0 !important;
+      border-radius: 8px !important;
     }
   `;
 
@@ -96,8 +154,8 @@ export const createProviderEmailTemplate = (devisData: DevisEmailData, baseUrl: 
     <div class="admin-section">
       <h3 style="color: #2563eb !important; margin-bottom: 15px !important;">Actions Admin</h3>
       <p style="margin-bottom: 20px !important;">Approuver ou refuser cette demande de devis :</p>
-      <a href="${baseUrl}/admin/devis/${devisData.devisNumber}?action=approve" class="admin-button btn-approve">✅ Approuver</a>
-      <a href="${baseUrl}/admin/devis/${devisData.devisNumber}?action=reject" class="admin-button btn-reject">❌ Refuser</a>
+      <a href="${baseUrl}/api/admin/devis/${devisData.devisNumber}?action=approve" class="admin-button btn-approve">✅ Approuver</a>
+      <a href="${baseUrl}/api/admin/devis/${devisData.devisNumber}?action=reject" class="admin-button btn-reject">❌ Refuser</a>
       <br><br>
       <a href="${baseUrl}/admin/devis" style="color: #2563eb; text-decoration: underline;">📋 Voir tous les devis</a>
     </div>
@@ -176,18 +234,41 @@ export const createStatusNotificationTemplate = (
     .status-badge {
       background-color: ${statusColor} !important;
       color: #ffffff !important;
-      padding: 15px 25px !important;
+      padding: 20px 30px !important;
       text-align: center !important;
-      margin: 20px 0 !important;
+      margin: 25px 0 !important;
       font-weight: bold !important;
-      font-size: 18px !important;
+      font-size: 20px !important;
       border-radius: 8px !important;
+      border: 2px solid ${statusColor} !important;
     }
     .header { 
       background-color: ${statusColor} !important; 
       color: #ffffff !important; 
       padding: 30px !important; 
       text-align: center !important;
+      border-radius: 8px 8px 0 0 !important;
+    }
+    .header h1 {
+      color: #ffffff !important;
+      margin: 0 0 15px 0 !important;
+      font-size: 24px !important;
+    }
+    .header p {
+      color: #ffffff !important;
+      margin: 5px 0 !important;
+      font-size: 16px !important;
+    }
+    .content ul {
+      margin: 15px 0 !important;
+      padding-left: 20px !important;
+    }
+    .content li {
+      color: #374151 !important;
+      margin: 8px 0 !important;
+    }
+    .content strong {
+      color: #1f2937 !important;
     }
   `;
 

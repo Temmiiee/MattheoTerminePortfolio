@@ -92,7 +92,7 @@ export const getEmailBaseStyles = () => `
     font-family: Arial, sans-serif !important; 
     line-height: 1.6 !important; 
     color: #333333 !important;
-    background-color: #f5f5f5 !important;
+    background-color: #f8fafc !important;
     margin: 0 !important;
     padding: 20px !important;
     width: 100% !important;
@@ -101,13 +101,16 @@ export const getEmailBaseStyles = () => `
     max-width: 600px !important; 
     margin: 0 auto !important;
     background: #ffffff !important;
-    border: 1px solid #dddddd !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
   }
   .header { 
     background-color: #2563eb !important; 
     color: #ffffff !important; 
     padding: 30px !important; 
     text-align: center !important;
+    border-radius: 8px 8px 0 0 !important;
   }
   .header h1 {
     margin: 0 0 15px 0 !important;
@@ -115,27 +118,48 @@ export const getEmailBaseStyles = () => `
     font-weight: bold !important;
     color: #ffffff !important;
   }
+  .header p {
+    margin: 5px 0 !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+  }
   .content { 
     background: #ffffff !important; 
     padding: 30px !important;
+    color: #374151 !important;
+  }
+  .content p {
+    margin: 15px 0 !important; 
+    color: #374151 !important;
+    line-height: 1.6 !important;
   }
   .footer { 
-    background-color: #6b7280 !important; 
+    background-color: #374151 !important; 
     color: #ffffff !important; 
     padding: 25px !important; 
     text-align: center !important;
+    border-radius: 0 0 8px 8px !important;
+  }
+  .footer p {
+    margin: 5px 0 !important;
+    color: #ffffff !important;
   }
   p { 
     margin: 15px 0 !important; 
-    color: #333333 !important;
+    color: #374151 !important;
     line-height: 1.6 !important;
   }
   strong { 
-    color: #000000 !important; 
+    color: #1f2937 !important; 
     font-weight: bold !important; 
   }
   ul, li {
-    color: #333333 !important;
+    color: #374151 !important;
+    margin: 5px 0 !important;
+  }
+  h3 {
+    color: #1f2937 !important;
+    margin: 20px 0 10px 0 !important;
   }
 `;
 
@@ -145,7 +169,7 @@ export const createEmailTemplate = (
   content: string,
   footer: string = `
     <div class="footer">
-      <p>contact@mattheo-termine.fr | www.mattheo-termine.fr</p>
+      <p style="color: #ffffff !important; margin: 5px 0 !important;">contact@mattheo-termine.fr | www.mattheo-termine.fr</p>
     </div>
   `
 ) => `
