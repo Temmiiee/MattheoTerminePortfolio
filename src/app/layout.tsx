@@ -251,6 +251,23 @@ export default function RootLayout({
         </ThemeProvider>
         {/* Google Analytics via @next/third-parties - charge seulement si consenté */}
         <ConditionalGoogleAnalytics />
+        
+        {/* Désactiver les React DevTools en production */}
+        {process.env.NODE_ENV === 'production' && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                if (typeof window !== 'undefined' && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
+                  window.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled = true;
+                  window.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber = false;
+                  window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {};
+                  window.__REACT_DEVTOOLS_GLOBAL_HOOK__.onCommitFiberRoot = function() {};
+                  window.__REACT_DEVTOOLS_GLOBAL_HOOK__.onCommitFiberUnmount = function() {};
+                }
+              `
+            }}
+          />
+        )}
       </body>
     </html>
   );
