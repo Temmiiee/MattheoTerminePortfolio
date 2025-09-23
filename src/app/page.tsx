@@ -147,7 +147,6 @@ const AnimatedSection = ({ children, className, id, ...props }: {
 
   // Séparer les classes statiques des classes dynamiques pour éviter l'hydratation
   const staticClasses = cn(className, "transition-all duration-1000 ease-out scroll-mt-20");
-  const animationClasses = !isMounted ? "opacity-100 translate-y-0" : (isIntersecting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8");
 
   return (
     <section 
@@ -346,12 +345,10 @@ const HeroSection = () => {
   const [buttonsVisible, setButtonsVisible] = useState(false);
   const [typingText, setTypingText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
-  const [mounted, setMounted] = useState(false);
 
   const fullText = "Intégrateur web freelance";
 
   useEffect(() => {
-    setMounted(true);
     const timers = [
       setTimeout(() => setNameVisible(true), 200),
       setTimeout(() => setTitleVisible(true), 800),

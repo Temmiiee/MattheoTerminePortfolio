@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import React, { createContext, useContext, useCallback, useEffect, useState } from 'react';
 import { shouldLog } from '@/lib/config';
 
 export type ConsentState = {
@@ -14,19 +14,38 @@ export type ConsentStatus = 'pending' | 'accepted' | 'rejected' | 'partial';
 const CONSENT_STORAGE_KEY = 'cookie-consent-preferences';
 const CONSENT_DATE_KEY = 'cookie-consent-date';
 
-export function useConsent() {
+interface ConsentContextType {
+  mounted: boolean;
+  consentGiven: ConsentState;
+  consentStatus: ConsentStatus;
+  showBanner: boolean;
+  acceptAll: () => void;
+  rejectAll: () => void;
+  saveCustomPreferences: (preferences: ConsentState) => void;
+  openPreferences: () => void;
+}
+
+const ConsentContext = createContext<ConsentContextType | null>(null);
+
+export function ConsentProvider({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
   const [consentGiven, setConsentGiven] = useState<ConsentState>({
     analytics: false,
     marketing: false,
-    functional: true, // Toujours autorisé (cookies techniques)
+    functional: true,
   });
   
   const [consentStatus, setConsentStatus] = useState<ConsentStatus>('pending');
   const [showBanner, setShowBanner] = useState(false);
 
+  // Montage côté client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Charger les préférences au montage
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (!mounted || typeof window === 'undefined') return;
 
     try {
       const saved = localStorage.getItem(CONSENT_STORAGE_KEY);
@@ -38,7 +57,6 @@ export function useConsent() {
         const now = new Date();
         const daysDiff = (now.getTime() - consentDate.getTime()) / (1000 * 3600 * 24);
         
-        // Redemander le consentement après 365 jours
         if (daysDiff < 365) {
           setConsentGiven(preferences);
           
@@ -49,14 +67,10 @@ export function useConsent() {
           } else {
             setConsentStatus('partial');
           }
-          
-          // Google Analytics est maintenant géré par ConditionalGoogleAnalytics
         } else {
-          // Consentement expiré, redemander
           setShowBanner(true);
         }
       } else {
-        // Première visite, afficher la bannière
         setShowBanner(true);
       }
     } catch (error) {
@@ -65,7 +79,7 @@ export function useConsent() {
       }
       setShowBanner(true);
     }
-  }, []);
+  }, [mounted]);
 
   // Sauvegarder les préférences
   const savePreferences = useCallback((preferences: ConsentState) => {
@@ -80,7 +94,6 @@ export function useConsent() {
       }
     }
   }, []);
-
 
   // Accepter tous les cookies
   const acceptAll = useCallback(() => {
@@ -127,13 +140,10 @@ export function useConsent() {
   // Réouvrir les préférences
   const openPreferences = useCallback(() => {
     setShowBanner(true);
-    // Forcer le re-rendu en remettant le statut à jour
-    if (shouldLog()) {
-      console.log('Ouverture des préférences cookies');
-    }
   }, []);
 
-  return {
+  const value: ConsentContextType = {
+    mounted,
     consentGiven,
     consentStatus,
     showBanner,
@@ -142,5 +152,18 @@ export function useConsent() {
     saveCustomPreferences,
     openPreferences,
   };
+
+  return (
+    <ConsentContext.Provider value={value}>
+      {children}
+    </ConsentContext.Provider>
+  );
 }
 
+export function useConsent() {
+  const context = useContext(ConsentContext);
+  if (!context) {
+    throw new Error('useConsent must be used within a ConsentProvider');
+  }
+  return context;
+}

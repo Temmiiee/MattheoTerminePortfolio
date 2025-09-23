@@ -8,8 +8,9 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { CookieBanner, CookieStatus } from "@/components/CookieBanner";
+import { GoogleAnalyticsConsent } from "@/components/GoogleAnalyticsConsent";
+import { ConsentProvider } from "@/contexts/ConsentContext";
 import Link from "next/link";
-import { ConditionalGoogleAnalytics } from '@/components/ConditionalGoogleAnalytics';
 
 // Fallback font configuration for build environment
 const ptSans = {
@@ -234,12 +235,13 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem={true}
-          disableTransitionOnChange
-        >
+        <ConsentProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem={true}
+            disableTransitionOnChange
+          >
           <Link href="#main-content" className="skip-link">
             Aller au contenu principal
           </Link>
@@ -258,10 +260,32 @@ export default function RootLayout({
           <Footer />
           <CookieBanner />
           <CookieStatus />
+          <GoogleAnalyticsConsent />
           <Toaster />
         </ThemeProvider>
-        {/* Google Analytics via @next/third-parties - charge seulement si consenté */}
-        <ConditionalGoogleAnalytics />
+        </ConsentProvider>
+        {/* Google Analytics GA4 - Direct Implementation */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                    page_path: window.location.pathname,
+                    send_page_view: true
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
         
         {/* Désactiver les React DevTools en production */}
         {process.env.NODE_ENV === 'production' && (

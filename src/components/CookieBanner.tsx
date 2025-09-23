@@ -6,11 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Cookie, Settings, X, Shield, BarChart3, Target } from 'lucide-react';
 import Link from 'next/link';
-import { useConsent, ConsentState } from '@/hooks/use-consent';
+import { useConsent, ConsentState } from '@/contexts/ConsentContext';
 import { cn } from '@/lib/utils';
 
 export function CookieBanner() {
   const { 
+    mounted,
     showBanner, 
     consentGiven, 
     acceptAll, 
@@ -29,7 +30,9 @@ export function CookieBanner() {
     }
   }, [showBanner, consentGiven]);
 
-  if (!showBanner) return null;
+  if (!mounted || !showBanner) {
+    return null;
+  }
 
   const handleCustomChange = (key: keyof ConsentState, checked: boolean) => {
     if (key === 'functional') return; // Toujours obligatoire
@@ -45,9 +48,9 @@ export function CookieBanner() {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm" suppressHydrationWarning>
+    <div className="fixed inset-0 z-[200] bg-black/50 backdrop-blur-sm" suppressHydrationWarning>
       <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md">
-        <Card className="border-2 border-primary/20 shadow-2xl">
+        <Card className="border-2 border-primary/20 shadow-2xl bg-background">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Cookie className="h-5 w-5 text-primary" />
@@ -193,14 +196,13 @@ export function CookieBanner() {
 
 // Composant pour afficher le statut des cookies (optionnel)
 export function CookieStatus() {
-  const { consentStatus, openPreferences } = useConsent();
+  const { mounted, consentStatus, openPreferences } = useConsent();
   
   const handleOpenPreferences = () => {
-    console.log('CookieStatus: Click detected, opening preferences');
     openPreferences();
   };
   
-  if (consentStatus === 'pending') return null;
+  if (!mounted || consentStatus === 'pending') return null;
   
   return (
     <div className="fixed bottom-4 right-4 z-[101]" suppressHydrationWarning>

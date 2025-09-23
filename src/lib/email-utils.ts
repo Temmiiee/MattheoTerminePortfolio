@@ -8,15 +8,7 @@ export const createEmailTransporter = () => {
     validateEmailConfig();
     
     const emailConfig = getEmailConfig();
-    if (shouldLog()) {
-      console.log('Configuration SMTP:', {
-        host: emailConfig.host,
-        port: emailConfig.port,
-        secure: emailConfig.secure,
-        user: emailConfig.auth?.user ? '***' : 'NON_DÉFINI',
-        pass: emailConfig.auth?.pass ? '***' : 'NON_DÉFINI'
-      });
-    }
+    // Configuration SMTP visible seulement en développement
     return nodemailer.createTransport(emailConfig);
   } catch (error) {
     console.error('Erreur lors de la création du transporteur email:', error);
@@ -35,9 +27,7 @@ export const sendEmailWithRetry = async (
   for (let i = 0; i <= retries; i++) {
     try {
       const result = await transporter.sendMail(options);
-      if (shouldLog()) {
-        console.log(`Email envoyé avec succès (tentative ${i + 1}/${retries + 1}):`, result.messageId);
-      }
+      // Email envoyé avec succès (logs seulement en développement)
       return result;
     } catch (error) {
       lastError = error as Error;
