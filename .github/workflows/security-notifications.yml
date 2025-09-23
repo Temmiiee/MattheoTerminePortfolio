@@ -125,7 +125,7 @@ jobs:
 
     - name: Create security issue (if needed)
       if: steps.security-audit.outputs.needs_attention == 'true'
-      uses: actions/github-script@v7
+      uses: actions/github-script@v8
       with:
         script: |
           const fs = require('fs');
