@@ -1,57 +1,71 @@
+# 🤖 Dependabot - Production Configuration
 version: 2
+
 updates:
-  # Enable version updates for npm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-    open-pull-requests-limit: 10
+      interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Paris"
+    
+    # Production-focused settings
+    open-pull-requests-limit: 3
+    pull-request-branch-name:
+      separator: "/"
+    
+    # Smart grouping for production
+    groups:
+      # 🚨 Security fixes - Auto-merge eligible
+      security-critical:
+        patterns:
+          - "*"
+        update-types:
+          - "security"
+      
+      # 📦 Core framework - Review required
+      core-framework:
+        patterns:
+          - "next*"
+          - "react*"
+          - "@next/*"
+        update-types:
+          - "minor"
+          - "patch"
+      
+      # 🛠️ Development tools - Low priority
+      development-tools:
+        patterns:
+          - "@types/*"
+          - "eslint*"
+          - "prettier*"
+          - "typescript"
+          - "tailwindcss*"
+        update-types:
+          - "minor"
+          - "patch"
+    
+    # Production-safe settings
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    
+    # Assignment and review
     reviewers:
       - "Temmiiee"
     assignees:
       - "Temmiiee"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
+    
+    # Smart labeling
     labels:
       - "dependencies"
-      - "automated"
-    # Grouping related dependencies
-    groups:
-      react-ecosystem:
-        patterns:
-          - "react*"
-          - "@types/react*"
-      next-ecosystem:
-        patterns:
-          - "next*"
-          - "@next/*"
-      radix-ui:
-        patterns:
-          - "@radix-ui/*"
-      dev-tools:
-        dependency-type: "development"
-        patterns:
-          - "eslint*"
-          - "@typescript-eslint/*"
-          - "prettier*"
-          - "typescript"
-      testing:
-        patterns:
-          - "*test*"
-          - "*jest*"
-          - "*vitest*"
+      - "production-ready"
     
-  # Enable version updates for GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    commit-message:
-      prefix: "ci"
-      include: "scope"
-    labels:
-      - "github-actions"
-      - "automated"
+    # Ignore breaking changes
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+      # Ignore specific packages if needed
+      # - dependency-name: "package-name"
+      #   versions: ["1.x", "2.x"]

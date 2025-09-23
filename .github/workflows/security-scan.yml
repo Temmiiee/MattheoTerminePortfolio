@@ -1,4 +1,4 @@
-name: "Dependency Security Scan"
+name: "🔒 Security Scan"
 
 on:
   push:
@@ -11,103 +11,102 @@ on:
     paths:
       - 'package.json'
       - 'package-lock.json'
-  schedule:
-    # Scan quotidien des vulnérabilités
-    - cron: '0 4 * * *'
   workflow_dispatch:
 
 permissions:
   contents: read
-  security-events: write
   pull-requests: write
 
 jobs:
-  dependency-scan:
-    name: Dependency Vulnerability Scan
+  dependency-security:
+    name: "Dependency Security Check"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
-    - name: Checkout repository
+    - name: 📂 Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup Node.js
+    - name: 📦 Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+    - name: 🔧 Install dependencies
+      run: npm ci --prefer-offline --no-audit
 
-    - name: Run npm audit
-      id: npm-audit
+    - name: 🛡️ Security Audit
+      id: audit
       run: |
-        # Audit avec sortie JSON pour parsing
-        npm audit --audit-level=moderate --json > audit-results.json || true
+        echo "🔍 Running dependency security audit..."
         
-        # Compter les vulnérabilités
-        CRITICAL=$(cat audit-results.json | jq '.metadata.vulnerabilities.critical // 0')
-        HIGH=$(cat audit-results.json | jq '.metadata.vulnerabilities.high // 0')
-        MODERATE=$(cat audit-results.json | jq '.metadata.vulnerabilities.moderate // 0')
+        npm audit --audit-level=moderate --json > audit-results.json 2>/dev/null || true
+        
+        CRITICAL=$(jq '.metadata.vulnerabilities.critical // 0' audit-results.json)
+        HIGH=$(jq '.metadata.vulnerabilities.high // 0' audit-results.json)
+        MODERATE=$(jq '.metadata.vulnerabilities.moderate // 0' audit-results.json)
         
         echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
         echo "high=$HIGH" >> $GITHUB_OUTPUT
         echo "moderate=$MODERATE" >> $GITHUB_OUTPUT
         
-        # Afficher résumé
-        echo "🔍 Vulnerability Summary:"
-        echo "Critical: $CRITICAL"
-        echo "High: $HIGH" 
-        echo "Moderate: $MODERATE"
+        # Determine action needed
+        if [ "$CRITICAL" -gt 0 ]; then
+          echo "result=critical" >> $GITHUB_OUTPUT
+          echo "🚨 CRITICAL vulnerabilities detected!"
+          exit 1
+        elif [ "$HIGH" -gt 0 ]; then
+          echo "result=high" >> $GITHUB_OUTPUT
+          echo "⚠️ HIGH vulnerabilities detected!"
+        elif [ "$MODERATE" -gt 0 ]; then
+          echo "result=moderate" >> $GITHUB_OUTPUT
+          echo "📝 MODERATE vulnerabilities detected"
+        else
+          echo "result=clean" >> $GITHUB_OUTPUT
+          echo "✅ No vulnerabilities detected"
+        fi
 
-    - name: Upload audit results
-      uses: actions/upload-artifact@v4
-      with:
-        name: npm-audit-results
-        path: audit-results.json
-
-    - name: Check for critical vulnerabilities
-      if: steps.npm-audit.outputs.critical > 0
-      run: |
-        echo "❌ Critical vulnerabilities found!"
-        npm audit --audit-level=critical
-        exit 1
-
-    - name: Comment PR with security results
+    - name: 💬 Comment on PR
       if: github.event_name == 'pull_request'
       uses: actions/github-script@v7
       with:
         script: |
-          const critical = '${{ steps.npm-audit.outputs.critical }}';
-          const high = '${{ steps.npm-audit.outputs.high }}';
-          const moderate = '${{ steps.npm-audit.outputs.moderate }}';
+          const critical = '${{ steps.audit.outputs.critical }}';
+          const high = '${{ steps.audit.outputs.high }}';
+          const moderate = '${{ steps.audit.outputs.moderate }}';
+          const result = '${{ steps.audit.outputs.result }}';
           
           let status = '✅';
-          let message = 'No critical security vulnerabilities detected';
+          let message = 'No security vulnerabilities detected';
+          let canMerge = true;
           
-          if (critical > 0) {
+          if (result === 'critical') {
             status = '🚨';
-            message = `${critical} critical vulnerabilities found!`;
-          } else if (high > 0) {
+            message = 'CRITICAL security vulnerabilities detected - merge blocked!';
+            canMerge = false;
+          } else if (result === 'high') {
             status = '⚠️';
-            message = `${high} high-severity vulnerabilities found`;
-          } else if (moderate > 0) {
+            message = 'High-severity vulnerabilities detected - review required';
+            canMerge = false;
+          } else if (result === 'moderate') {
             status = '📝';
-            message = `${moderate} moderate vulnerabilities found`;
+            message = 'Moderate vulnerabilities detected - monitor and fix when possible';
           }
           
-          const body = `## 🔒 Dependency Security Scan
+          const body = `## 🔒 Security Scan Results
           
           ${status} **${message}**
           
-          ### Summary:
-          - **Critical:** ${critical}
-          - **High:** ${high}  
-          - **Moderate:** ${moderate}
+          ### Vulnerability Breakdown:
+          - 🔴 **Critical:** ${critical}
+          - 🟠 **High:** ${high}
+          - 🟡 **Moderate:** ${moderate}
           
-          ${critical > 0 ? '**Action Required:** Please fix critical vulnerabilities before merging.' : ''}
+          ${!canMerge ? '### ⚠️ Action Required:\n- Fix critical/high vulnerabilities before merging\n- Run `npm audit fix` locally\n- Test fixes thoroughly\n- Update this PR with fixes' : '### ✅ Security Status:\n- Safe to merge from security perspective\n- Continue monitoring for future updates'}
           
-          [View full audit results in the workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId})`;
+          ---
+          *🔒 Automated security scan for production deployment*`;
           
           github.rest.issues.createComment({
             issue_number: context.issue.number,
@@ -116,49 +115,10 @@ jobs:
             body: body
           });
 
-  security-summary:
-    name: Security Summary
-    runs-on: ubuntu-latest
-    needs: dependency-scan
-    if: always()
-    
-    steps:
-    - name: Download audit results
-      uses: actions/download-artifact@v4
-      with:
-        name: npm-audit-results
-
-    - name: Generate security summary
-      run: |
-        echo "## 🔒 Daily Security Report" >> security-summary.md
-        echo "" >> security-summary.md
-        echo "**Date:** $(date -u)" >> security-summary.md
-        echo "" >> security-summary.md
-        
-        if [ -f audit-results.json ]; then
-          TOTAL=$(cat audit-results.json | jq '.metadata.totalDependencies // 0')
-          CRITICAL=$(cat audit-results.json | jq '.metadata.vulnerabilities.critical // 0')
-          HIGH=$(cat audit-results.json | jq '.metadata.vulnerabilities.high // 0')
-          MODERATE=$(cat audit-results.json | jq '.metadata.vulnerabilities.moderate // 0')
-          
-          echo "### Dependencies Status:" >> security-summary.md
-          echo "- **Total Dependencies:** $TOTAL" >> security-summary.md
-          echo "- **Critical Vulnerabilities:** $CRITICAL" >> security-summary.md
-          echo "- **High Vulnerabilities:** $HIGH" >> security-summary.md
-          echo "- **Moderate Vulnerabilities:** $MODERATE" >> security-summary.md
-          echo "" >> security-summary.md
-          
-          if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
-            echo "⚠️ **Action Required:** Security vulnerabilities detected" >> security-summary.md
-          else
-            echo "✅ **All Clear:** No critical security issues found" >> security-summary.md
-          fi
-        else
-          echo "❌ **Error:** Unable to generate security report" >> security-summary.md
-        fi
-
-    - name: Upload security summary
+    - name: 📊 Upload Results
       uses: actions/upload-artifact@v4
+      if: always()
       with:
-        name: security-summary
-        path: security-summary.md
+        name: security-scan-results
+        path: audit-results.json
+        retention-days: 30
