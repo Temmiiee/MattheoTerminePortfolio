@@ -22,7 +22,7 @@ export const createEmailTransporter = () => {
 export const sendEmailWithRetry = async (
   transporter: nodemailer.Transporter, 
   options: nodemailer.SendMailOptions, 
-  retries = config.timeouts.email.retries
+  retries = config.isProduction ? 1 : config.timeouts.email.retries // Moins de retries en prod
 ) => {
   let lastError: Error | null = null;
   
@@ -64,8 +64,8 @@ export const sendEmailWithRetry = async (
         throw enhancedError;
       }
       
-      // Attendre 2 secondes avant de réessayer
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Attendre moins longtemps en production
+      await new Promise(resolve => setTimeout(resolve, config.isProduction ? 1000 : 2000));
     }
   }
   

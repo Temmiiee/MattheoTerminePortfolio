@@ -36,10 +36,10 @@ export const config = {
   // Configuration des timeouts
   timeouts: {
     email: {
-      connection: 60000, // 60 secondes
-      socket: 60000,     // 60 secondes
-      greeting: 30000,   // 30 secondes
-      retries: 2,
+      connection: 15000,
+      socket: 15000,
+      greeting: 10000,
+      retries: 1,
     },
   },
 

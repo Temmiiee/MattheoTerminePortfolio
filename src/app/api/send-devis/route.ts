@@ -113,20 +113,7 @@ export async function POST(request: NextRequest) {
       }, { status: 500 });
     }
 
-    // Test de connexion SMTP (seulement en développement)
-    if (shouldLog()) {
-      try {
-        await transporter.verify();
-        if (shouldLog()) {
-          console.log('Connexion SMTP vérifiée');
-        }
-      } catch (verifyError) {
-        if (shouldLog()) {
-          console.error('Erreur de vérification SMTP:', verifyError);
-        }
-        // On continue quand même car parfois verify() échoue mais sendMail fonctionne
-      }
-    }
+    // Pas de test de connexion en production pour éviter les timeouts
 
     try {
       // Envoyer l'email au prestataire en premier (priorité)
