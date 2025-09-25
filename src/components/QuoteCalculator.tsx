@@ -124,30 +124,7 @@ const pricingModel = {
   },
 };
 
-// Helper: comparaison des valeurs pertinentes (ignore files pour éviter faux positifs)
-function areFormValuesEqual(a?: FormValues | null, b?: FormValues | null) {
-  if (a === b) return true;
-  if (!a || !b) return false;
-  // comparer champs scalaires
-  if (a.siteType !== b.siteType) return false;
-  if (a.designType !== b.designType) return false;
-  if (a.maintenance !== b.maintenance) return false;
-  if (a.name !== b.name) return false;
-  if (a.email !== b.email) return false;
-  if (a.phone !== b.phone) return false;
-  if (a.company !== b.company) return false;
-  if (a.technology !== b.technology) return false;
-  if ((a.projectDescription || "") !== (b.projectDescription || "")) return false;
-  // features (comparer comme ensembles)
-  const fa = Array.isArray(a.features) ? [...a.features].sort() : [];
-  const fb = Array.isArray(b.features) ? [...b.features].sort() : [];
-  if (fa.length !== fb.length) return false;
-  for (let i = 0; i < fa.length; i++) {
-    if (fa[i] !== fb[i]) return false;
-  }
-  // on ignore volontairement files (peuvent contenir objets non JSON-serializables)
-  return true;
-}
+// Removed unused areFormValuesEqual function - it was never used and contributed to code bloat
 
 // util: sérialise seulement les champs pertinents pour comparaison stable
 function serializeRelevant(v: FormValues) {
@@ -182,7 +159,6 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
   onFormChange,
   searchParams,
 }: QuoteCalculatorProps & { searchParams?: ReturnType<typeof useSearchParams> }) {
-  console.log("🎯 [QuoteCalculator] Composant rendu", { onFormChange: !!onFormChange });
 
   const [isDragActive, setIsDragActive] = useState(false);
   const [fileNames, setFileNames] = useState<string[]>([]);
@@ -250,16 +226,9 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
   // dernière sérialisation envoyée au parent
   const lastSerializedRef = React.useRef<string | null>(null);
 
+  // Simplified useEffect - removed form.formState dependency to prevent infinite loops
   React.useEffect(() => {
-    // debug léger
-    console.log("� [QuoteCalculator] useWatch déclenché", { isFirstRun: isFirstRunRef.current });
-
     if (!onFormChangeRef.current) {
-      return;
-    }
-
-    // Ne pas appeler pendant la soumission du formulaire
-    if (form.formState?.isSubmitting) {
       return;
     }
 
@@ -284,11 +253,9 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
     } catch (err) {
       console.error("[QuoteCalculator] Erreur lors de l'appel onFormChange", err);
     }
-    // on ne dépend que de formValues et form.formState.isSubmitting volontairement
-  }, [formValues, form.formState?.isSubmitting]);
+  }, [formValues]); // Removed form.formState?.isSubmitting to prevent infinite re-renders
 
   const onSubmit = (data: FormValues) => {
-    console.log("📤 [QuoteCalculator] onSubmit appelé avec:", data);
     const devisData = {
       siteType: data.siteType,
       designType: data.designType,
@@ -326,7 +293,6 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
               <FormControl>
                 <RadioGroup
                   onValueChange={(value) => {
-                    console.log("🏢 [QuoteCalculator] siteType changé vers:", value);
                     field.onChange(value);
                   }}
                   value={field.value}
@@ -470,15 +436,11 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {featureOptions.map((item) => {
-                let forcedIncluded = false;
-                let displayPrice = item.price;
-                let info = "";
-                const currentValues = form.getValues();
-                if (currentValues.siteType === "webapp" && item.id === "user-accounts") {
-                  forcedIncluded = true;
-                  displayPrice = 0;
-                  info = "(inclus d'office)";
-                }
+                // Fixed: Use formValues from useWatch instead of form.getValues() to prevent infinite re-renders
+                const forcedIncluded = formValues.siteType === "webapp" && item.id === "user-accounts";
+                const displayPrice = forcedIncluded ? 0 : item.price;
+                const info = forcedIncluded ? "(inclus d'office)" : "";
+                
                 return (
                   <FormField key={item.id} control={form.control} name="features" render={({ field }) => (
                     <FormItem key={item.id} className={cn("flex flex-row items-start space-x-3 space-y-0 border rounded-md p-4 cursor-pointer hover:shadow-md transition-all duration-200", (field.value?.includes(item.id) || forcedIncluded) ? "border-primary bg-primary/5" : "border-border")} onClick={() => {
@@ -574,7 +536,7 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
             <FormItem className="flex-1">
               <FormLabel>Votre nom <span className="text-red-500">*</span></FormLabel>
               <FormControl>
-                <Input placeholder="Votre nom" {...field} onChange={(e) => { console.log("✏️ [QuoteCalculator] Input name changé:", e.target.value); field.onChange(e); }} />
+                <Input placeholder="Votre nom" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -584,7 +546,7 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
             <FormItem className="flex-1">
               <FormLabel>Votre email <span className="text-red-500">*</span></FormLabel>
               <FormControl>
-                <Input type="email" placeholder="Votre email" {...field} onChange={(e) => { console.log("📧 [QuoteCalculator] Input email changé:", e.target.value); field.onChange(e); }} />
+                <Input type="email" placeholder="Votre email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
