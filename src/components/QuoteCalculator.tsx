@@ -64,55 +64,55 @@ const featureOptions = [
   {
     id: "blog",
     label: "Intégration d'un blog / système d'actualités",
-    price: 299.99,
+    price: 300,
   },
-  { id: "gallery", label: "Galerie d'images / Portfolio avancé", price: 249.99 },
+  { id: "gallery", label: "Galerie d'images / Portfolio avancé", price: 250 },
   {
     id: "newsletter",
     label: "Système d'inscription à la newsletter",
-    price: 149.99,
+    price: 150,
   },
   {
     id: "multi-langue",
     label: "Configuration pour un site multilingue",
-    price: 449.99,
+    price: 450,
   },
   {
     id: "analytics",
     label: "Intégration et configuration d'analytics",
-    price: 79.99,
+    price: 80,
   },
   {
     id: "user-accounts",
     label: "Espace utilisateur / authentification",
-    price: 499.99,
+    price: 500,
   },
   {
     id: "third-party-integration",
     label: "Intégration de service tiers (API, etc.)",
-    price: 399.99,
+    price: 400,
   },
   {
     id: "admin-panel",
     label: "Tableau de bord administrateur",
-    price: 599.99,
+    price: 600,
   },
 ];
 const pricingModel = {
   siteType: {
-    vitrine: 349.99,
-    ecommerce: 1199.99,
-    webapp: 2499.99,
+    vitrine: 350,
+    ecommerce: 1200,
+    webapp: 2500,
   },
   designType: {
-    template: 199.99,
-    custom: 799.99,
+    template: 200,
+    custom: 800,
   },
   features: featureOptions.reduce((acc, feature) => {
     acc[feature.id] = feature.price;
     return acc;
   }, {} as Record<string, number>),
-  maintenance: 9.99,
+  maintenance: 49,
 };
 
 export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorProps & { searchParams?: ReturnType<typeof useSearchParams> }) {
@@ -217,12 +217,11 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
                         <FormItem className={cn(
                           "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
                           field.value === "vitrine" ? "border-primary bg-primary/5" : "border-border"
-                        )}
-                        onClick={() => field.onChange("vitrine")}>
+                        )}>
                           <FormControl>
                             <RadioGroupItem value="vitrine" className="sr-only" />
                           </FormControl>
-                          <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                          <FormLabel className="font-normal w-full cursor-pointer">
                             <span className="font-bold block">Site Vitrine</span>
                             <span className="text-sm text-muted-foreground">
                               Présenter votre activité et vos services.
@@ -243,12 +242,11 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
                         <FormItem className={cn(
                           "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
                           field.value === "ecommerce" ? "border-primary bg-primary/5" : "border-border"
-                        )}
-                        onClick={() => field.onChange("ecommerce")}>
+                        )}>
                           <FormControl>
                             <RadioGroupItem value="ecommerce" className="sr-only" />
                           </FormControl>
-                          <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                          <FormLabel className="font-normal w-full cursor-pointer">
                             <span className="font-bold block">E-commerce</span>
                             <span className="text-sm text-muted-foreground">
                               Vendre des produits en ligne (base).
@@ -270,12 +268,11 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
                       <FormItem className={cn(
                         "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
                         field.value === "webapp" ? "border-primary bg-primary/5" : "border-border"
-                      )}
-                      onClick={() => field.onChange("webapp")}>
+                      )}>
                         <FormControl>
                           <RadioGroupItem value="webapp" className="sr-only" />
                         </FormControl>
-                        <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                        <FormLabel className="font-normal w-full cursor-pointer">
                           <span className="font-bold block">Application Web</span>
                           <span className="text-sm text-muted-foreground">
                             Projet complexe avec des fonctionnalités sur mesure
@@ -318,12 +315,11 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
                     <FormItem className={cn(
                       "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
                       field.value === "template" ? "border-primary bg-primary/5" : "border-border"
-                    )}
-                    onClick={() => field.onChange("template")}>
+                    )}>
                       <FormControl>
                         <RadioGroupItem value="template" className="sr-only" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                      <FormLabel className="font-normal w-full cursor-pointer">
                         <span className="font-bold block">
                           Design basé sur un template
                         </span>
@@ -348,12 +344,11 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
                     <FormItem className={cn(
                       "flex items-center space-x-3 space-y-0 flex-1 border rounded-md p-4 hover:shadow-md transition-all duration-200 cursor-pointer",
                       field.value === "custom" ? "border-primary bg-primary/5" : "border-border"
-                    )}
-                    onClick={() => field.onChange("custom")}>
+                    )}>
                       <FormControl>
                         <RadioGroupItem value="custom" className="sr-only" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                      <FormLabel className="font-normal w-full cursor-pointer">
                         <span className="font-bold block">
                           Design sur mesure
                         </span>
@@ -417,16 +412,7 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
                         render={({ field }) => (
                           <FormItem
                             key={item.id}
-                            className="flex flex-row items-start space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary cursor-pointer hover:shadow-md transition-all duration-200"
-                            onClick={() => {
-                              if (forcedIncluded) return;
-                              const isChecked = field.value?.includes(item.id);
-                              if (isChecked) {
-                                field.onChange(field.value?.filter(value => value !== item.id));
-                              } else {
-                                field.onChange([...(field.value || []), item.id]);
-                              }
-                            }}
+                            className="flex flex-row items-start space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary"
                           >
                             <FormControl>
                               <Checkbox
@@ -447,12 +433,7 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
                                 disabled={forcedIncluded}
                               />
                             </FormControl>
-                            <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => {
-                              if (forcedIncluded) {
-                                e.preventDefault();
-                                return;
-                              }
-                            }}>
+                            <FormLabel className="font-normal w-full">
                               {item.label} <span className="text-muted-foreground">- {displayPrice}€ {info}</span>
                             </FormLabel>
                           </FormItem>
@@ -470,24 +451,20 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
             control={form.control}
             name="maintenance"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 items-center justify-between rounded-lg border p-4 cursor-pointer hover:shadow-md transition-all duration-200"
-              onClick={() => field.onChange(!field.value)}>
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 items-center justify-between rounded-lg border p-4">
                 <div className="space-y-0.5">
-                  <FormLabel className="text-base font-semibold cursor-pointer">
+                  <FormLabel className="text-base font-semibold">
                     4. Maintenance & Hébergement (Optionnel)
                   </FormLabel>
                   <FormDescription>
-                    Souscrire à l&apos;offre de maintenance pour la tranquillité d&apos;esprit.<br />
-                    <span className="font-semibold text-primary">Prix : {pricingModel.maintenance}€ / mois</span><br />
-                    <span className="font-semibold text-primary">Ou : 99.99€ / an (économisez 19.89€)</span>
+                    Souscrire à l&apos;offre de maintenance mensuelle pour la tranquillité d&apos;esprit.<br />
+                    <span className="font-semibold text-primary">Prix : {pricingModel.maintenance}€ / mois</span>
                   </FormDescription>
                 </div>
                 <FormControl>
                   <Checkbox
                     checked={field.value}
-                    onCheckedChange={() => {
-                      // Empêcher la double activation du onClick
-                    }}
+                    onCheckedChange={field.onChange}
                   />
                 </FormControl>
               </FormItem>
@@ -512,46 +489,41 @@ export function QuoteCalculator({ onFormChange, searchParams }: QuoteCalculatorP
                     value={field.value}
                     className="flex flex-col space-y-2 md:grid md:grid-cols-3 md:gap-4 md:space-y-0"
                   >
-                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary cursor-pointer hover:shadow-md transition-all duration-200"
-                    onClick={() => field.onChange("react")}>
+                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
                       <FormControl>
                         <RadioGroupItem value="react" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                      <FormLabel className="font-normal w-full">
                         React
                       </FormLabel>
                     </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary cursor-pointer hover:shadow-md transition-all duration-200"
-                    onClick={() => field.onChange("vue")}>
+                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
                       <FormControl>
                         <RadioGroupItem value="vue" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>Vue</FormLabel>
+                      <FormLabel className="font-normal w-full">Vue</FormLabel>
                     </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary cursor-pointer hover:shadow-md transition-all duration-200"
-                    onClick={() => field.onChange("nextjs")}>
+                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
                       <FormControl>
                         <RadioGroupItem value="nextjs" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                      <FormLabel className="font-normal w-full">
                         Next.js
                       </FormLabel>
                     </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary cursor-pointer hover:shadow-md transition-all duration-200"
-                    onClick={() => field.onChange("wordpress")}>
+                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
                       <FormControl>
                         <RadioGroupItem value="wordpress" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                      <FormLabel className="font-normal w-full">
                         WordPress
                       </FormLabel>
                     </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary cursor-pointer hover:shadow-md transition-all duration-200"
-                    onClick={() => field.onChange("no-preference")}>
+                    <FormItem className="flex items-center space-x-3 space-y-0 border rounded-md p-4 has-[:checked]:border-primary">
                       <FormControl>
                         <RadioGroupItem value="no-preference" />
                       </FormControl>
-                      <FormLabel className="font-normal w-full cursor-pointer" onClick={(e) => e.preventDefault()}>
+                      <FormLabel className="font-normal w-full">
                         Pas de préférences
                       </FormLabel>
                     </FormItem>
