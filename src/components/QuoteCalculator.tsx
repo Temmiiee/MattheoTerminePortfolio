@@ -193,22 +193,44 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
     defaultValues,
   }) as ReturnType<typeof useForm<FormValues>>;
 
-  const formValues = useWatch({ control: form.control }) as FormValues;
+  // Only watch specific fields that should trigger parent updates
+  const importantFields = useWatch({ 
+    control: form.control,
+    name: ['siteType', 'designType', 'maintenance', 'features', 'name', 'email', 'company', 'technology', 'projectDescription']
+  });
+  
+  // Get all form values for rendering purposes
+  const allFormValues = form.getValues() as FormValues;
+  
   const isFirstRunRef = React.useRef(true);
-
   const onFormChangeRef = React.useRef<typeof onFormChange | undefined>(onFormChange);
+  const lastSerializedRef = React.useRef<string | null>(null);
+
   React.useEffect(() => {
     onFormChangeRef.current = onFormChange;
   }, [onFormChange]);
-
-  const lastSerializedRef = React.useRef<string | null>(null);
 
   React.useEffect(() => {
     if (!onFormChangeRef.current) {
       return;
     }
 
-    const serialized = serializeRelevant(formValues);
+    // Reconstruct the form values from the watched important fields
+    const watchedFormValues: FormValues = {
+      siteType: importantFields[0] || 'vitrine',
+      designType: importantFields[1] || 'template', 
+      maintenance: importantFields[2] || 'none',
+      features: importantFields[3] || [],
+      name: importantFields[4] || '',
+      email: importantFields[5] || '',
+      company: importantFields[6] || '',
+      technology: importantFields[7] || 'no-preference',
+      projectDescription: importantFields[8] || '',
+      phone: allFormValues.phone || '',
+      files: allFormValues.files
+    };
+
+    const serialized = serializeRelevant(watchedFormValues);
 
     if (isFirstRunRef.current) {
       isFirstRunRef.current = false;
@@ -225,11 +247,11 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
 
     try {
       // appeler la callback avec l'objet actuel (types ok)
-      onFormChangeRef.current(formValues);
+      onFormChangeRef.current(watchedFormValues);
     } catch (err) {
       console.error("[QuoteCalculator] Erreur lors de l'appel onFormChange", err);
     }
-  }, [formValues]); // Removed form.formState?.isSubmitting to prevent infinite re-renders
+  }, [importantFields, allFormValues.phone, allFormValues.files]);
 
   const onSubmit = (data: FormValues) => {
     const devisData = {
@@ -412,8 +434,8 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {featureOptions.map((item) => {
-                // Fixed: Use formValues from useWatch instead of form.getValues() to prevent infinite re-renders
-                const forcedIncluded = formValues.siteType === "webapp" && item.id === "user-accounts";
+                // Use allFormValues for forced inclusion logic  
+                const forcedIncluded = allFormValues.siteType === "webapp" && item.id === "user-accounts";
                 const displayPrice = forcedIncluded ? 0 : item.price;
                 const info = forcedIncluded ? "(inclus d'office)" : "";
                 
