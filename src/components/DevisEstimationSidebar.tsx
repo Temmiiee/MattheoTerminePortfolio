@@ -5,7 +5,7 @@ interface DevisEstimationSidebarProps {
   siteType: string;
   designType: string;
   features: string[];
-  maintenance: boolean;
+  maintenance: "none" | "monthly" | "annually";
   onValidate: () => void;
   canValidate?: boolean;
 }
@@ -62,7 +62,11 @@ const pricingModel = {
     acc[feature.id] = feature.price;
     return acc;
   }, {} as Record<string, number>),
-  maintenance: 49,
+  maintenance: {
+    none: 0,
+    monthly: 10,
+    annually: 100,
+  },
 };
 
 export function DevisEstimationSidebar({ siteType, designType, features, maintenance, onValidate, canValidate = true }: DevisEstimationSidebarProps) {
@@ -90,9 +94,9 @@ export function DevisEstimationSidebar({ siteType, designType, features, mainten
         <p className="text-4xl font-bold text-primary">
           {totalPrice} € <span className="text-lg font-normal text-muted-foreground">HT</span>
         </p>
-        {maintenance && (
+        {maintenance !== "none" && (
           <p className="text-xl font-semibold text-primary mt-2">
-            + {pricingModel.maintenance} € / mois
+            + {pricingModel.maintenance[maintenance]} € / {maintenance === "monthly" ? "mois" : "an"}
           </p>
         )}
         <p className="text-muted-foreground mt-2 max-w-md mx-auto">

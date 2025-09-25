@@ -199,6 +199,7 @@ export default function DevisSignaturePage() {
               <div>
                 <CardTitle className="text-2xl">DEVIS #{devisData.devisNumber}</CardTitle>
                 <p className="mt-2 opacity-90">Matthéo Termine - Intégrateur Web</p>
+                <p className="text-sm opacity-80">SIRET: 991 804 493 00013</p>
               </div>
               <div className="text-right opacity-90">
                 <p><strong>Date:</strong> {today}</p>

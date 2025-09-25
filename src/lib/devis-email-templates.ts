@@ -186,6 +186,8 @@ export const createProviderEmailTemplate = (devisData: DevisEmailData, baseUrl: 
           ${content}
         </div>
         <div class="footer">
+          <p style="color: #ffffff !important; margin: 5px 0 !important;">Matthéo Termine - Intégrateur Web Freelance</p>
+          <p style="color: #ffffff !important; margin: 5px 0 !important;">SIRET: 991 804 493 00013</p>
           <p style="color: #ffffff !important; margin: 5px 0 !important;">${config.company.contactEmail} | ${config.company.website}</p>
         </div>
       </div>
@@ -332,6 +334,8 @@ export const createStatusNotificationTemplate = (
           ${content}
         </div>
         <div class="footer">
+          <p>Matthéo Termine - Intégrateur Web Freelance</p>
+          <p>SIRET: 991 804 493 00013</p>
           <p>${config.company.contactEmail} | ${config.company.website}</p>
         </div>
       </div>

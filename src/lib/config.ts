@@ -7,6 +7,7 @@ export const config = {
     contactEmail: 'contact@mattheo-termine.fr',
     website: 'www.mattheo-termine.fr',
     title: 'Développeur Web Freelance',
+    siret: '991 804 493 00013',
   },
 
   // Configuration des URLs

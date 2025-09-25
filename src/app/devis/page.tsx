@@ -1,28 +1,29 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { QuoteCalculatorWrapper } from "@/components/QuoteCalculator";
+import { QuoteCalculatorWrapper, FormValues as QuoteFormValues } from "@/components/QuoteCalculator";
 import { Suspense } from "react";
 import { DevisEstimationSidebar } from "@/components/DevisEstimationSidebar";
 
+// Remarques : on réutilise le type exporté depuis le composant formulaire
+type LocalFormValues = {
+  siteType: "vitrine" | "ecommerce" | "webapp";
+  designType: "template" | "custom";
+  maintenance: boolean; // ici on gère comme boolean localement
+  name: string;
+  email: string;
+  company: string;
+  technology: "react" | "vue" | "nextjs" | "wordpress" | "no-preference";
+  features?: string[];
+  projectDescription?: string;
+  files?: File[];
+  phone?: string;
+};
+
 export default function DevisPage() {
   const router = useRouter();
-  // On gère les valeurs du formulaire pour l'estimation
-  type FormValues = {
-    siteType: "vitrine" | "ecommerce" | "webapp";
-    designType: "template" | "custom";
-    maintenance: boolean;
-    name: string;
-    email: string;
-    company: string;
-    technology: "react" | "vue" | "nextjs" | "wordpress" | "no-preference";
-    features?: string[];
-    projectDescription?: string;
-    files?: File[];
-    phone?: string;
-  };
 
-  const [formValues, setFormValues] = React.useState<FormValues>({
+  const [formValues, setFormValues] = React.useState<LocalFormValues>({
     siteType: "vitrine",
     designType: "template",
     maintenance: false,
@@ -36,16 +37,58 @@ export default function DevisPage() {
     phone: "",
   });
 
-  // Fonction pour mettre à jour les valeurs du formulaire
-  const handleFormChange = (values: FormValues) => {
-    setFormValues(values);
+  // Helper: compare seulement les champs pertinents pour éviter mises à jour inutiles
+  const areLocalValuesEqual = (a: LocalFormValues, b: LocalFormValues) => {
+    if (a.siteType !== b.siteType) return false;
+    if (a.designType !== b.designType) return false;
+    if (a.maintenance !== b.maintenance) return false;
+    if (a.name !== b.name) return false;
+    if (a.email !== b.email) return false;
+    if (a.company !== b.company) return false;
+    if (a.phone !== b.phone) return false;
+    if (a.technology !== b.technology) return false;
+    if ((a.projectDescription || "") !== (b.projectDescription || "")) return false;
+    const fa = Array.isArray(a.features) ? [...a.features].sort() : [];
+    const fb = Array.isArray(b.features) ? [...b.features].sort() : [];
+    if (fa.length !== fb.length) return false;
+    for (let i = 0; i < fa.length; i++) if (fa[i] !== fb[i]) return false;
+    // on ignore files dans cette comparaison (peuvent changer souvent)
+    return true;
   };
+
+  // stable callback pour éviter de re-créer la fonction à chaque rendu du parent
+  const handleFormChange = useCallback((values: QuoteFormValues) => {
+    // map maintenance enum -> boolean local
+    const maintenanceBoolean = values.maintenance !== "none";
+    const next: LocalFormValues = {
+      siteType: values.siteType,
+      designType: values.designType,
+      maintenance: maintenanceBoolean,
+      name: values.name,
+      email: values.email,
+      company: values.company || "",
+      technology: values.technology,
+      features: values.features ?? [],
+      projectDescription: values.projectDescription ?? "",
+      files: Array.isArray(values.files) ? values.files as File[] : undefined,
+      phone: values.phone ?? "",
+    };
+
+    setFormValues((prev) => {
+      if (areLocalValuesEqual(prev, next)) {
+        // aucune modification significative -> ne pas mettre à jour l'état
+        return prev;
+      }
+      return next;
+    });
+  }, []);
 
   // Fonction de validation: construit les données, les enregistre et redirige
   const handleValidate = () => {
     const emailValid = !!formValues.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email);
     const nameValid = !!formValues.name && formValues.name.trim().length > 0;
     if (!emailValid || !nameValid) return; // sécurité côté bouton
+
     // Pricing local (identique au sidebar)
     const pricingModel = {
       siteType: { vitrine: 350, ecommerce: 1200, webapp: 2500 },
@@ -124,7 +167,7 @@ export default function DevisPage() {
               siteType={formValues.siteType}
               designType={formValues.designType}
               features={formValues.features ?? []}
-              maintenance={formValues.maintenance}
+              maintenance={formValues.maintenance ? "monthly" : "annually"}
               onValidate={handleValidate}
               canValidate={canValidate}
             />

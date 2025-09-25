@@ -161,6 +161,8 @@ export const createEmailTemplate = (
   content: string,
   footer: string = `
     <div class="footer">
+      <p style="color: #ffffff !important; margin: 5px 0 !important;">Matthéo Termine - Intégrateur Web Freelance</p>
+      <p style="color: #ffffff !important; margin: 5px 0 !important;">SIRET: 991 804 493 00013</p>
       <p style="color: #ffffff !important; margin: 5px 0 !important;">contact@mattheo-termine.fr | www.mattheo-termine.fr</p>
     </div>
   `

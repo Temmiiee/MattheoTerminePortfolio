@@ -68,8 +68,9 @@ function generateDevisPDF(pdf: jsPDF, devisData: DevisData, devisNumber: string)
   // Provider info
   pdf.text('Matthéo Termine', margin, 35);
   pdf.text('Intégrateur Web Freelance', margin, 42);
+  pdf.text('SIRET: 991 804 493 00013', margin, 49);
 
-  currentY = 65;
+  currentY = 72;
 
   // Client Information Section
   pdf.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
@@ -381,6 +382,7 @@ function DevisValidationContent() {
                   <p style={{ margin: '0 0 6px 0', fontWeight: '600', color: '#fff' }}>Prestataire :</p>
                   <p style={{ margin: '2px 0', color: '#fff', fontWeight: '500' }}>Matthéo Termine</p>
                   <p style={{ margin: '2px 0', color: '#fff' }}>Intégrateur Web Freelance</p>
+                  <p style={{ margin: '2px 0', color: '#fff' }}>SIRET: 991 804 493 00013</p>
                   <p style={{ margin: '2px 0', color: '#fff' }}>📧 contact@mattheo-termine.fr</p>
                   <p style={{ margin: '2px 0', color: '#fff' }}>🌐 https://mattheo-termine.fr</p>
                 </div>
