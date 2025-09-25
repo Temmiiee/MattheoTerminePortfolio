@@ -195,21 +195,14 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
 
   const formValues = useWatch({ control: form.control }) as FormValues;
   const isFirstRunRef = React.useRef(true);
-
-  const onFormChangeRef = React.useRef<typeof onFormChange | undefined>(onFormChange);
-  React.useEffect(() => {
-    onFormChangeRef.current = onFormChange;
-  }, [onFormChange]);
-
   const lastSerializedRef = React.useRef<string | null>(null);
 
+  // Use a controlled approach to call the parent callback only when needed
   React.useEffect(() => {
-    if (!onFormChangeRef.current) {
-      return;
-    }
+    if (!onFormChange) return;
 
     const serialized = serializeRelevant(formValues);
-
+    
     if (isFirstRunRef.current) {
       isFirstRunRef.current = false;
       lastSerializedRef.current = serialized;
@@ -217,19 +210,29 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
     }
 
     if (lastSerializedRef.current === serialized) {
-      // mêmes valeurs pertinentes -> éviter l'appel parent
       return;
     }
 
     lastSerializedRef.current = serialized;
-
+    
     try {
-      // appeler la callback avec l'objet actuel (types ok)
-      onFormChangeRef.current(formValues);
+      onFormChange(formValues);
     } catch (err) {
       console.error("[QuoteCalculator] Erreur lors de l'appel onFormChange", err);
     }
-  }, [formValues]); // Removed form.formState?.isSubmitting to prevent infinite re-renders
+  }, [
+    formValues.siteType,
+    formValues.designType,
+    formValues.features,
+    formValues.maintenance,
+    formValues.name,
+    formValues.email,
+    formValues.company,
+    formValues.phone,
+    formValues.technology,
+    formValues.projectDescription,
+    onFormChange
+  ]);
 
   const onSubmit = (data: FormValues) => {
     const devisData = {
@@ -404,52 +407,54 @@ export const QuoteCalculator = React.memo(function QuoteCalculator({
           )}
         />
 
-        <FormField control={form.control} name="features" render={({ field }) => (
-          <FormItem>
-            <div className="mb-4">
-              <FormLabel className="text-lg font-semibold">3. Fonctionnalités additionnelles</FormLabel>
-              <FormDescription>Cochez toutes les fonctionnalités que vous souhaitez intégrer.</FormDescription>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {featureOptions.map((item) => {
-                // Use field.value for checking features instead of formValues to prevent re-render loops
-                const siteType = form.getValues("siteType");
-                const forcedIncluded = siteType === "webapp" && item.id === "user-accounts";
-                const displayPrice = forcedIncluded ? 0 : item.price;
-                const info = forcedIncluded ? "(inclus d'office)" : "";
-                const isChecked = field.value?.includes(item.id) || forcedIncluded;
-                
-                const handleFeatureToggle = () => {
-                  if (forcedIncluded) return;
-                  const currentFeatures = field.value || [];
-                  const isCurrentlyChecked = currentFeatures.includes(item.id);
-                  const updatedFeatures = isCurrentlyChecked 
-                    ? currentFeatures.filter((value) => value !== item.id)
-                    : [...currentFeatures, item.id];
-                  field.onChange(updatedFeatures);
-                };
-                
-                return (
-                  <div key={item.id} className={cn("flex flex-row items-start space-x-3 space-y-0 border rounded-md p-4 cursor-pointer hover:shadow-md transition-all duration-200", isChecked ? "border-primary bg-primary/5" : "border-border")} onClick={handleFeatureToggle}>
-                    <FormControl>
-                      <Checkbox checked={isChecked} disabled={forcedIncluded} className="pointer-events-none" />
-                    </FormControl>
-                    <div className="font-normal w-full cursor-pointer">
-                      <div className="flex justify-between items-start">
-                        <span>{item.label}</span>
-                        <span className="text-muted-foreground text-right ml-4">
-                          {displayPrice}€
-                          {info && (<span className="text-primary block text-xs font-semibold">{info}</span>)}
-                        </span>
+        <FormField control={form.control} name="features" render={({ field }) => {
+          return (
+            <FormItem>
+              <div className="mb-4">
+                <FormLabel className="text-lg font-semibold">3. Fonctionnalités additionnelles</FormLabel>
+                <FormDescription>Cochez toutes les fonctionnalités que vous souhaitez intégrer.</FormDescription>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {featureOptions.map((item) => {
+                  // Use formValues from useWatch instead of form.getValues() to avoid re-render loops
+                  const forcedIncluded = formValues.siteType === "webapp" && item.id === "user-accounts";
+                  const displayPrice = forcedIncluded ? 0 : item.price;
+                  const info = forcedIncluded ? "(inclus d'office)" : "";
+                  const isChecked = field.value?.includes(item.id) || forcedIncluded;
+                  
+                  return (
+                    <div key={item.id} className={cn("flex flex-row items-start space-x-3 space-y-0 border rounded-md p-4 cursor-pointer hover:shadow-md transition-all duration-200", isChecked ? "border-primary bg-primary/5" : "border-border")} onClick={() => {
+                      if (forcedIncluded) return;
+                      const currentFeatures = field.value || [];
+                      const isCurrentlyChecked = currentFeatures.includes(item.id);
+                      if (isCurrentlyChecked) {
+                        // Remove the feature
+                        field.onChange(currentFeatures.filter((value) => value !== item.id));
+                      } else {
+                        // Add the feature
+                        field.onChange([...currentFeatures, item.id]);
+                      }
+                    }}>
+                      <FormControl>
+                        <Checkbox checked={isChecked} disabled={forcedIncluded} className="pointer-events-none" />
+                      </FormControl>
+                      <div className="font-normal w-full cursor-pointer">
+                        <div className="flex justify-between items-start">
+                          <span>{item.label}</span>
+                          <span className="text-muted-foreground text-right ml-4">
+                            {displayPrice}€
+                            {info && (<span className="text-primary block text-xs font-semibold">{info}</span>)}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-            <FormMessage />
-          </FormItem>
-        )} />
+                  );
+                })}
+              </div>
+              <FormMessage />
+            </FormItem>
+          );
+        }} />
 
         <FormField control={form.control} name="maintenance" render={({ field }) => (
           <FormItem className="space-y-3">
