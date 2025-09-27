@@ -379,7 +379,7 @@ function DevisValidationContent() {
       let responseData;
       try {
         responseData = await response.json();
-      } catch (jsonError) {
+      } catch {
         const responseText = await response.text();
         throw new Error(`Erreur serveur (${response.status}): ${responseText}`);
       }

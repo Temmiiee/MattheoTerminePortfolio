@@ -127,20 +127,25 @@ export async function POST(request: NextRequest) {
 
     try {
       console.log('📧 Envoi email prestataire vers:', config.email.admin);
-      const providerResult = await sendEmailWithRetry(transporter, mailOptionsToProvider);
+      await sendEmailWithRetry(transporter, mailOptionsToProvider);
       console.log('✅ Email prestataire envoyé avec succès');
       
       console.log('📧 Envoi email client vers:', devisData.clientInfo.email);
-      const clientResult = await sendEmailWithRetry(transporter, mailOptionsToClient);
+      await sendEmailWithRetry(transporter, mailOptionsToClient);
       console.log('✅ Email client envoyé avec succès');
       
     } catch (mailError) {
       console.error('❌ ERREUR ENVOI EMAIL BREVO:');
       console.error('- Erreur complète:', mailError);
       console.error('- Message:', mailError instanceof Error ? mailError.message : String(mailError));
-      console.error('- Code erreur:', (mailError as any)?.code);
-      console.error('- Response Code:', (mailError as any)?.responseCode);
-      console.error('- Command:', (mailError as any)?.command);
+      
+      // Vérifications TypeScript safe pour les propriétés d'erreur SMTP
+      if (mailError && typeof mailError === 'object') {
+        const smtpError = mailError as Record<string, unknown>;
+        if ('code' in smtpError) console.error('- Code erreur:', smtpError.code);
+        if ('responseCode' in smtpError) console.error('- Response Code:', smtpError.responseCode);
+        if ('command' in smtpError) console.error('- Command:', smtpError.command);
+      }
       
       return NextResponse.json({ 
         error: 'Erreur lors de l\'envoi des emails', 
