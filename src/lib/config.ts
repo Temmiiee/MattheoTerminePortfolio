@@ -22,9 +22,9 @@ export const config = {
     from: process.env.SMTP_FROM || 'noreply@mattheo-termine.fr',
     admin: 'mattheotermine104@gmail.com',
     smtp: {
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '465'), // Changement vers 465 (SSL)
-      secure: process.env.SMTP_SECURE === 'true' || parseInt(process.env.SMTP_PORT || '465') === 465, // Auto-secure pour 465
+      host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true' || false,
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
@@ -97,7 +97,7 @@ export const getEmailConfig = () => {
   const smtpConfig = {
     host: config.email.smtp.host,
     port: config.email.smtp.port,
-    secure: config.email.smtp.secure, // true pour port 465, false pour autres ports
+    secure: config.email.smtp.secure,
     auth: {
       user: config.email.smtp.user,
       pass: config.email.smtp.pass,
