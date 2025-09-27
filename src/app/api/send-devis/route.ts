@@ -126,26 +126,26 @@ export async function POST(request: NextRequest) {
     // Pas de test de connexion en production pour éviter les timeouts
 
     try {
-      // Envoyer l'email au prestataire en premier (priorité)
-      await sendEmailWithRetry(transporter, mailOptionsToProvider);
-      if (shouldLog()) {
-        console.log('Email prestataire envoyé');
-      }
+      console.log('📧 Envoi email prestataire vers:', config.email.admin);
+      const providerResult = await sendEmailWithRetry(transporter, mailOptionsToProvider);
+      console.log('✅ Email prestataire envoyé avec succès');
       
-      // Puis envoyer la confirmation au client
-      await sendEmailWithRetry(transporter, mailOptionsToClient);
-      if (shouldLog()) {
-        console.log('Email client envoyé');
-      }
+      console.log('📧 Envoi email client vers:', devisData.clientInfo.email);
+      const clientResult = await sendEmailWithRetry(transporter, mailOptionsToClient);
+      console.log('✅ Email client envoyé avec succès');
       
     } catch (mailError) {
-      if (shouldLog()) {
-        console.error('Erreur lors de l\'envoi des emails après toutes les tentatives:', mailError);
-      }
+      console.error('❌ ERREUR ENVOI EMAIL BREVO:');
+      console.error('- Erreur complète:', mailError);
+      console.error('- Message:', mailError instanceof Error ? mailError.message : String(mailError));
+      console.error('- Code erreur:', (mailError as any)?.code);
+      console.error('- Response Code:', (mailError as any)?.responseCode);
+      console.error('- Command:', (mailError as any)?.command);
+      
       return NextResponse.json({ 
         error: 'Erreur lors de l\'envoi des emails', 
         details: mailError instanceof Error ? mailError.message : String(mailError),
-        devisNumber // On retourne quand même le numéro pour que l'utilisateur sache que ça a été traité
+        devisNumber
       }, { status: 500 });
     }
 
