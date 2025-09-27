@@ -23,8 +23,8 @@ export const config = {
     admin: 'mattheotermine104@gmail.com',
     smtp: {
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true',
+      port: parseInt(process.env.SMTP_PORT || '465'), // Changement vers 465 (SSL)
+      secure: process.env.SMTP_SECURE === 'true' || parseInt(process.env.SMTP_PORT || '465') === 465, // Auto-secure pour 465
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
@@ -37,9 +37,9 @@ export const config = {
   // Configuration des timeouts
   timeouts: {
     email: {
-      connection: 15000,
-      socket: 15000,
-      greeting: 10000,
+      connection: 10000, // Réduction de 15s à 10s
+      socket: 10000,     // Réduction de 15s à 10s
+      greeting: 5000,    // Réduction de 10s à 5s
       retries: 1,
     },
   },
