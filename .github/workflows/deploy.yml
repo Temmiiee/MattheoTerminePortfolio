@@ -22,4 +22,6 @@ jobs:
             git reset --hard origin/main
             npm install
             npm run build
-            pm2 restart portfolio --update-env
+            pm2 stop portfolio || true
+            pm2 delete portfolio || true
+            /var/www/start-portfolio.sh
