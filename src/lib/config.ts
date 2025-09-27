@@ -23,7 +23,7 @@ export const config = {
     admin: 'mattheotermine104@gmail.com',
     smtp: {
       host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
+      port: parseInt(process.env.SMTP_PORT || '2525'),
       secure: process.env.SMTP_SECURE === 'true' || false,
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
