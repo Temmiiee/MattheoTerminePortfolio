@@ -14,6 +14,16 @@ import { config, getBaseUrl, shouldLog } from '@/lib/config';
 
 export async function POST(request: NextRequest) {
   try {
+    // Debug: Vérifier les variables d'environnement en production
+    if (shouldLog()) {
+      console.log('=== DEBUG SEND-DEVIS ===');
+      console.log('NODE_ENV:', process.env.NODE_ENV);
+      console.log('SMTP_HOST exists:', !!process.env.SMTP_HOST);
+      console.log('SMTP_USER exists:', !!process.env.SMTP_USER);
+      console.log('SMTP_PASS exists:', !!process.env.SMTP_PASS);
+      console.log('Base URL:', getBaseUrl());
+    }
+
     // Récupérer le FormData (PDF + devisData + devisNumber)
     const formData = await request.formData();
     const devisNumber = formData.get('devisNumber');

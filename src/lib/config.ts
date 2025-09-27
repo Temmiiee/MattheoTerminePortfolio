@@ -120,8 +120,22 @@ export const getEmailConfig = () => {
 
 // Helper pour valider la configuration SMTP (séparé du getEmailConfig)
 export const validateEmailConfig = () => {
-  if (!config.email.smtp.user || !config.email.smtp.pass) {
-    throw new Error(`Configuration SMTP incomplète: user=${!!config.email.smtp.user}, pass=${!!config.email.smtp.pass}`);
+  const hasUser = !!config.email.smtp.user;
+  const hasPass = !!config.email.smtp.pass;
+  const hasHost = !!config.email.smtp.host;
+  
+  console.log('=== SMTP CONFIG VALIDATION ===');
+  console.log('SMTP_HOST:', config.email.smtp.host);
+  console.log('SMTP_PORT:', config.email.smtp.port);
+  console.log('SMTP_USER exists:', hasUser);
+  console.log('SMTP_PASS exists:', hasPass);
+  console.log('Raw env SMTP_USER:', process.env.SMTP_USER ? 'SET' : 'NOT_SET');
+  console.log('Raw env SMTP_PASS:', process.env.SMTP_PASS ? 'SET' : 'NOT_SET');
+  
+  if (!hasUser || !hasPass) {
+    const error = `Configuration SMTP incomplète: user=${hasUser}, pass=${hasPass}, host=${hasHost}`;
+    console.error(error);
+    throw new Error(error);
   }
 };
 
