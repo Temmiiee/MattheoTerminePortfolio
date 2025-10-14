@@ -432,7 +432,7 @@ const HeroSection = () => {
   const [typingText, setTypingText] = useState("");
   const [showCursor, setShowCursor] = useState(false);
 
-  const fullText = "Intégrateur web freelance";
+  const fullText = "Intégrateur web";
 
   useEffect(() => {
     // Smooth startup animation sequence

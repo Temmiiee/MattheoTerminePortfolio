@@ -186,7 +186,7 @@ export function Header() {
                   {/* Footer section */}
                   <div className="pt-6 border-t border-border/50 text-center">
                     <p className="text-sm text-muted-foreground">
-                      Intégrateur Web Freelance
+                      Intégrateur Web
                     </p>
                   </div>
                 </div>
