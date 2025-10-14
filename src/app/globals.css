@@ -20,9 +20,6 @@
 @import "../styles/components/process.css";
 @import "../styles/components/about.css";
 
-/* Responsive Design */
-@import "../styles/responsive.css";
-
 /* Tailwind CSS directives */
 @tailwind base;
 @tailwind components;
@@ -57,7 +54,7 @@
   padding: 0;
   box-sizing: border-box;
   background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
   margin-bottom: 2rem;
 }
@@ -97,5 +94,498 @@
   .devis-header > div {
     min-width: unset;
     text-align: left;
+  }
+}
+
+/* =============================================================================
+   PERFORMANCE & ACCESSIBILITY IMPROVEMENTS
+   ============================================================================= */
+
+/* Amélioration des performances pour les animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Réduction des animations pour les utilisateurs qui préfèrent moins de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Amélioration des focus pour l'accessibilité */
+.focus-visible:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Amélioration des effets hover pour la section À propos */
+.about-photo-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.about-photo-container:hover {
+  transform: translateZ(0);
+}
+
+/* Optimisation des ombres */
+.shadow-enhanced {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.shadow-enhanced:hover {
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Amélioration du contraste pour l'accessibilité */
+.high-contrast {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+}
+
+/* Optimisation des images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Amélioration des transitions pour les éléments interactifs */
+.interactive-element {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive-element:hover {
+  transform: translateY(-2px);
+}
+
+/* Optimisation pour les écrans haute densité */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .crisp-edges {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Animation bounce très lente et discrète */
+@keyframes slow-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(-4px);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-slow-bounce {
+  animation: slow-bounce 5s infinite;
+}
+
+/* Réduction encore plus importante pour prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-slow-bounce {
+    animation: none;
+  }
+}/* ==
+===========================================================================
+   LIGHT MODE IMPROVEMENTS
+   ============================================================================= */
+
+/* Amélioration des contrastes en mode light */
+html:not(.dark) {
+  /* Amélioration de la section Hero en mode light */
+  .hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  /* Amélioration des cartes en mode light */
+  .shadow-enhanced {
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+  
+  .shadow-enhanced:hover {
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.15),
+      0 10px 10px -5px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Amélioration des textes en mode light */
+  .text-white\/50 {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+  
+  .text-white\/40 {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  
+  .text-white\/70 {
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+  
+  .text-white\/60 {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+}
+
+/* =============================================================================
+   ABOUT SECTION ANIMATIONS
+   ============================================================================= */
+
+/* Animation d'entrée pour la section À propos */
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Classes d'animation pour la section À propos */
+.animate-slide-in-left {
+  animation: slideInFromLeft 1s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 1s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+/* Animation avec délais */
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animate-delay-600 {
+  animation-delay: 600ms;
+}
+
+.animate-delay-800 {
+  animation-delay: 800ms;
+}
+
+/* États initiaux pour les animations */
+.animate-slide-in-left,
+.animate-slide-in-right,
+.animate-fade-in-up,
+.animate-scale-in {
+  opacity: 0;
+}
+
+/* Respect des préférences d'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-fade-in-up,
+  .animate-scale-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =============================================================================
+   INTERACTIVE ELEMENTS IMPROVEMENTS
+   ============================================================================= */
+
+/* Amélioration des éléments interactifs */
+.interactive-element {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.interactive-element:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Amélioration des focus pour l'accessibilité */
+.focus-enhanced:focus-visible {
+  outline: 3px solid hsl(var(--primary));
+  outline-offset: 3px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 6px hsla(var(--primary), 0.2);
+}
+
+/* Animation de pulsation subtile pour les éléments importants */
+@keyframes subtle-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 3s ease-in-out infinite;
+}/* =
+============================================================================
+   FINAL TOUCHES FOR PRODUCTION
+   ============================================================================= */
+
+/* Amélioration des cartes de projet en mode light */
+html:not(.dark) .bg-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Amélioration des sections en mode light */
+html:not(.dark) .bg-secondary\/20 {
+  background-color: rgba(248, 250, 252, 0.8);
+}
+
+html:not(.dark) .bg-secondary\/30 {
+  background-color: rgba(241, 245, 249, 0.9);
+}
+
+/* Amélioration de la navigation en mode light */
+html:not(.dark) .bg-background\/80 {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+/* Animation de chargement pour les images */
+@keyframes imageLoad {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.image-load-animation {
+  animation: imageLoad 0.6s ease-out;
+}
+
+/* Amélioration des transitions globales */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Optimisation des performances pour les animations */
+.will-change-auto {
+  will-change: auto;
+}
+
+.will-change-scroll {
+  will-change: scroll-position;
+}
+
+/* Amélioration de l'accessibilité pour les animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animate-slow-bounce,
+  .animate-subtle-pulse {
+    animation: none !important;
+  }
+}/* =======
+======================================================================
+   HERO TITLE IMPROVEMENTS FOR LIGHT MODE
+   ============================================================================= */
+
+/* Titre Hero adaptatif selon le thème */
+.hero-section h1 {
+  color: white;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+html:not(.dark) .hero-section h1 {
+  color: #0f172a;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.9), 0 4px 8px rgba(0, 0, 0, 0.15);
+  font-weight: 800;
+}
+
+/* Amélioration du sous-titre en mode light */
+html:not(.dark) .hero-section .text-primary {
+  color: #4c1d95 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Amélioration des descriptions en mode light */
+html:not(.dark) .hero-section .text-muted-foreground {
+  color: #475569 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}/* Amél
+ioration de la flèche Découvrir en mode light */
+html:not(.dark) .hero-section button span {
+  color: rgba(26, 26, 46, 0.7) !important;
+}
+
+html:not(.dark) .hero-section button:hover span {
+  color: rgba(26, 26, 46, 0.9) !important;
+}
+
+html:not(.dark) .hero-section button svg {
+  color: rgba(26, 26, 46, 0.6) !important;
+}
+
+html:not(.dark) .hero-section button:hover svg {
+  color: rgba(26, 26, 46, 0.8) !important;
+}
+
+html:not(.dark) .hero-section button:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}/* 
+=============================================================================
+   PRODUCTION OPTIMIZATIONS
+   ============================================================================= */
+
+/* Ensure dark mode is truly default for new users */
+html {
+  /* Force dark mode as the absolute default */
+  background-color: #0a0a1a !important;
+  color-scheme: dark light;
+}
+
+/* Prevent any light mode flash on initial load */
+html:not(.dark-loaded) {
+  background-color: #0a0a1a !important;
+  color: #e2e8f0 !important;
+}
+
+/* Performance optimizations for production */
+* {
+  /* Optimize repaints and reflows */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize images for production */
+img {
+  /* Prevent layout shift */
+  max-width: 100%;
+  height: auto;
+  /* Optimize rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Optimize animations for production */
+@media (prefers-reduced-motion: no-preference) {
+  /* Enable hardware acceleration for smooth animations */
+  .animate-slow-bounce,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-fade-in-up,
+  .animate-scale-in {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+}
+
+/* Production-ready focus states */
+.focus-enhanced:focus-visible {
+  outline: 3px solid hsl(var(--primary));
+  outline-offset: 3px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 6px hsla(var(--primary), 0.2);
+  transition: all 0.2s ease-out;
+}
+
+/* Ensure proper contrast ratios for accessibility */
+@media (prefers-contrast: high) {
+  :root {
+    --primary: 258 89% 35%;
+    --foreground: 0 0% 0%;
+  }
+  
+  .dark {
+    --primary: 258 89% 85%;
+    --foreground: 0 0% 100%;
+  }
+}
+
+/* Production-ready print styles */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  .hero-section,
+  .animate-slow-bounce {
+    display: none !important;
   }
 }

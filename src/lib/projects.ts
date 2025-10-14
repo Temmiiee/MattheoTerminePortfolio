@@ -45,7 +45,7 @@ export const projects: Project[] = [
     ],
     imageUrl: "/images/projects/tdm-factory.png",
     dataAiHint: "data analysis",
-    liveLink: "https://tdm-factory.services.istex.fr/",
+    liveLink: "https://www.istex.fr/tdm-factory-la-fouille-de-textes-a-portee-de-main/",
     repoLink: "https://github.com/Inist-CNRS/tdm-factory",
   },
   {

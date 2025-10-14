@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 // Commented out Google Fonts for build environment compatibility
 // import { PT_Sans, Space_Grotesk } from 'next/font/google';
 import "./globals.css";
+import "@/styles/accessibility.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -185,27 +186,51 @@ export default function RootLayout({
           content="black-translucent"
         />
         <meta name="msapplication-TileColor" content="#a259ff" />
+        
+        {/* Production optimizations */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
+        <meta name="bingbot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
+        
+        {/* Performance hints */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        
+        {/* Security headers */}
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta httpEquiv="X-Frame-Options" content="DENY" />
+        <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
+        <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
         <link rel="canonical" href="https://mattheo-termine.fr" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
             (function() {
               try {
+                // Production-ready theme initialization with dark mode as default
                 var theme = localStorage.getItem('theme');
-                var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var html = document.documentElement;
                 
-                if (theme === 'dark' || (theme === 'system' && systemDark) || (!theme && systemDark)) {
-                  document.documentElement.classList.add('dark');
+                // Default to dark mode for new users
+                if (theme === 'light') {
+                  html.classList.remove('dark');
+                  html.style.backgroundColor = '#ffffff';
                 } else {
-                  document.documentElement.classList.remove('dark');
+                  // Dark mode for: explicit dark, system dark, or no preference (new users)
+                  html.classList.add('dark');
+                  html.style.backgroundColor = '#0a0a1a';
                 }
+                
+                // Mark as loaded to prevent flash
+                html.classList.add('dark-loaded');
+                
               } catch (e) {
-                // Fallback en cas d'erreur - utiliser la préférence système si possible
-                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  document.documentElement.classList.remove('dark');
-                }
+                // Bulletproof fallback - always default to dark mode
+                document.documentElement.classList.add('dark');
+                document.documentElement.style.backgroundColor = '#0a0a1a';
+                document.documentElement.classList.add('dark-loaded');
               }
             })();
           `,
@@ -218,10 +243,10 @@ export default function RootLayout({
             --font-pt-sans: ${ptSans.style.fontFamily};
             --font-space-grotesk: ${spaceGrotesk.style.fontFamily};
           }
-          /* Éviter le flash de couleur incorrecte */
+          /* Éviter le flash de couleur incorrecte - mode sombre par défaut */
           html {
-            background-color: #ffffff;
-            color-scheme: light dark;
+            background-color: #0a0a1a;
+            color-scheme: dark light;
           }
           html.dark {
             background-color: #0a0a1a;
@@ -239,7 +264,7 @@ export default function RootLayout({
         <ConsentProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem={true}
             disableTransitionOnChange
           >
@@ -303,6 +328,25 @@ export default function RootLayout({
                   window.__REACT_DEVTOOLS_GLOBAL_HOOK__.onCommitFiberUnmount = function() {};
                 }
               `
+            }}
+          />
+        )}
+        
+        {/* Production-ready service worker registration */}
+        {process.env.NODE_ENV === 'production' && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                if ('serviceWorker' in navigator) {
+                  window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                      console.log('SW registered: ', registration);
+                    }).catch(function(registrationError) {
+                      console.log('SW registration failed: ', registrationError);
+                    });
+                  });
+                }
+              `,
             }}
           />
         )}

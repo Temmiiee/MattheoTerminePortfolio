@@ -4,18 +4,16 @@ Allow: /
 # Sitemap
 Sitemap: https://mattheo-termine.fr/sitemap.xml
 
-# Block sensitive pages
+# Disallow admin and API routes
 Disallow: /admin/
 Disallow: /api/
-Disallow: /devis/signature/
-Disallow: /_next/
-Disallow: /*.json$
 
-# Allow specific crawlers
-User-agent: Googlebot
+# Allow important pages
 Allow: /
+Allow: /devis
+Allow: /projets
+Allow: /declaration-accessibilite
+Allow: /politique-confidentialite
 
-User-agent: Bingbot
-Allow: /
-
+# Crawl delay for respectful crawling
 Crawl-delay: 1
