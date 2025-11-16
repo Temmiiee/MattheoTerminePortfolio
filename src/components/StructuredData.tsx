@@ -75,8 +75,10 @@ export function StructuredData() {
       name: "France",
     },
     serviceType: "Développement Web",
-    priceRange: "550€ - 2500€+",
+    // DEVIS - TEMPORAIREMENT DÉSACTIVÉ
+    // priceRange: "550€ - 2500€+",
     paymentAccepted: ["Virement bancaire", "Chèque"],
+    /* DEVIS - TEMPORAIREMENT DÉSACTIVÉ
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Services de Développement Web",
@@ -122,6 +124,7 @@ export function StructuredData() {
         },
       ],
     },
+    */
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "5",

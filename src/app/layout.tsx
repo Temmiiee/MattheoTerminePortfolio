@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { CookieBanner, CookieStatus } from "@/components/CookieBanner";
 import { GoogleAnalyticsConsent } from "@/components/GoogleAnalyticsConsent";
 import { ConsentProvider } from "@/contexts/ConsentContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Link from "next/link";
 
@@ -134,7 +135,7 @@ export const metadata: Metadata = {
   },
   other: {
     "msapplication-TileColor": "#a259ff",
-    "apple-mobile-web-app-capable": "yes",
+    "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "black-translucent",
     "format-detection": "telephone=no",
   },
@@ -180,12 +181,21 @@ export default function RootLayout({
         <meta name="color-scheme" content="dark light" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
         <meta name="msapplication-TileColor" content="#a259ff" />
+        
+        {/* Explicit icon links for better browser compatibility (especially Firefox) */}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         
         {/* Production optimizations */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -197,9 +207,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
-        {/* Security headers */}
+        {/* Security headers - X-Frame-Options removed as it should only be set via HTTP headers */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-        <meta httpEquiv="X-Frame-Options" content="DENY" />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
         <link rel="canonical" href="https://mattheo-termine.fr" />
@@ -270,37 +279,39 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
-        <ConsentProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem={true}
-            disableTransitionOnChange
-          >
-          <Link href="#main-content" className="skip-link">
-            Aller au contenu principal
-          </Link>
-          <Link href="#navigation" className="skip-link">
-            Aller à la navigation
-          </Link>
-          <Header />
-          <main
-            id="main-content"
-            className="flex-grow"
-            role="main"
-            aria-label="Contenu principal"
-          >
-            <ErrorBoundary>
-              {children}
-            </ErrorBoundary>
-          </main>
-          <Footer />
-          <CookieBanner />
-          <CookieStatus />
-          <GoogleAnalyticsConsent />
-          <Toaster />
-        </ThemeProvider>
-        </ConsentProvider>
+        <LanguageProvider>
+          <ConsentProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem={true}
+              disableTransitionOnChange
+            >
+            <Link href="#main-content" className="skip-link">
+              Aller au contenu principal
+            </Link>
+            <Link href="#navigation" className="skip-link">
+              Aller à la navigation
+            </Link>
+            <Header />
+            <main
+              id="main-content"
+              className="flex-grow"
+              role="main"
+              aria-label="Contenu principal"
+            >
+              <ErrorBoundary>
+                {children}
+              </ErrorBoundary>
+            </main>
+            <Footer />
+            <CookieBanner />
+            <CookieStatus />
+            <GoogleAnalyticsConsent />
+            <Toaster />
+          </ThemeProvider>
+          </ConsentProvider>
+        </LanguageProvider>
         {/* Google Analytics GA4 - Direct Implementation */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
@@ -349,9 +360,9 @@ export default function RootLayout({
                 if ('serviceWorker' in navigator) {
                   window.addEventListener('load', function() {
                     navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                      console.log('SW registered: ', registration);
+                      // Service worker registered successfully
                     }).catch(function(registrationError) {
-                      console.log('SW registration failed: ', registrationError);
+                      // Service worker registration failed - silent in production
                     });
                   });
                 }

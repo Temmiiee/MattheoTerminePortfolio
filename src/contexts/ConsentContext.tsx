@@ -67,16 +67,42 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
           } else {
             setConsentStatus('partial');
           }
+          // Ne pas afficher la bannière si les préférences sont sauvegardées
+          setShowBanner(false);
         } else {
+          // Préférences expirées - refuser par défaut et afficher la bannière
+          const defaultPreferences: ConsentState = {
+            analytics: false,
+            marketing: false,
+            functional: true,
+          };
+          setConsentGiven(defaultPreferences);
+          setConsentStatus('rejected');
           setShowBanner(true);
         }
       } else {
+        // Pas de préférences sauvegardées - refuser par défaut et afficher la bannière
+        const defaultPreferences: ConsentState = {
+          analytics: false,
+          marketing: false,
+          functional: true,
+        };
+        setConsentGiven(defaultPreferences);
+        setConsentStatus('rejected');
         setShowBanner(true);
       }
     } catch (error) {
       if (shouldLog()) {
         console.error('Erreur lors du chargement des préférences de consentement:', error);
       }
+      // En cas d'erreur - refuser par défaut
+      const defaultPreferences: ConsentState = {
+        analytics: false,
+        marketing: false,
+        functional: true,
+      };
+      setConsentGiven(defaultPreferences);
+      setConsentStatus('rejected');
       setShowBanner(true);
     }
   }, [mounted]);

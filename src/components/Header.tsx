@@ -9,16 +9,19 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Menu, Code2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const navLinks = [
-  { href: "#accueil", label: "Accueil" },
-  { href: "#projects", label: "Réalisations" },
-  { href: "#a-propos", label: "À propos" },
-  { href: "#contact", label: "Contact" },
+  { href: "#accueil", labelKey: "nav.home" },
+  { href: "#projects", labelKey: "nav.projects" },
+  { href: "#a-propos", labelKey: "nav.about" },
+  { href: "#contact", labelKey: "nav.contact" },
 ];
 
 export function Header() {
   const pathname = usePathname();
+  const { t } = useTranslation();
   const [isSheetOpen, setSheetOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("#accueil");
 
@@ -68,7 +71,8 @@ export function Header() {
   }, [pathname]);
 
 
-  const NavLink = ({ href, label, className }: { href: string, label: string, className?: string }) => {
+  const NavLink = ({ href, labelKey, className }: { href: string, labelKey: string, className?: string }) => {
+    const label = t(labelKey);
     const isAnchor = href.startsWith("#");
     const isActive = activeLink === href;
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -134,11 +138,13 @@ export function Header() {
             {navLinks.map((link) => (
               <NavLink key={link.href} {...link} />
             ))}
+            <LanguageSelector />
             <ThemeToggle />
           </nav>
 
           {/* Mobile Navigation */}
           <div className="md:hidden flex items-center gap-2">
+            <LanguageSelector />
             <ThemeToggle />
             <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger asChild>

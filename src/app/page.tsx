@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils";
 import { WordpressIcon } from "@/components/icons/WordpressIcon";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { InteractiveGalaxy } from "@/components/InteractiveGalaxy";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const services = [
   {
@@ -80,6 +81,10 @@ const processSteps = [
   },
 ];
 
+/* ============================================
+   SYSTÈME DE DEVIS - TEMPORAIREMENT DÉSACTIVÉ
+   ============================================ */
+/*
 const pricingPlans = [
   {
     title: "Site Vitrine Classique",
@@ -153,6 +158,7 @@ const pricingPlans = [
       "bg-pricing-enterprise text-pricing-enterprise-foreground border-b border-border",
   },
 ];
+*/
 
 const AnimatedSection = ({
   children,
@@ -245,6 +251,7 @@ const AnimatedDiv = ({
 };
 
 const AboutSection = () => {
+  const { t } = useTranslation();
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.1,
     rootMargin: "-20px 0px -50px 0px",
@@ -270,14 +277,13 @@ const AboutSection = () => {
             id="about-title"
             className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground whitespace-nowrap sm:whitespace-normal"
           >
-            À&nbsp;propos de&nbsp;moi
+            {t('about.title')}
           </h2>
           <p
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4"
             style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
           >
-            Développeur passionné par&nbsp;la&nbsp;création d&apos;expériences
-            web&nbsp;exceptionnelles
+            {t('about.subtitle')}
           </p>
         </div>
 
@@ -327,46 +333,28 @@ const AboutSection = () => {
                   className="first-letter:text-2xl first-letter:font-bold first-letter:text-primary first-letter:mr-1 px-4"
                   style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
                 >
-                  Passionné par&nbsp;la&nbsp;création d&apos;expériences
-                  web&nbsp;performantes et&nbsp;inclusives. Je&nbsp;transforme
-                  des&nbsp;idées créatives en&nbsp;sites web&nbsp;fonctionnels,
-                  que&nbsp;ce&nbsp;soit en écrivant du&nbsp;code sur‑mesure
-                  ou&nbsp;en personnalisant des&nbsp;solutions WordPress.
+                  {t('about.p1')}
                 </p>
 
                 <p
                   className="px-4"
                   style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
                 >
-                  Mon&nbsp;objectif est&nbsp;de construire des&nbsp;plateformes
-                  qui&nbsp;répondent aux&nbsp;besoins de mes&nbsp;clients
-                  et&nbsp;qui offrent une&nbsp;expérience utilisateur fluide
-                  et&nbsp;intuitive.
+                  {t('about.p2')}
                 </p>
 
                 <p
                   className="px-4"
                   style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
                 >
-                  Je&nbsp;crois fermement en&nbsp;un web&nbsp;ouvert
-                  et&nbsp;accessible. C&apos;est&nbsp;pourquoi j&apos;accorde
-                  une&nbsp;importance capitale au&nbsp;respect
-                  des&nbsp;standards, à&nbsp;la&nbsp;performance et&nbsp;aux
-                  normes d&apos;accessibilité&nbsp;(RGAA).
-                  Un&nbsp;bon&nbsp;site, selon&nbsp;moi, est&nbsp;un&nbsp;site
-                  rapide, facile à&nbsp;utiliser et&nbsp;qui ne&nbsp;laisse
-                  personne de&nbsp;côté.
+                  {t('about.p3')}
                 </p>
 
                 <p
                   className="px-4"
                   style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
                 >
-                  Constamment en&nbsp;veille technologique, j&apos;aime explorer
-                  de&nbsp;nouveaux outils et de&nbsp;nouvelles méthodes
-                  pour&nbsp;améliorer la&nbsp;qualité de&nbsp;mon travail
-                  et&nbsp;proposer des&nbsp;solutions toujours
-                  plus&nbsp;innovantes.
+                  {t('about.p4')}
                 </p>
               </div>
 
@@ -388,14 +376,14 @@ const AboutSection = () => {
                     href="/cv-mattheo-termine.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Télécharger mon CV au format PDF (ouvre dans une nouvelle fenêtre)"
+                    aria-label={t('a11y.downloadCV')}
                     className="flex items-center justify-center gap-3 px-6 py-3 relative z-10 min-h-[44px]"
                   >
                     <span className="transition-transform duration-300 group-hover:-translate-y-0.5 text-sm sm:text-base">
                       <span className="hidden sm:inline">
-                        Télécharger mon&nbsp;CV
+                        {t('about.downloadCV')}
                       </span>
-                      <span className="sm:hidden">Mon&nbsp;CV</span>
+                      <span className="sm:hidden">{t('about.downloadCVShort')}</span>
                     </span>
                     {/* Icône de téléchargement améliorée */}
                     <svg
@@ -428,11 +416,12 @@ const AboutSection = () => {
 };
 
 const HeroSection = () => {
+  const { t } = useTranslation();
   const [animationStep, setAnimationStep] = useState(0);
   const [typingText, setTypingText] = useState("");
   const [showCursor, setShowCursor] = useState(false);
 
-  const fullText = "Intégrateur web";
+  const fullText = t('hero.subtitle');
 
   useEffect(() => {
     // Smooth startup animation sequence
@@ -545,8 +534,7 @@ const HeroSection = () => {
             transitionDelay: "200ms",
           }}
         >
-          Création de sites&nbsp;web modernes, performants et&nbsp;accessibles
-          pour développer votre présence en&nbsp;ligne
+          {t('hero.description')}
         </p>
 
         {/* Sous-description */}
@@ -563,9 +551,7 @@ const HeroSection = () => {
             transitionDelay: "400ms",
           }}
         >
-          Spécialisé dans le&nbsp;développement web&nbsp;sur‑mesure,
-          j&apos;accompagne les&nbsp;entreprises et&nbsp;particuliers dans
-          la&nbsp;création de&nbsp;leur identité&nbsp;numérique.
+          {t('hero.subdescription')}
         </p>
 
         <div
@@ -639,12 +625,12 @@ const HeroSection = () => {
                   projectsSection.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              aria-label="Faire défiler vers mes réalisations"
+              aria-label={t('a11y.scrollToProjects')}
               aria-describedby="scroll-indicator-description"
               type="button"
             >
               <span className="text-white/50 text-sm font-light group-hover:text-white/70 transition-colors duration-500">
-                Découvrir
+                {t('hero.discover')}
               </span>
               <svg
                 className="w-6 h-6 text-white/40 group-hover:text-white/60 group-hover:scale-105 transition-all duration-500"
@@ -667,7 +653,7 @@ const HeroSection = () => {
         {/* Description accessible pour l'indicateur de scroll */}
         <div className="sr-only">
           <p id="scroll-indicator-description">
-            Cliquez pour découvrir mes réalisations et projets récents
+            {t('a11y.scrollDescription')}
           </p>
         </div>
       </div>
@@ -676,6 +662,8 @@ const HeroSection = () => {
 };
 
 export default function Home() {
+  const { t } = useTranslation();
+  
   // États pour les animations des sections - initialisés comme visibles pour éviter l'hydratation
   const [isMounted, setIsMounted] = useState(false);
   const [servicesVisible, setServicesVisible] = useState<boolean[]>(
@@ -684,9 +672,14 @@ export default function Home() {
   const [processVisible, setProcessVisible] = useState<boolean[]>(
     new Array(processSteps.length).fill(true)
   );
-  const [pricingVisible, setPricingVisible] = useState<boolean[]>(
-    new Array(pricingPlans.length).fill(true)
-  );
+  /* DEVIS - TEMPORAIREMENT DÉSACTIVÉ */
+  // Variables factices pour éviter les erreurs de compilation
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pricingPlans: any[] = [];
+  const [pricingVisible] = useState<boolean[]>([]);
+  const pricingObserverRef = { current: null as HTMLDivElement | null };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const pricingIntersecting = false;
 
   // Hooks pour déclencher les animations des sections
   const { ref: servicesObserverRef, isIntersecting: servicesIntersecting } =
@@ -703,12 +696,14 @@ export default function Home() {
       triggerOnce: true,
     });
 
+  /* DEVIS - TEMPORAIREMENT DÉSACTIVÉ
   const { ref: pricingObserverRef, isIntersecting: pricingIntersecting } =
     useIntersectionObserver({
       threshold: 0.2,
       rootMargin: "-50px 0px -100px 0px",
       triggerOnce: true,
     });
+  */
 
   useEffect(() => {
     setIsMounted(true);
@@ -749,6 +744,7 @@ export default function Home() {
     }
   }, [processIntersecting, isMounted]);
 
+  /* DEVIS - TEMPORAIREMENT DÉSACTIVÉ
   useEffect(() => {
     if (isMounted && pricingIntersecting) {
       // Reset pour l'animation
@@ -765,6 +761,7 @@ export default function Home() {
       });
     }
   }, [pricingIntersecting, isMounted]);
+  */
 
   return (
     <>
@@ -879,21 +876,20 @@ export default function Home() {
               id="projects-title"
               className="text-3xl md:text-4xl font-bold mb-4 whitespace-nowrap sm:whitespace-normal"
             >
-              Mes&nbsp;Réalisations
+              {t('projects.title')}
             </h2>
             <p
               className="text-xl text-muted-foreground max-w-2xl mx-auto px-4"
               style={{ wordBreak: "keep-all", overflowWrap: "break-word" }}
             >
-              Découvrez quelques‑uns de&nbsp;mes projets récents
-              qui&nbsp;illustrent mon&nbsp;expertise technique
+              {t('projects.subtitle')}
             </p>
           </div>
 
           <div
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
             role="list"
-            aria-label="Liste de mes réalisations récentes"
+            aria-label={t('projects.listLabel')}
           >
             {projects.slice(0, 6).map((project, index) => (
               <AnimatedDiv
@@ -917,7 +913,7 @@ export default function Home() {
               >
                 <Link
                   href="/projets"
-                  aria-label="Voir tous mes projets et réalisations"
+                  aria-label={t('a11y.viewAllProjects')}
                   className="inline-flex items-center gap-2"
                 >
                   <span className="transition-transform duration-300 group-hover:scale-105">
@@ -1154,7 +1150,7 @@ export default function Home() {
                         role="list"
                         aria-label={`Fonctionnalités de l'offre ${plan.title}`}
                       >
-                        {plan.features.map((feature, featureIndex) => (
+                        {plan.features.map((feature: string, featureIndex: number) => (
                           <li
                             key={featureIndex}
                             className="flex items-start gap-3"
@@ -1225,9 +1221,9 @@ export default function Home() {
               <Button asChild variant="outline" className="font-medium">
                 <Link
                   href="#contact"
-                  aria-label="Contacter Matthéo Termine pour un devis personnalisé"
+                  aria-label={t('a11y.contactForQuote')}
                 >
-                  📞 Discutons de votre projet
+                  📞 {t('contact.discussProject')}
                 </Link>
               </Button>
             </div>
@@ -1248,10 +1244,10 @@ export default function Home() {
               id="contact-title"
               className="text-3xl md:text-4xl font-bold mb-4"
             >
-              Parlons de Votre Projet
+              {t('contact.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Prêt à donner vie à votre projet web ? Contactez-moi !
+              {t('contact.subtitle')}
             </p>
           </div>
 
@@ -1260,7 +1256,7 @@ export default function Home() {
               <div
                 className="space-y-8"
                 role="list"
-                aria-label="Informations de contact"
+                aria-label={t('contact.infoLabel')}
               >
                 <div
                   className="flex items-start gap-4 interactive-element p-4 rounded-lg hover:bg-primary/5 transition-colors duration-300"
@@ -1275,7 +1271,7 @@ export default function Home() {
                     <a
                       href="mailto:mattheotermine104@gmail.com"
                       className="text-muted-foreground hover:text-primary transition-colors duration-300 focus-visible"
-                      aria-label="Envoyer un email à mattheotermine104@gmail.com"
+                      aria-label={t('a11y.emailMe')}
                     >
                       mattheotermine104@gmail.com
                     </a>
@@ -1291,15 +1287,14 @@ export default function Home() {
                     aria-hidden="true"
                   />
                   <div>
-                    <h3 className="font-semibold mb-2">Réponse rapide</h3>
+                    <h3 className="font-semibold mb-2">{t('contact.quickResponse')}</h3>
                     <p className="text-muted-foreground">
-                      Je réponds généralement sous 24h pour discuter de votre
-                      projet
+                      {t('contact.quickResponseDesc')}
                     </p>
                   </div>
                 </div>
-
-                <div
+                  {/* Temporairement retiré */}
+                {/* <div
                   className="flex items-start gap-4 interactive-element p-4 rounded-lg hover:bg-primary/5 transition-colors duration-300"
                   role="listitem"
                 >
@@ -1313,7 +1308,7 @@ export default function Home() {
                       Obtenez une estimation détaillée sans engagement
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </AnimatedDiv>
 
@@ -1326,3 +1321,4 @@ export default function Home() {
     </>
   );
 }
+

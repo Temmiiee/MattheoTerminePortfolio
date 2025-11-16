@@ -14,8 +14,8 @@ export default function Icon() {
       // ImageResponse JSX element
       <div
         style={{
-          fontSize: 24,
-          background: '#3F51B5', // Primary color from the design system
+          fontSize: 20,
+          background: 'linear-gradient(135deg, #a259ff 0%, #8b3dff 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -23,7 +23,8 @@ export default function Icon() {
           justifyContent: 'center',
           color: 'white',
           fontWeight: 'bold',
-          fontFamily: 'system-ui',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+          borderRadius: '6px',
         }}
       >
         MT
@@ -31,8 +32,6 @@ export default function Icon() {
     ),
     // ImageResponse options
     {
-      // For convenience, we can re-use the exported icons size metadata
-      // config to also set the ImageResponse's width and height.
       ...size,
     }
   )

@@ -34,14 +34,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    /* DEVIS - TEMPORAIREMENT DÉSACTIVÉ
     {
       url: `${baseUrl}/devis`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.8,
     },
+    */
+    /* DÉCLARATION D'ACCESSIBILITÉ - TEMPORAIREMENT DÉSACTIVÉE
     {
       url: `${baseUrl}/declaration-accessibilite`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    */
+    {
+      url: `${baseUrl}/politique-confidentialite`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,

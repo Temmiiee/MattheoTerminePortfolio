@@ -16,20 +16,27 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const formSchema = z.object({
+const createFormSchema = (t: (key: string) => string) => z.object({
   name: z.string().min(2, {
-    message: "Le nom doit contenir au moins 2 caractères.",
+    message: t('contact.validation.name'),
   }),
   email: z.string().email({
-    message: "Veuillez entrer une adresse email valide.",
+    message: t('contact.validation.email'),
   }),
   message: z.string().min(10, {
-    message: "Le message doit contenir au moins 10 caractères.",
+    message: t('contact.validation.message'),
   }),
 });
 
-async function submitAction(data: z.infer<typeof formSchema>) {
+type FormData = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+async function submitAction(data: FormData) {
   try {
     const response = await fetch('/api/contact', {
       method: 'POST',
@@ -61,7 +68,9 @@ async function submitAction(data: z.infer<typeof formSchema>) {
 }
 
 export function ContactForm() {
+  const { t } = useTranslation();
   const { toast } = useToast();
+  const formSchema = createFormSchema(t);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,13 +84,13 @@ export function ContactForm() {
     const result = await submitAction(values);
     if (result.success) {
       toast({
-        title: "Succès !",
+        title: t('contact.successTitle'),
         description: result.message,
       });
       form.reset();
     } else {
       toast({
-        title: "Erreur",
+        title: t('contact.errorTitle'),
         description: result.message,
         variant: "destructive",
       });
@@ -91,8 +100,8 @@ export function ContactForm() {
   return (
     <Card>
         <CardHeader>
-            <CardTitle id="form-title" className="font-headline text-2xl">Envoyer un message</CardTitle>
-            <CardDescription>Remplissez le formulaire ci-dessous.</CardDescription>
+            <CardTitle id="form-title" className="font-headline text-2xl">{t('contact.formTitle')}</CardTitle>
+            <CardDescription>{t('contact.formDescription')}</CardDescription>
         </CardHeader>
         <CardContent>
             <Form {...form}>
@@ -102,9 +111,9 @@ export function ContactForm() {
                 name="name"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Nom</FormLabel>
+                    <FormLabel>{t('contact.name')}</FormLabel>
                     <FormControl>
-                        <Input placeholder="Votre nom complet" {...field} />
+                        <Input placeholder={t('contact.placeholder.name')} {...field} />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
@@ -115,9 +124,9 @@ export function ContactForm() {
                 name="email"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t('contact.email')}</FormLabel>
                     <FormControl>
-                        <Input placeholder="votre.email@exemple.com" {...field} type="email" />
+                        <Input placeholder={t('contact.placeholder.email')} {...field} type="email" />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
@@ -128,16 +137,16 @@ export function ContactForm() {
                 name="message"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Message</FormLabel>
+                    <FormLabel>{t('contact.message')}</FormLabel>
                     <FormControl>
-                        <Textarea placeholder="Votre message..." className="min-h-[120px]" {...field} />
+                        <Textarea placeholder={t('contact.placeholder.message')} className="min-h-[120px]" {...field} />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
                 )}
                 />
                 <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                    {form.formState.isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+                    {form.formState.isSubmitting ? t('contact.sending') : t('contact.send')}
                 </Button>
             </form>
             </Form>
