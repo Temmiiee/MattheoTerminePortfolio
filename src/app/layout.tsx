@@ -192,8 +192,6 @@ export default function RootLayout({
         {/* Explicit icon links for better browser compatibility (especially Firefox) */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icon" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon" />
         <link rel="shortcut icon" href="/favicon.ico" />
         
@@ -352,18 +350,38 @@ export default function RootLayout({
           />
         )}
         
-        {/* Production-ready service worker registration */}
+        {/* Service Worker - Unregister old versions and register new minimal version */}
         {process.env.NODE_ENV === 'production' && (
           <script
             dangerouslySetInnerHTML={{
               __html: `
                 if ('serviceWorker' in navigator) {
                   window.addEventListener('load', function() {
-                    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                      // Service worker registered successfully
-                    }).catch(function(registrationError) {
-                      // Service worker registration failed - silent in production
+                    // First, unregister all existing service workers to clear corrupted cache
+                    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                      for(let registration of registrations) {
+                        registration.unregister();
+                      }
                     });
+                    
+                    // Clear all caches
+                    if ('caches' in window) {
+                      caches.keys().then(function(names) {
+                        for (let name of names) {
+                          caches.delete(name);
+                        }
+                      });
+                    }
+                    
+                    // Register the new minimal service worker after a short delay
+                    setTimeout(function() {
+                      navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                        // Force update check
+                        registration.update();
+                      }).catch(function(error) {
+                        // Silent fail in production
+                      });
+                    }, 1000);
                   });
                 }
               `,
