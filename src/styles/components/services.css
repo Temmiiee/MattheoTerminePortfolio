@@ -1,0 +1,32 @@
+/* =============================================================================
+   SERVICE CARDS COMPONENTS
+   ============================================================================= */
+
+/* Base service card styles */
+.service-card {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+}
+
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dark .service-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.service-icon-container {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.service-card:hover .service-icon-container {
+  transform: scale(1.1) rotate(5deg);
+  background-color: hsl(var(--primary) / 0.2);
+}
+
+/* Service card animations - handled by React components with Tailwind classes */
+.service-card-featured {
+  animation: pulse-glow 2s infinite;
+}

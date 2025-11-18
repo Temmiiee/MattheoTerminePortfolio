@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://mattheo-termine.fr/sitemap.xml
+
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /api/
+
+# Allow important pages
+Allow: /
+Allow: /devis
+Allow: /projets
+Allow: /declaration-accessibilite
+Allow: /politique-confidentialite
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
