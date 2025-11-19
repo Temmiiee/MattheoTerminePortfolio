@@ -2,37 +2,37 @@
 export const config = {
   // Informations de l'entreprise
   company: {
-    name: 'Matthéo Termine',
-    email: 'mattheotermine104@gmail.com',
-    contactEmail: 'mattheotermine104@gmail.com', // Changé vers l'adresse qui fonctionne
-    website: 'www.mattheo-termine.fr',
-    title: 'Développeur Web Freelance',
-    siret: '991 804 493 00013',
+    name: "Matthéo Termine",
+    email: "mattheotermine104@gmail.com",
+    contactEmail: "mattheotermine104@gmail.com", // Changé vers l'adresse qui fonctionne
+    website: "www.mattheo-termine.fr",
+    title: "Développeur Web Freelance",
+    siret: "991 804 493 00013",
   },
 
   // Configuration des URLs
   urls: {
-    production: 'https://mattheo-termine.fr',
-    development: 'http://localhost:3000',
-    admin: '/admin/devis',
+    production: "https://mattheo-termine.fr",
+    development: "http://localhost:3000",
+    admin: "/admin/devis",
   },
 
   // Configuration des emails
   email: {
-    from: process.env.SMTP_FROM || 'mattheotermine104@gmail.com', // Utiliser une adresse vérifiée
-    admin: 'mattheotermine104@gmail.com',
+    from: process.env.SMTP_FROM || "mattheotermine104@gmail.com", // Utiliser une adresse vérifiée
+    admin: "mattheotermine104@gmail.com",
     smtp: {
-      host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
-      port: parseInt(process.env.SMTP_PORT || '2525'),
-      secure: process.env.SMTP_SECURE === 'true' || false,
+      host: process.env.SMTP_HOST || "smtp-relay.brevo.com",
+      port: parseInt(process.env.SMTP_PORT || "2525"),
+      secure: process.env.SMTP_SECURE === "true" || false,
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
   },
 
   // Configuration de l'environnement
-  isDevelopment: process.env.NODE_ENV !== 'production',
-  isProduction: process.env.NODE_ENV === 'production',
+  isDevelopment: process.env.NODE_ENV !== "production",
+  isProduction: process.env.NODE_ENV === "production",
 
   // Configuration des timeouts
   timeouts: {
@@ -52,8 +52,8 @@ export const config = {
 
   // Configuration des fichiers
   files: {
-    dataDir: 'data',
-    devisFile: 'devis.json',
+    dataDir: "data",
+    devisFile: "devis.json",
   },
 
   // Configuration Google Analytics
@@ -67,22 +67,25 @@ export const getBaseUrl = () => {
   // En production, essayer plusieurs sources
   if (config.isProduction) {
     // 1. Variable d'environnement NEXT_PUBLIC_BASE_URL (si set au build)
-    if (process.env.NEXT_PUBLIC_BASE_URL && !process.env.NEXT_PUBLIC_BASE_URL.includes('localhost')) {
+    if (
+      process.env.NEXT_PUBLIC_BASE_URL &&
+      !process.env.NEXT_PUBLIC_BASE_URL.includes("localhost")
+    ) {
       return process.env.NEXT_PUBLIC_BASE_URL;
     }
-    
+
     // 2. Variables d'environnement serveur (disponibles uniquement côté serveur)
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       // Variable d'environnement serveur BASE_URL
-      if (process.env.BASE_URL && !process.env.BASE_URL.includes('localhost')) {
+      if (process.env.BASE_URL && !process.env.BASE_URL.includes("localhost")) {
         return process.env.BASE_URL;
       }
     }
-    
+
     // 3. Fallback sur la configuration statique de production
     return config.urls.production;
   }
-  
+
   // En développement
   return process.env.NEXT_PUBLIC_BASE_URL || config.urls.development;
 };
@@ -111,7 +114,7 @@ export const getEmailConfig = () => {
     tls: {
       rejectUnauthorized: config.isProduction,
       // Configuration spéciale pour Gmail
-      ciphers: 'SSLv3'
+      ciphers: "SSLv3",
     },
   };
 
@@ -123,15 +126,15 @@ export const validateEmailConfig = () => {
   const hasUser = !!config.email.smtp.user;
   const hasPass = !!config.email.smtp.pass;
   const hasHost = !!config.email.smtp.host;
-  
-  console.log('=== SMTP CONFIG VALIDATION ===');
-  console.log('SMTP_HOST:', config.email.smtp.host);
-  console.log('SMTP_PORT:', config.email.smtp.port);
-  console.log('SMTP_USER exists:', hasUser);
-  console.log('SMTP_PASS exists:', hasPass);
-  console.log('Raw env SMTP_USER:', process.env.SMTP_USER ? 'SET' : 'NOT_SET');
-  console.log('Raw env SMTP_PASS:', process.env.SMTP_PASS ? 'SET' : 'NOT_SET');
-  
+
+  console.info("=== SMTP CONFIG VALIDATION ===");
+  console.info("SMTP_HOST:", config.email.smtp.host);
+  console.info("SMTP_PORT:", config.email.smtp.port);
+  console.info("SMTP_USER exists:", hasUser);
+  console.info("SMTP_PASS exists:", hasPass);
+  console.info("Raw env SMTP_USER:", process.env.SMTP_USER ? "SET" : "NOT_SET");
+  console.info("Raw env SMTP_PASS:", process.env.SMTP_PASS ? "SET" : "NOT_SET");
+
   if (!hasUser || !hasPass) {
     const error = `Configuration SMTP incomplète: user=${hasUser}, pass=${hasPass}, host=${hasHost}`;
     console.error(error);

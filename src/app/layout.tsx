@@ -47,8 +47,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL("https://mattheo-termine.fr"),
   title: {
-    default:
-      "Matthéo Termine | Intégrateur Web Freelance spécialisé en Accessibilité RGAA",
+    default: "Matthéo Termine | Intégrateur Web Freelance spécialisé en Accessibilité RGAA",
     template: "%s | Matthéo Termine – Intégrateur Web Freelance",
   },
   description:
@@ -84,8 +83,7 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   openGraph: {
-    title:
-      "Matthéo Termine | Intégrateur Web Freelance spécialisé en Accessibilité RGAA",
+    title: "Matthéo Termine | Intégrateur Web Freelance spécialisé en Accessibilité RGAA",
     description:
       "Expert en création de sites web modernes, accessibles (normes RGAA) et optimisés SEO. Services professionnels : sites vitrines, applications web, WordPress sur mesure.",
     url: "https://mattheo-termine.fr",
@@ -168,38 +166,36 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes"
         />
-        <meta
-          name="theme-color"
-          content="#a259ff"
-          media="(prefers-color-scheme: light)"
-        />
-        <meta
-          name="theme-color"
-          content="#a259ff"
-          media="(prefers-color-scheme: dark)"
-        />
+        <meta name="theme-color" content="#a259ff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#a259ff" media="(prefers-color-scheme: dark)" />
         <meta name="color-scheme" content="dark light" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="msapplication-TileColor" content="#a259ff" />
-        
+
         {/* Explicit icon links for better browser compatibility (especially Firefox) */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icon" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        
+
         {/* Production optimizations */}
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
-        <meta name="bingbot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
-        
+        <meta
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
+        <meta
+          name="googlebot"
+          content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+        />
+        <meta
+          name="bingbot"
+          content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+        />
+
         {/* Performance hints - Google Analytics uniquement si activé */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
@@ -207,54 +203,14 @@ export default function RootLayout({
             <link rel="dns-prefetch" href="https://www.google-analytics.com" />
           </>
         )}
-        
+
         {/* Security headers - X-Frame-Options removed as it should only be set via HTTP headers */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
         <link rel="canonical" href="https://mattheo-termine.fr" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function() {
-              try {
-                // BULLETPROOF dark mode as default - executed immediately
-                var html = document.documentElement;
-                var theme = null;
-                
-                try {
-                  theme = localStorage.getItem('theme');
-                } catch (e) {
-                  // localStorage might not be available
-                }
-                
-                // ALWAYS start with dark mode
-                html.classList.add('dark');
-                html.style.backgroundColor = '#0a0a1a';
-                html.style.colorScheme = 'dark';
-                
-                // Only switch to light if explicitly requested
-                if (theme === 'light') {
-                  html.classList.remove('dark');
-                  html.style.backgroundColor = '#ffffff';
-                  html.style.colorScheme = 'light';
-                }
-                
-                // Prevent any flash
-                html.classList.add('theme-loaded');
-                
-              } catch (e) {
-                // Ultimate fallback - ALWAYS dark mode
-                var html = document.documentElement;
-                html.classList.add('dark');
-                html.style.backgroundColor = '#0a0a1a';
-                html.style.colorScheme = 'dark';
-                html.classList.add('theme-loaded');
-              }
-            })();
-          `,
-          }}
-        />
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="/theme-init.js" />
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -288,29 +244,27 @@ export default function RootLayout({
               enableSystem={true}
               disableTransitionOnChange
             >
-            <Link href="#main-content" className="skip-link">
-              Aller au contenu principal
-            </Link>
-            <Link href="#navigation" className="skip-link">
-              Aller à la navigation
-            </Link>
-            <Header />
-            <main
-              id="main-content"
-              className="flex-grow"
-              role="main"
-              aria-label="Contenu principal"
-            >
-              <ErrorBoundary>
-                {children}
-              </ErrorBoundary>
-            </main>
-            <Footer />
-            <CookieBanner />
-            <CookieStatus />
-            <GoogleAnalyticsConsent />
-            <Toaster />
-          </ThemeProvider>
+              <Link href="#main-content" className="skip-link">
+                Aller au contenu principal
+              </Link>
+              <Link href="#navigation" className="skip-link">
+                Aller à la navigation
+              </Link>
+              <Header />
+              <main
+                id="main-content"
+                className="flex-grow"
+                role="main"
+                aria-label="Contenu principal"
+              >
+                <ErrorBoundary>{children}</ErrorBoundary>
+              </main>
+              <Footer />
+              <CookieBanner />
+              <CookieStatus />
+              <GoogleAnalyticsConsent />
+              <Toaster />
+            </ThemeProvider>
           </ConsentProvider>
         </LanguageProvider>
         {/* Google Analytics GA4 - Chargé de manière non-bloquante après le chargement de la page */}
@@ -348,9 +302,9 @@ export default function RootLayout({
             }}
           />
         )}
-        
+
         {/* Désactiver les React DevTools en production */}
-        {process.env.NODE_ENV === 'production' && (
+        {process.env.NODE_ENV === "production" && (
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -361,13 +315,13 @@ export default function RootLayout({
                   window.__REACT_DEVTOOLS_GLOBAL_HOOK__.onCommitFiberRoot = function() {};
                   window.__REACT_DEVTOOLS_GLOBAL_HOOK__.onCommitFiberUnmount = function() {};
                 }
-              `
+              `,
             }}
           />
         )}
-        
+
         {/* Service Worker - Unregister old versions and register new minimal version */}
-        {process.env.NODE_ENV === 'production' && (
+        {process.env.NODE_ENV === "production" && (
           <script
             dangerouslySetInnerHTML={{
               __html: `

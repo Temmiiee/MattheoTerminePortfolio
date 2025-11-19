@@ -6,14 +6,25 @@ A modern, accessible website for Matthéo Termine, a freelance web integrator sp
 
 ## ✨ Features
 
-- 🎨 Modern, responsive design
-- ♿ RGAA accessibility compliance
-- 🚀 Optimized for performance and SEO
-- 🔧 Built with Next.js 15 and TypeScript
-- 🎯 Interactive quote calculator
-- 📱 Mobile-first approach
-- 🌐 Structured data for better SEO
-- 🔒 Security-focused development
+- 🎨 Modern, responsive design with dark/light mode
+- ♿ RGAA / WCAG accessibility compliance
+- 🚀 Optimized for performance
+- 🔧 Built with Next.js 15, React 19, and TypeScript
+- 📱 Mobile-first, responsive approach
+- 🌍 Multi-language support (FR/EN)
+- 🍪 GDPR-compliant cookie consent management
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript 5
+- **Styling:** Tailwind CSS 3
+- **UI Components:** Radix UI
+- **Forms:** React Hook Form + Zod validation
+- **Email:** Nodemailer
+- **PDF Generation:** jsPDF
+- **Analytics:** Google Analytics 4
+- **Deployment:** Vercel / Custom VPS
 
 ## 📄 License
 
@@ -21,6 +32,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-Matthéo Termine - [contact@mattheo-termine.fr](mailto:contact@mattheo-termine.fr)
+Matthéo Termine - [mattheotermine104@gmail.com](mailto:mattheotermine104@gmail.com)
+
+Website: [https://mattheo-termine.fr](https://mattheo-termine.fr)
 
 Project Link: [https://github.com/Temmiiee/TemmiiePortfolio](https://github.com/Temmiiee/TemmiiePortfolio)
