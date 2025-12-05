@@ -299,7 +299,7 @@ const AboutSection = () => {
                     : "opacity-0"
                 )}
               >
-                <div className="relative group cursor-pointer interactive-element focus-enhanced">
+                <div className="relative group cursor-pointer interactive-element focus-enhanced" aria-label="Mattheo Termine - Intégrateur web freelance" role="img" aria-roledescription="Photo de Matthéo Termine" style={{ left: -15 }}>
                   <Image
                     src="/images/mattheo-termine-photo.png"
                     alt="Mattheo Termine - Intégrateur web freelance"
