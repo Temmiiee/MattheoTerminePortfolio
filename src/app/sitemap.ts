@@ -11,50 +11,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/#services`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/#projets`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/#tarifs`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    /* DEVIS - TEMPORAIREMENT DÉSACTIVÉ
-    {
-      url: `${baseUrl}/devis`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.8,
-    },
-    */
-    /* DÉCLARATION D'ACCESSIBILITÉ - TEMPORAIREMENT DÉSACTIVÉE
-    {
-      url: `${baseUrl}/declaration-accessibilite`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    */
-    {
       url: `${baseUrl}/politique-confidentialite`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
-      priority: 0.3,
+      priority: 0.5,
     },
+    // Note: Les sections #services, #projets, #tarifs, #contact sont des ancres
+    // de la page d'accueil, pas des pages séparées. Elles ne doivent pas être
+    // dans le sitemap pour éviter les erreurs "Page avec redirection" et
+    // "Autre page avec balise canonique correcte"
   ]
 }
