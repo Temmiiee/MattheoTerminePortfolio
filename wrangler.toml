@@ -1,0 +1,7 @@
+name = "mattheo-termine-portfolio"
+compatibility_date = "2025-16-12"
+
+# Pages configuration
+pages_build_output_dir = "out"
+
+node_compat = true

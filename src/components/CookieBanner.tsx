@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Cookie, Settings, X, Shield, BarChart3 } from 'lucide-react';
-import Link from 'next/link';
 import { useConsent, ConsentState } from '@/contexts/ConsentContext';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
