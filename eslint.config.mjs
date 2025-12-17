@@ -37,6 +37,8 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "warn",
       "prefer-const": "error",
       "no-var": "error",
+      // Désactiver le warning Google Font preconnect car nous gérons déjà les preconnect manuellement
+      "@next/next/google-font-preconnect": "off",
     },
   },
   {

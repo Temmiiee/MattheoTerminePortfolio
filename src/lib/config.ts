@@ -10,6 +10,13 @@ export const config = {
     siret: "991 804 493 00013",
   },
 
+  // Social media profiles
+  social: {
+    linkedin: "https://www.linkedin.com/in/mattheo-termine-a6918522b/",
+    github: "https://github.com/Temmiiee",
+    malt: "https://www.malt.fr/profile/mattheotermine",
+  },
+
   // Configuration des URLs
   urls: {
     production: "https://mattheo-termine.fr",

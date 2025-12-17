@@ -169,7 +169,7 @@ export function CookieBanner() {
                     </div>
                   </div>
                   
-                  {/* Cookies marketing (Inutilisé)
+                  {/* Cookies marketing */}
                   <div className="flex items-start space-x-3">
                     <Checkbox
                       checked={customPreferences.marketing}
@@ -180,15 +180,14 @@ export function CookieBanner() {
                     />
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <Target className="h-4 w-4 text-purple-600" />
-                        <span className="font-medium text-sm">Cookies marketing</span>
+                        <Cookie className="h-4 w-4 text-purple-600" />
+                        <span className="font-medium text-sm">{t('cookies.marketing')}</span>
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        Personnalisation des publicités (non utilisés actuellement)
+                        {t('cookies.marketingDesc')}
                       </p>
                     </div>
                   </div>
-                  */}
                 </div>
                 
                 <div className="flex gap-2 pt-2">

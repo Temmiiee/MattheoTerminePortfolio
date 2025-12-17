@@ -58,9 +58,13 @@ export default function NotFound() {
       {/* Animated background gradient following mouse */}
       <div
         className="pointer-events-none fixed inset-0 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(162, 89, 255, 0.1), transparent 40%)`,
-        }}
+        style={
+          {
+            "--mouse-x": `${mousePosition.x}px`,
+            "--mouse-y": `${mousePosition.y}px`,
+            background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(162, 89, 255, 0.1), transparent 40%)`,
+          } as React.CSSProperties
+        }
       />
 
       {/* Floating particles */}
@@ -69,10 +73,14 @@ export default function NotFound() {
           <motion.div
             key={particle.id}
             className="absolute w-1 h-1 bg-primary/30 rounded-full"
-            style={{
-              left: `${particle.startX}%`,
-              top: `${particle.startY}%`,
-            }}
+            style={
+              {
+                "--particle-x": `${particle.startX}%`,
+                "--particle-y": `${particle.startY}%`,
+                left: `var(--particle-x)`,
+                top: `var(--particle-y)`,
+              } as React.CSSProperties
+            }
             animate={{
               left: `${particle.endX}%`,
               top: `${particle.endY}%`,

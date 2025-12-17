@@ -9,6 +9,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { CookieBanner, CookieStatus } from "@/components/CookieBanner";
 import { GoogleAnalyticsConsent } from "@/components/GoogleAnalyticsConsent";
+import { CoreWebVitalsTracking } from "@/components/CoreWebVitalsTracking";
+import { StructuredData } from "@/components/StructuredData";
 import { ConsentProvider } from "@/contexts/ConsentContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -20,6 +22,7 @@ const ptSans = PT_Sans({
   variable: "--font-body",
   display: "swap",
   fallback: ["system-ui", "sans-serif"],
+  preload: true,
 });
 
 const spaceGrotesk = Space_Grotesk({
@@ -27,16 +30,17 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   display: "swap",
   fallback: ["system-ui", "sans-serif"],
+  preload: true,
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mattheo-termine.fr"),
   title: {
-    default: "Matthéo Termine | Intégrateur Web Freelance spécialisé en Accessibilité RGAA",
+    default: "Matthéo Termine | Intégrateur Web Freelance RGAA",
     template: "%s | Matthéo Termine – Intégrateur Web Freelance",
   },
   description:
-    "Matthéo Termine, intégrateur web freelance expert en création de sites modernes, accessibles (normes RGAA) et optimisés SEO. Services : sites vitrines, applications web, WordPress.",
+    "Intégrateur web freelance expert en sites accessibles RGAA et optimisés SEO. Création de sites modernes, applications web et WordPress. Contactez-moi !",
   keywords: [
     "intégrateur web freelance",
     "développeur web France",
@@ -67,9 +71,9 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   openGraph: {
-    title: "Matthéo Termine | Intégrateur Web Freelance spécialisé en Accessibilité RGAA",
+    title: "Matthéo Termine | Intégrateur Web Freelance RGAA",
     description:
-      "Expert en création de sites web modernes, accessibles (normes RGAA) et optimisés SEO. Services professionnels : sites vitrines, applications web, WordPress sur mesure.",
+      "Intégrateur web freelance expert en sites accessibles RGAA et optimisés SEO. Création de sites modernes et WordPress sur mesure. Contactez-moi !",
     url: "https://mattheo-termine.fr",
     siteName: "Portfolio Matthéo Termine - Intégrateur Web Freelance",
     locale: "fr_FR",
@@ -88,7 +92,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Matthéo Termine | Intégrateur Web Freelance RGAA",
     description:
-      "Expert en sites web accessibles et performants. Spécialiste Next.js, React, WordPress. Conformité RGAA et optimisation SEO garanties.",
+      "Expert en sites web accessibles et performants. Spécialiste Next.js, React, WordPress. Conformité RGAA et optimisation SEO garanties. Contactez-moi !",
     images: ["/og-image.svg"],
     creator: "@mattheo_termine",
     site: "@mattheo_termine",
@@ -159,6 +163,13 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="msapplication-TileColor" content="#a259ff" />
+        <style id="critical-css" dangerouslySetInnerHTML={{
+          __html: `:root{--background:0 0% 100%;--foreground:222 84% 4.9%;--primary:258 89% 50%;--primary-foreground:0 0% 100%;--secondary:210 40% 96%;--muted:210 40% 94%;--border:214 31% 85%}.dark{--background:222 84% 4.9%;--foreground:210 40% 98%;--primary:258 89% 70%;--primary-foreground:222 84% 4.9%;--secondary:217 33% 20%;--muted:217 33% 18%;--border:217 33% 25%}html{background-color:#ffffff;color-scheme:light dark}html.dark{background-color:#0a0a1a}body{background-color:hsl(var(--background));color:hsl(var(--foreground));font-family:var(--font-body),sans-serif;min-height:100vh;opacity:0;animation:fadeInBody 0.3s ease-out forwards}.dark body{background:linear-gradient(to bottom,#0a0a1a 0%,#0f0f23 30%,#1a1a2e 60%,#0d1117 100%)}h1,h2,h3,h4,h5,h6{font-family:var(--font-headline),sans-serif}.hero-section{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center}.hero-title{opacity:1;text-shadow:0 2px 4px rgba(0,0,0,0.3)}.typing-cursor{display:inline-block;background-color:hsl(var(--primary));margin-left:2px;width:3px;animation:blink-cursor 1s infinite}.skip-link{position:absolute;top:-40px;left:6px;background:hsl(var(--background));color:hsl(var(--foreground));padding:8px;text-decoration:none;z-index:100}.skip-link:focus{top:6px}@keyframes fadeInBody{to{opacity:1}}@keyframes blink-cursor{0%,50%{opacity:1}51%,100%{opacity:0}}`
+        }} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preload" href="https://fonts.gstatic.com/s/ptsans/v17/jizaRExUiTo99u79D0KExcOPIDU.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mPbF4C4-uBg.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
 
         {/* Explicit icon links for better browser compatibility (especially Firefox) */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -192,8 +203,13 @@ export default function RootLayout({
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
         <link rel="canonical" href="https://mattheo-termine.fr" />
+        
+        {/* Theme initialization must be synchronous */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="/theme-init.js" />
+        
+        {/* Structured Data for SEO */}
+        <StructuredData />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
         <LanguageProvider>
@@ -223,31 +239,27 @@ export default function RootLayout({
               <CookieBanner />
               <CookieStatus />
               <GoogleAnalyticsConsent />
+              <CoreWebVitalsTracking />
               <Toaster />
             </ThemeProvider>
           </ConsentProvider>
         </LanguageProvider>
-        {/* Google Analytics GA4 - Chargé de manière non-bloquante après le chargement de la page */}
+        {/* Optimized JavaScript Loading */}
+        
+        {/* Google Analytics GA4 */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <script
+            async
             dangerouslySetInnerHTML={{
               __html: `
                 (function() {
-                  // Charger GA de manière asynchrone après le chargement de la page
-                  if (document.readyState === 'complete') {
-                    loadGA();
-                  } else {
-                    window.addEventListener('load', loadGA);
-                  }
-                  
+                  // Load GA asynchronously with requestIdleCallback for better performance
                   function loadGA() {
-                    // Charger le script gtag de manière asynchrone
                     const script = document.createElement('script');
                     script.async = true;
                     script.src = 'https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}';
                     document.head.appendChild(script);
                     
-                    // Initialiser dataLayer et gtag
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
@@ -257,15 +269,23 @@ export default function RootLayout({
                     });
                     window.gtag = gtag;
                   }
+                  
+                  // Use requestIdleCallback for better performance
+                  if ('requestIdleCallback' in window) {
+                    requestIdleCallback(loadGA, { timeout: 2000 });
+                  } else {
+                    setTimeout(loadGA, 1000);
+                  }
                 })();
               `,
             }}
           />
         )}
 
-        {/* Désactiver les React DevTools en production */}
+        {/* React DevTools disabler */}
         {process.env.NODE_ENV === "production" && (
           <script
+            defer
             dangerouslySetInnerHTML={{
               __html: `
                 if (typeof window !== 'undefined' && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
@@ -280,21 +300,21 @@ export default function RootLayout({
           />
         )}
 
-        {/* Service Worker - Unregister old versions and register new minimal version */}
+        {/* Service Worker */}
         {process.env.NODE_ENV === "production" && (
           <script
+            async
             dangerouslySetInnerHTML={{
               __html: `
                 if ('serviceWorker' in navigator) {
-                  window.addEventListener('load', function() {
-                    // First, unregister all existing service workers to clear corrupted cache
+                  // Use requestIdleCallback to avoid blocking main thread
+                  function registerSW() {
                     navigator.serviceWorker.getRegistrations().then(function(registrations) {
                       for(let registration of registrations) {
                         registration.unregister();
                       }
                     });
                     
-                    // Clear all caches
                     if ('caches' in window) {
                       caches.keys().then(function(names) {
                         for (let name of names) {
@@ -303,25 +323,22 @@ export default function RootLayout({
                       });
                     }
                     
-                    // Register the new minimal service worker after a short delay
                     setTimeout(function() {
                       navigator.serviceWorker.register('/sw.js', { 
-                        updateViaCache: 'none' // Éviter les problèmes de cache
+                        updateViaCache: 'none'
                       }).then(function(registration) {
-                        // Vérifier les mises à jour périodiquement
                         setInterval(function() {
-                          registration.update().catch(function() {
-                            // Ignorer les erreurs silencieusement
-                          });
-                        }, 60000); // Vérifier toutes les minutes
-                      }).catch(function(error) {
-                        // Log l'erreur pour le debugging mais ne pas bloquer
-                        if (process.env.NODE_ENV === 'development') {
-                          console.error('Service Worker registration failed:', error);
-                        }
-                      });
-                    }, 1000);
-                  });
+                          registration.update().catch(function() {});
+                        }, 60000);
+                      }).catch(function() {});
+                    }, 2000);
+                  }
+                  
+                  if ('requestIdleCallback' in window) {
+                    requestIdleCallback(registerSW, { timeout: 5000 });
+                  } else {
+                    setTimeout(registerSW, 3000);
+                  }
                 }
               `,
             }}

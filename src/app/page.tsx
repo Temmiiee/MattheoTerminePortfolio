@@ -47,7 +47,7 @@ const ScrollToTopButton = () => {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-50 bg-primary text-primary-foreground p-3 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+      className="fixed bottom-8 right-8 z-50 bg-primary text-primary-foreground p-3 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 mb-[25px]"
       aria-label={t("a11y.scrollToTop")}
       type="button"
     >
@@ -137,12 +137,9 @@ const HeroSection = () => {
         <h1
           id="hero-title"
           className={cn(
-            "text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-white transition-all duration-1000 ease-out",
+            "text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-white transition-all duration-1000 ease-out text-shadow-hero-title",
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}
-          style={{
-            textShadow: "0 4px 8px rgba(0,0,0,0.5)",
-          }}
         >
           Matthéo Termine
         </h1>
@@ -150,17 +147,15 @@ const HeroSection = () => {
         {/* Sous-titre avec animation typewriter */}
         <div
           className={cn(
-            "text-2xl md:text-3xl lg:text-4xl font-semibold mb-8 leading-[1.4] transition-all duration-1000 ease-out",
+            "text-2xl md:text-3xl lg:text-4xl font-semibold mb-8 leading-[1.4] transition-all duration-1000 ease-out transition-delay-200",
             textVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           )}
-          style={{ transitionDelay: "200ms" }}
         >
           <span
             className={cn(
-              "text-primary inline-block relative typewriter-container",
+              "text-primary inline-block relative typewriter-container text-shadow-hero-subtitle",
               isTypingComplete && "typing-complete"
             )}
-            style={{ textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}
           >
             <span className={cn("typewriter-text", isTyping && "typing-vibration")}>
               {typedText.split("").map((char, index) => (
@@ -179,9 +174,12 @@ const HeroSection = () => {
             {/* Effet de glow qui suit le texte */}
             <span
               className="typewriter-glow"
-              style={{
-                width: `${(typedText.length / t("hero.subtitle").length) * 100}%`,
-              }}
+              style={
+                {
+                  "--glow-width": `${(typedText.length / t("hero.subtitle").length) * 100}%`,
+                  width: `var(--glow-width)`,
+                } as React.CSSProperties
+              }
             />
           </span>
         </div>
@@ -189,13 +187,9 @@ const HeroSection = () => {
         {/* Description principale */}
         <p
           className={cn(
-            "text-xl md:text-2xl text-white mb-6 max-w-3xl mx-auto leading-relaxed px-4 transition-all duration-1000 ease-out",
+            "text-xl md:text-2xl text-white mb-6 max-w-3xl mx-auto leading-relaxed px-4 transition-all duration-1000 ease-out text-shadow-hero-description transition-delay-400",
             textVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           )}
-          style={{
-            textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-            transitionDelay: "400ms",
-          }}
         >
           {t("hero.description")}
         </p>
@@ -203,13 +197,9 @@ const HeroSection = () => {
         {/* Sous-description */}
         <p
           className={cn(
-            "text-lg text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed px-4 transition-all duration-1000 ease-out",
+            "text-lg text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed px-4 transition-all duration-1000 ease-out text-shadow-hero-description transition-delay-600",
             textVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           )}
-          style={{
-            textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-            transitionDelay: "600ms",
-          }}
         >
           {t("hero.subdescription")}
         </p>
@@ -217,10 +207,9 @@ const HeroSection = () => {
         {/* Bouton découvrir */}
         <div
           className={cn(
-            "flex justify-center px-4 transition-all duration-1000 ease-out",
+            "flex justify-center px-4 transition-all duration-1000 ease-out transition-delay-800",
             textVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-90"
           )}
-          style={{ transitionDelay: "800ms" }}
         >
           <button
             onClick={scrollToServices}
@@ -270,6 +259,8 @@ const ServicesSection = () => {
       ref={ref}
       className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
       aria-labelledby="services-title"
+      itemScope
+      itemType="https://schema.org/Service"
     >
       <div className="container mx-auto px-4">
         {/* En-tête moderne */}
@@ -288,8 +279,7 @@ const ServicesSection = () => {
 
           <h2
             id="services-title"
-            className="text-4xl md:text-5xl font-bold mb-6 text-white"
-            style={{ textShadow: "0 4px 8px rgba(0,0,0,0.3)" }}
+            className="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow-section-title"
           >
             {t("services.title")}
           </h2>
@@ -302,12 +292,11 @@ const ServicesSection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 auto-rows-min">
             <div
               className={cn(
-                "lg:col-span-8 tech-card group relative overflow-hidden rounded-2xl border border-blue-500/20 p-8 hover:border-blue-500/40 transition-all duration-700 ease-out",
+                "lg:col-span-8 tech-card group relative overflow-hidden rounded-2xl border border-blue-500/20 p-8 hover:border-blue-500/40 transition-all duration-700 ease-out transition-delay-0",
                 servicesVisible[0]
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-8 scale-95"
               )}
-              style={{ transitionDelay: "0ms" }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -349,12 +338,11 @@ const ServicesSection = () => {
 
             <div
               className={cn(
-                "lg:col-span-4 performance-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-green-900/20 to-slate-900 border border-green-500/20 p-6 hover:border-green-500/40 transition-all duration-700 ease-out",
+                "lg:col-span-4 performance-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-green-900/20 to-slate-900 border border-green-500/20 p-6 hover:border-green-500/40 transition-all duration-700 ease-out transition-delay-200",
                 servicesVisible[1]
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-8 scale-95"
               )}
-              style={{ transitionDelay: "200ms" }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-green-600/5 via-transparent to-emerald-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -400,12 +388,11 @@ const ServicesSection = () => {
             {/* Solutions WordPress - Carte élargie (span 7) */}
             <div
               className={cn(
-                "lg:col-span-7 tech-card group relative overflow-hidden rounded-2xl border border-purple-500/20 p-6 hover:border-purple-500/40 transition-all duration-700 ease-out",
+                "lg:col-span-7 tech-card group relative overflow-hidden rounded-2xl border border-purple-500/20 p-6 hover:border-purple-500/40 transition-all duration-700 ease-out transition-delay-400",
                 servicesVisible[2]
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-8 scale-95"
               )}
-              style={{ transitionDelay: "400ms" }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 via-transparent to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -445,12 +432,11 @@ const ServicesSection = () => {
 
             <div
               className={cn(
-                "lg:col-span-5 tech-card group relative overflow-hidden rounded-2xl border border-orange-500/20 p-6 hover:border-orange-500/40 transition-all duration-700 ease-out",
+                "lg:col-span-5 tech-card group relative overflow-hidden rounded-2xl border border-orange-500/20 p-6 hover:border-orange-500/40 transition-all duration-700 ease-out transition-delay-600",
                 servicesVisible[3]
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-8 scale-95"
               )}
-              style={{ transitionDelay: "600ms" }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-orange-600/5 via-transparent to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -495,12 +481,11 @@ const ServicesSection = () => {
             {/* Stack Technologique - Carte élargie (span 5) */}
             <div
               className={cn(
-                "lg:col-span-5 tech-card group relative overflow-hidden rounded-2xl border border-cyan-500/20 p-6 hover:border-cyan-500/40 transition-all duration-700 ease-out",
+                "lg:col-span-5 tech-card group relative overflow-hidden rounded-2xl border border-cyan-500/20 p-6 hover:border-cyan-500/40 transition-all duration-700 ease-out transition-delay-800",
                 servicesVisible[4]
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-8 scale-95"
               )}
-              style={{ transitionDelay: "800ms" }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/5 via-transparent to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -548,12 +533,11 @@ const ServicesSection = () => {
             {/* Collaboration & Support - Carte élargie (span 7) - SANS BOUTONS */}
             <div
               className={cn(
-                "lg:col-span-7 performance-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-900/20 to-slate-900 border border-indigo-500/20 p-6 hover:border-indigo-500/40 transition-all duration-700 ease-out",
+                "lg:col-span-7 performance-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-900/20 to-slate-900 border border-indigo-500/20 p-6 hover:border-indigo-500/40 transition-all duration-700 ease-out transition-delay-1000",
                 servicesVisible[5]
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-8 scale-95"
               )}
-              style={{ transitionDelay: "1000ms" }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/5 via-transparent to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -617,7 +601,14 @@ const ProjectsSection = () => {
   }, [isIntersecting]);
 
   return (
-    <section id="projects" ref={ref} className="py-20" aria-labelledby="projects-title">
+    <section 
+      id="projects" 
+      ref={ref} 
+      className="py-20" 
+      aria-labelledby="projects-title"
+      itemScope
+      itemType="https://schema.org/CollectionPage"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 id="projects-title" className="text-3xl md:text-4xl font-bold mb-4">
@@ -634,13 +625,11 @@ const ProjectsSection = () => {
               key={`project-${project.slug}-${index}`}
               className={cn(
                 "transition-all duration-700 ease-out",
+                `stagger-delay-${index}`,
                 projectsVisible[index]
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-8 scale-95"
               )}
-              style={{
-                transitionDelay: `${index * 100}ms`,
-              }}
             >
               <ProjectCard project={project} />
             </div>
@@ -725,11 +714,9 @@ const ProcessSection = () => {
                 key={index}
                 className={cn(
                   "flex gap-6 mb-12 last:mb-0 transition-all duration-700 ease-out",
+                  `process-delay-${index}`,
                   processVisible[index] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 )}
-                style={{
-                  transitionDelay: `${index * 200}ms`,
-                }}
               >
                 <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                   <Icon className="w-5 h-5 text-primary" />
@@ -762,6 +749,8 @@ const AboutSection = () => {
       ref={ref}
       className="py-20 bg-secondary/20"
       aria-labelledby="about-title"
+      itemScope
+      itemType="https://schema.org/AboutPage"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div
@@ -783,20 +772,19 @@ const AboutSection = () => {
             <div className="flex justify-center lg:justify-end order-2 lg:order-1">
               <div
                 className={cn(
-                  "transition-all duration-800 ease-out",
+                  "transition-all duration-800 ease-out transition-delay-200",
                   isIntersecting ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                 )}
-                style={{ transitionDelay: "200ms" }}
               >
                 <div className="relative group">
                   <Image
                     src="/images/mattheo-termine-photo.webp"
                     alt="Mattheo Termine - Intégrateur web freelance"
-                    width={280}
-                    height={280}
+                    width={272}
+                    height={272}
                     className="rounded-full border-4 border-white shadow-lg transition-all duration-500 ease-out group-hover:scale-105"
                     priority
-                    sizes="(max-width: 768px) 200px, 280px"
+                    sizes="(max-width: 768px) 200px, 272px"
                     quality={85}
                   />
                   <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-full blur-xl opacity-70 group-hover:opacity-100 transition-all duration-500"></div>
@@ -806,10 +794,9 @@ const AboutSection = () => {
 
             <div
               className={cn(
-                "order-1 lg:order-2 transition-all duration-800 ease-out",
+                "order-1 lg:order-2 transition-all duration-800 ease-out transition-delay-400",
                 isIntersecting ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
               )}
-              style={{ transitionDelay: "400ms" }}
             >
               <div className="space-y-6 text-base md:text-lg leading-relaxed text-muted-foreground">
                 <p className="first-letter:text-2xl first-letter:font-bold first-letter:text-primary first-letter:mr-1">
@@ -859,10 +846,9 @@ const ContactSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div
             className={cn(
-              "transition-all duration-800 ease-out",
+              "transition-all duration-800 ease-out transition-delay-200",
               isIntersecting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
-            style={{ transitionDelay: "200ms" }}
           >
             <div className="space-y-8">
               <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-primary/5 transition-colors duration-300">
@@ -890,10 +876,9 @@ const ContactSection = () => {
 
           <div
             className={cn(
-              "transition-all duration-800 ease-out",
+              "transition-all duration-800 ease-out transition-delay-400",
               isIntersecting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
-            style={{ transitionDelay: "400ms" }}
           >
             <ContactForm />
           </div>
@@ -908,12 +893,58 @@ export default function Home() {
   return (
     <>
       <StructuredData />
-      <HeroSection />
-      <ServicesSection />
-      <ProjectsSection />
-      <ProcessSection />
-      <AboutSection />
-      <ContactSection />
+      {/* Main content wrapper with semantic structure for AI interpretation */}
+      <article itemScope itemType="https://schema.org/ProfilePage">
+        {/* Hidden metadata for AI agents and search engines */}
+        <meta itemProp="name" content="Matthéo Termine - Intégrateur Web Freelance" />
+        <meta itemProp="description" content="Expert en développement web accessible (RGAA/WCAG), optimisation performance (Core Web Vitals), Next.js, React, TypeScript, WordPress" />
+        <meta itemProp="keywords" content="intégrateur web freelance, développeur web France, accessibilité RGAA, WCAG, Next.js, React, TypeScript, WordPress, SEO, Core Web Vitals, performance web" />
+        
+        {/* Key competencies prominently structured for AI */}
+        <div className="sr-only" aria-hidden="true">
+          <h1>Matthéo Termine - Intégrateur Web Freelance</h1>
+          <section itemScope itemType="https://schema.org/ItemList">
+            <h2 itemProp="name">Compétences Principales</h2>
+            <ul>
+              <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                <meta itemProp="position" content="1" />
+                <span itemProp="name">Développement Web Sur-Mesure: Next.js 15, React 18, TypeScript, Tailwind CSS</span>
+              </li>
+              <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                <meta itemProp="position" content="2" />
+                <span itemProp="name">Accessibilité Web: RGAA 4.1, WCAG 2.1 AA, audits et conformité</span>
+              </li>
+              <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                <meta itemProp="position" content="3" />
+                <span itemProp="name">Optimisation Performance: Core Web Vitals, LCP &lt; 2.5s, Lighthouse 95+</span>
+              </li>
+              <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                <meta itemProp="position" content="4" />
+                <span itemProp="name">Solutions WordPress: thèmes personnalisés, plugins sur-mesure, optimisation</span>
+              </li>
+              <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                <meta itemProp="position" content="5" />
+                <span itemProp="name">SEO Technique: meta tags, structured data, sitemap, robots.txt</span>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>Technologies Maîtrisées</h2>
+            <p>Frontend: Next.js, React, TypeScript, JavaScript ES6+, Tailwind CSS, HTML5, CSS3</p>
+            <p>Backend: Node.js, PHP, WordPress</p>
+            <p>Outils: Git, Docker, Webpack, Jest, ESLint, Prettier</p>
+            <p>Déploiement: Vercel, AWS, Cloudflare Pages</p>
+            <p>Standards: RGAA 4.1, WCAG 2.1 AA, Schema.org, Open Graph</p>
+          </section>
+        </div>
+        
+        <HeroSection />
+        <ServicesSection />
+        <ProjectsSection />
+        <ProcessSection />
+        <AboutSection />
+        <ContactSection />
+      </article>
       <ScrollToTopButton />
     </>
   );

@@ -6,16 +6,34 @@ const nextConfig: NextConfig = {
     formats: ["image/webp", "image/avif"],
     qualities: [75, 80, 85, 90],
     unoptimized: true,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   productionBrowserSourceMaps: false,
+  reactStrictMode: true,
   
   // Optimisations pour réduire les requêtes bloquantes
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    optimizePackageImports: [
+      'lucide-react', 
+      '@radix-ui/react-icons',
+      'framer-motion',
+      'date-fns'
+    ],
   },
   
-  // Compression et optimisations
+
+  // Compression and optimizations
   compress: true,
+  poweredByHeader: false,
+  generateEtags: true,
+  
+  // Compiler optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
   
   // Configuration pour l'export statique
   trailingSlash: false,

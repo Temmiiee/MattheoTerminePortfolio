@@ -97,6 +97,15 @@ export const translations = {
     'footer.privacy': 'Politique de confidentialité',
     'footer.accessibility': 'Déclaration d\'accessibilité',
     
+    // Social Media
+    'social.followMe': 'Suivez-moi',
+    'social.linkedin': 'LinkedIn',
+    'social.github': 'GitHub',
+    'social.malt': 'Malt',
+    'social.linkedinAria': 'Visitez mon profil LinkedIn (ouvre dans une nouvelle fenêtre)',
+    'social.githubAria': 'Visitez mon profil GitHub (ouvre dans une nouvelle fenêtre)',
+    'social.maltAria': 'Visitez mon profil Malt (ouvre dans une nouvelle fenêtre)',
+    
     // Cookie Banner
     'cookies.title': 'Respect de votre vie privée',
     'cookies.description': 'Ce site utilise des cookies pour améliorer votre expérience et analyser le trafic. Vous pouvez choisir les cookies que vous acceptez.',
@@ -108,6 +117,8 @@ export const translations = {
     'cookies.essentialDesc': 'Nécessaires au fonctionnement du site (obligatoires)',
     'cookies.analytics': 'Cookies analytiques',
     'cookies.analyticsDesc': 'Google Analytics pour comprendre l\'utilisation du site',
+    'cookies.marketing': 'Cookies marketing',
+    'cookies.marketingDesc': 'Cookies tiers pour le suivi d\'audience et le remarketing',
     'cookies.save': 'Sauvegarder mes préférences',
     'cookies.learnMore': 'En savoir plus :',
     'cookies.status': 'Cookies',
@@ -251,6 +262,15 @@ export const translations = {
     'footer.privacy': 'Privacy Policy',
     'footer.accessibility': 'Accessibility Statement',
     
+    // Social Media
+    'social.followMe': 'Follow me',
+    'social.linkedin': 'LinkedIn',
+    'social.github': 'GitHub',
+    'social.malt': 'Malt',
+    'social.linkedinAria': 'Visit my LinkedIn profile (opens in a new window)',
+    'social.githubAria': 'Visit my GitHub profile (opens in a new window)',
+    'social.maltAria': 'Visit my Malt profile (opens in a new window)',
+    
     // Cookie Banner
     'cookies.title': 'Respect for Your Privacy',
     'cookies.description': 'This site uses cookies to improve your experience and analyze traffic. You can choose which cookies you accept.',
@@ -262,6 +282,8 @@ export const translations = {
     'cookies.essentialDesc': 'Necessary for the site to function (required)',
     'cookies.analytics': 'Analytics Cookies',
     'cookies.analyticsDesc': 'Google Analytics to understand site usage',
+    'cookies.marketing': 'Marketing Cookies',
+    'cookies.marketingDesc': 'Third-party cookies for audience tracking and remarketing',
     'cookies.save': 'Save My Preferences',
     'cookies.learnMore': 'Learn more:',
     'cookies.status': 'Cookies',
