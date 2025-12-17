@@ -902,7 +902,6 @@ export default function Home() {
         
         {/* Key competencies prominently structured for AI */}
         <div className="sr-only" aria-hidden="true">
-          <h1>Matthéo Termine - Intégrateur Web Freelance</h1>
           <section itemScope itemType="https://schema.org/ItemList">
             <h2 itemProp="name">Compétences Principales</h2>
             <ul>

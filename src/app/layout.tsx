@@ -36,8 +36,8 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL("https://mattheo-termine.fr"),
   title: {
-    default: "Matthéo Termine | Intégrateur Web Freelance RGAA",
-    template: "%s | Matthéo Termine – Intégrateur Web Freelance",
+    default: "Matthéo Termine | Intégrateur Web Freelance Expert RGAA & Performance - Sites Accessibles & Optimisés SEO",
+    template: "%s | Matthéo Termine – Intégrateur Web Freelance Expert RGAA & Performance",
   },
   description:
     "Intégrateur web freelance expert en sites accessibles RGAA et optimisés SEO. Création de sites modernes, applications web et WordPress. Contactez-moi !",
@@ -164,10 +164,15 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="msapplication-TileColor" content="#a259ff" />
         <style id="critical-css" dangerouslySetInnerHTML={{
-          __html: `:root{--background:0 0% 100%;--foreground:222 84% 4.9%;--primary:258 89% 50%;--primary-foreground:0 0% 100%;--secondary:210 40% 96%;--muted:210 40% 94%;--border:214 31% 85%}.dark{--background:222 84% 4.9%;--foreground:210 40% 98%;--primary:258 89% 70%;--primary-foreground:222 84% 4.9%;--secondary:217 33% 20%;--muted:217 33% 18%;--border:217 33% 25%}html{background-color:#ffffff;color-scheme:light dark}html.dark{background-color:#0a0a1a}body{background-color:hsl(var(--background));color:hsl(var(--foreground));font-family:var(--font-body),sans-serif;min-height:100vh;opacity:0;animation:fadeInBody 0.3s ease-out forwards}.dark body{background:linear-gradient(to bottom,#0a0a1a 0%,#0f0f23 30%,#1a1a2e 60%,#0d1117 100%)}h1,h2,h3,h4,h5,h6{font-family:var(--font-headline),sans-serif}.hero-section{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center}.hero-title{opacity:1;text-shadow:0 2px 4px rgba(0,0,0,0.3)}.typing-cursor{display:inline-block;background-color:hsl(var(--primary));margin-left:2px;width:3px;animation:blink-cursor 1s infinite}.skip-link{position:absolute;top:-40px;left:6px;background:hsl(var(--background));color:hsl(var(--foreground));padding:8px;text-decoration:none;z-index:100}.skip-link:focus{top:6px}@keyframes fadeInBody{to{opacity:1}}@keyframes blink-cursor{0%,50%{opacity:1}51%,100%{opacity:0}}`
+          __html: `:root{--background:0 0% 100%;--foreground:222 84% 4.9%;--primary:258 89% 50%;--primary-foreground:0 0% 100%}.dark{--background:222 84% 4.9%;--foreground:210 40% 98%;--primary:258 89% 70%;--primary-foreground:222 84% 4.9%}html{background-color:#ffffff;color-scheme:light dark}html.dark{background-color:#0a0a1a}body{background-color:hsl(var(--background));color:hsl(var(--foreground));font-family:var(--font-body),sans-serif;min-height:100vh;opacity:0;animation:fadeInBody 0.3s ease-out forwards}.dark body{background:linear-gradient(to bottom,#0a0a1a 0%,#0f0f23 30%,#1a1a2e 60%,#0d1117 100%)}h1,h2,h3,h4,h5,h6{font-family:var(--font-headline),sans-serif}.hero-section{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center}.skip-link{position:absolute;top:-40px;left:6px;background:hsl(var(--background));color:hsl(var(--foreground));padding:8px;text-decoration:none;z-index:100}.skip-link:focus{top:6px}@keyframes fadeInBody{to{opacity:1}}`
         }} />
+        {/* Critical resource hints for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        
+        {/* Preload critical fonts */}
         <link rel="preload" href="https://fonts.gstatic.com/s/ptsans/v17/jizaRExUiTo99u79D0KExcOPIDU.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mPbF4C4-uBg.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
 
@@ -190,6 +195,10 @@ export default function RootLayout({
           content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
         />
 
+        {/* Performance hints for critical resources */}
+        <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="/theme-init.js" as="script" />
+        
         {/* Performance hints - Google Analytics uniquement si activé */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
@@ -202,7 +211,6 @@ export default function RootLayout({
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-        <link rel="canonical" href="https://mattheo-termine.fr" />
         
         {/* Theme initialization must be synchronous */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
