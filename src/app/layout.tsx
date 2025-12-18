@@ -244,6 +244,40 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
+        <noscript>
+          <div className="noscript-warning">
+            ⚠️ JavaScript est désactivé. Certaines fonctionnalités peuvent ne pas fonctionner correctement. 
+            Pour une expérience optimale, veuillez activer JavaScript dans votre navigateur.
+            <br />
+            <small>JavaScript is disabled. Some features may not work properly. Please enable JavaScript for the best experience.</small>
+          </div>
+          <style dangerouslySetInnerHTML={{
+            __html: `
+              body { padding-top: 80px !important; }
+              .interactive-galaxy { display: none !important; }
+              .animate-slow-bounce { animation: none !important; }
+              .typing-cursor { display: none !important; }
+              form { 
+                background: #f3f4f6 !important; 
+                padding: 1rem !important; 
+                border-radius: 8px !important;
+                border: 2px solid #d1d5db !important;
+              }
+              form::before {
+                content: "⚠️ Formulaire de contact statique - JavaScript requis pour l'envoi automatique. Vous pouvez nous contacter directement à : contact@mattheo-termine.fr";
+                display: block;
+                background: #fef3c7;
+                color: #92400e;
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+                border-radius: 4px;
+                font-size: 14px;
+                border: 1px solid #f59e0b;
+              }
+            `
+          }} />
+        </noscript>
+        
         <LanguageProvider>
           <ThemeProvider
             attribute="class"
@@ -261,7 +295,6 @@ export default function RootLayout({
               <main
                 id="main-content"
                 className="flex-grow"
-                role="main"
                 aria-label="Contenu principal"
               >
                 <ErrorBoundary>{children}</ErrorBoundary>

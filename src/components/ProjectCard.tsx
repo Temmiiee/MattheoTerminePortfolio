@@ -54,14 +54,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex gap-2 mt-auto">
         {project.liveLink && (
           <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
-            <Link href={project.liveLink} target="_blank">
+            <Link 
+              href={project.liveLink} 
+              target="_blank"
+              aria-label={`${t('projects.viewProject')} - ${project.title[language]}`}
+            >
               <ExternalLink className="mr-2 h-4 w-4" /> {t('projects.viewProject')}
             </Link>
           </Button>
         )}
         {project.repoLink && (
           <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
-            <Link href={project.repoLink} target="_blank">
+            <Link 
+              href={project.repoLink} 
+              target="_blank"
+              aria-label={`${t('projects.sourceCode')} - ${project.title[language]}`}
+            >
               <Github className="mr-2 h-4 w-4" /> {t('projects.sourceCode')}
             </Link>
           </Button>

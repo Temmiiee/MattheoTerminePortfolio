@@ -77,10 +77,10 @@ export const translations = {
     'contact.title': 'Parlons de Votre Projet',
     'contact.subtitle': 'Prêt à donner vie à votre projet web ? Contactez-moi !',
     'contact.infoLabel': 'Informations de contact',
-    'contact.name': 'Nom',
-    'contact.email': 'Email',
+    'contact.name': 'Votre nom complet',
+    'contact.email': 'Votre adresse email',
     'contact.phone': 'Téléphone',
-    'contact.message': 'Message',
+    'contact.message': 'Votre message',
     'contact.send': 'Envoyer',
     'contact.sending': 'Envoi en cours...',
     'contact.success': 'Message envoyé avec succès !',
@@ -94,6 +94,7 @@ export const translations = {
     
     // Footer
     'footer.rights': 'Tous droits réservés.',
+    'footer.sitemap': 'Plan du site',
     'footer.privacy': 'Politique de confidentialité',
     'footer.accessibility': 'Déclaration d\'accessibilité',
     
@@ -225,10 +226,10 @@ export const translations = {
     'contact.title': 'Let\'s Talk About Your Project',
     'contact.subtitle': 'Ready to bring your web project to life? Contact me!',
     'contact.infoLabel': 'Contact information',
-    'contact.name': 'Name',
-    'contact.email': 'Email',
+    'contact.name': 'Your full name',
+    'contact.email': 'Your email address',
     'contact.phone': 'Phone',
-    'contact.message': 'Message',
+    'contact.message': 'Your message',
     'contact.send': 'Send',
     'contact.sending': 'Sending...',
     'contact.success': 'Message sent successfully!',
@@ -242,6 +243,7 @@ export const translations = {
     
     // Footer
     'footer.rights': 'All rights reserved.',
+    'footer.sitemap': 'Sitemap',
     'footer.privacy': 'Privacy Policy',
     'footer.accessibility': 'Accessibility Statement',
     

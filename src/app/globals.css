@@ -56,6 +56,52 @@ body {
   border-radius: 4px;
 }
 
+/* Fix for Radix UI Toast empty ol element accessibility issue */
+[data-radix-toast-viewport] ol:empty {
+  display: none !important;
+}
+
+/* Noscript warning styles */
+.noscript-warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #f59e0b;
+  color: #000;
+  padding: 1rem;
+  text-align: center;
+  z-index: 9999;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Ensure all links have proper contrast and focus states */
+a:not(.no-underline) {
+  text-decoration-skip-ink: auto;
+}
+
+a:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Accessibility: Hide native tooltips that are not keyboard accessible */
+[title]:not([aria-label]):not([aria-labelledby]) {
+  position: relative;
+}
+
+/* Ensure interactive elements are keyboard accessible */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* Amélioration des effets hover pour la section À propos */
 .about-photo-container {
   transform-style: preserve-3d;

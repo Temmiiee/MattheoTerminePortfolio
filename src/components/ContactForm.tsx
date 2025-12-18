@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -65,6 +66,10 @@ export function ContactForm() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const formSchema = createFormSchema(t);
+  const [formStatus, setFormStatus] = React.useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -76,14 +81,23 @@ export function ContactForm() {
   });
 
   async function onSubmit(values: FormData) {
+    setFormStatus({ type: null, message: '' });
     const result = await submitAction(values);
     if (result.success) {
+      setFormStatus({
+        type: 'success',
+        message: t("contact.success")
+      });
       toast({
         title: t("contact.successTitle"),
         description: t("contact.success"),
       });
       form.reset();
     } else {
+      setFormStatus({
+        type: 'error',
+        message: t("contact.error")
+      });
       toast({
         title: t("contact.errorTitle"),
         description: t("contact.error"),
@@ -102,6 +116,24 @@ export function ContactForm() {
           <CardDescription>{t("contact.formDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Status region for form feedback */}
+          <div 
+            role="status" 
+            aria-live="polite" 
+            aria-atomic="true"
+            className={`mb-4 p-3 rounded-md text-sm ${
+              formStatus.type === 'success' 
+                ? 'bg-green-50 text-green-800 border border-green-200' 
+                : formStatus.type === 'error'
+                ? 'bg-red-50 text-red-800 border border-red-200'
+                : 'sr-only'
+            }`}
+          >
+            {formStatus.message && (
+              <span>{formStatus.message}</span>
+            )}
+          </div>
+          
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Name Field */}
@@ -115,6 +147,7 @@ export function ContactForm() {
                       <Input
                         id="name"
                         placeholder={t("contact.placeholder.name")}
+                        autoComplete="name"
                         {...field}
                         aria-required="true"
                       />
@@ -136,6 +169,7 @@ export function ContactForm() {
                         id="email"
                         type="email"
                         placeholder={t("contact.placeholder.email")}
+                        autoComplete="email"
                         {...field}
                         aria-required="true"
                       />

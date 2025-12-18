@@ -12,7 +12,7 @@ interface SocialLinksProps {
 
 // Icône Malt personnalisée (SVG)
 const MaltIcon = ({ size = 24 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M20.1 13.5L18.6 12l1.5-1.5c2-2 2-5.2 0-7.2s-5.2-2-7.2 0L11.4 4.8 9.9 3.3c-2-2-5.2-2-7.2 0s-2 5.2 0 7.2l1.5 1.5-1.5 1.5c-2 2-2 5.2 0 7.2s5.2 2 7.2 0l1.5-1.5 1.5 1.5c2 2 5.2 2 7.2 0s2-5.2 0-7.2zM12 15.9l-3.9-3.9L12 8.1l3.9 3.9L12 15.9z"/>
   </svg>
 );
@@ -54,9 +54,8 @@ export function SocialLinks({ className = '', iconSize = 24, showLabels = false 
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-primary transition-colors duration-200"
+            className="text-primary hover:text-primary/80 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 rounded-md"
             aria-label={platform.ariaLabel}
-            title={platform.label}
           >
             {showLabels ? (
               <span className="flex items-center gap-2">

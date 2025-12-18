@@ -125,10 +125,10 @@ export function Header() {
   };
 
   return (
-    <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b" role="banner">
+    <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2" onClick={handleLogoClick}>
+          <Link href="/" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 rounded-md" onClick={handleLogoClick}>
             <Code2 className="h-7 w-7 text-primary" />
             <span className="font-headline font-bold text-xl">
               Matthéo Termine
@@ -136,7 +136,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav id="navigation" className="hidden md:flex items-center gap-6" role="navigation" aria-label={t('a11y.mainNav')}>
+          <nav id="navigation" className="hidden md:flex items-center gap-6" aria-label={t('a11y.mainNav')}>
             {navLinks.map((link) => (
               <NavLink key={link.href} {...link} />
             ))}
@@ -174,7 +174,7 @@ export function Header() {
                   </div>
 
                   {/* Navigation */}
-                  <nav id="mobile-menu" className="flex flex-col gap-2 pt-8 flex-1" role="navigation" aria-label={t('a11y.mobileNav')}>
+                  <nav id="mobile-menu" className="flex flex-col gap-2 pt-8 flex-1" aria-label={t('a11y.mobileNav')}>
                     {navLinks.map((link, index) => (
                       <div
                         key={link.href}

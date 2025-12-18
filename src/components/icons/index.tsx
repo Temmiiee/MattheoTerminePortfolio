@@ -8,6 +8,7 @@ export function WordpressIcon(props: SVGProps<SVGSVGElement>) {
 			width="1em"
 			height="1em"
 			fill="currentColor"
+			aria-label="WordPress"
 			{...props}
 		>
 			<g fill="currentColor">

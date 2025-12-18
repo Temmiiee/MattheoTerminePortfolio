@@ -856,7 +856,7 @@ const ContactSection = () => {
                   <h3 className="font-semibold mb-2">Email</h3>
                   <a
                     href="mailto:mattheotermine104@gmail.com"
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
+                    className="text-primary hover:text-primary/80 underline underline-offset-2 transition-colors duration-300"
                   >
                     mattheotermine104@gmail.com
                   </a>
@@ -906,33 +906,33 @@ export default function Home() {
             <ul>
               <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
                 <meta itemProp="position" content="1" />
-                <span itemProp="name">Développement Web Sur-Mesure: Next.js 15, React 18, TypeScript, Tailwind CSS</span>
+                <span itemProp="name">Développement Web Sur-Mesure: <span lang="en">Next.js 15, React 18, TypeScript, Tailwind CSS</span></span>
               </li>
               <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
                 <meta itemProp="position" content="2" />
-                <span itemProp="name">Accessibilité Web: RGAA 4.1, WCAG 2.1 AA, audits et conformité</span>
+                <span itemProp="name">Accessibilité Web: <span lang="en">RGAA 4.1, WCAG 2.1 AA</span>, audits et conformité</span>
               </li>
               <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
                 <meta itemProp="position" content="3" />
-                <span itemProp="name">Optimisation Performance: Core Web Vitals, LCP &lt; 2.5s, Lighthouse 95+</span>
+                <span itemProp="name">Optimisation Performance: <span lang="en">Core Web Vitals, LCP &lt; 2.5s, Lighthouse 95+</span></span>
               </li>
               <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
                 <meta itemProp="position" content="4" />
-                <span itemProp="name">Solutions WordPress: thèmes personnalisés, plugins sur-mesure, optimisation</span>
+                <span itemProp="name">Solutions <span lang="en">WordPress</span>: thèmes personnalisés, plugins sur-mesure, optimisation</span>
               </li>
               <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
                 <meta itemProp="position" content="5" />
-                <span itemProp="name">SEO Technique: meta tags, structured data, sitemap, robots.txt</span>
+                <span itemProp="name"><span lang="en">SEO</span> Technique: <span lang="en">meta tags, structured data, sitemap, robots.txt</span></span>
               </li>
             </ul>
           </section>
           <section>
             <h2>Technologies Maîtrisées</h2>
-            <p>Frontend: Next.js, React, TypeScript, JavaScript ES6+, Tailwind CSS, HTML5, CSS3</p>
-            <p>Backend: Node.js, PHP, WordPress</p>
-            <p>Outils: Git, Docker, Webpack, Jest, ESLint, Prettier</p>
-            <p>Déploiement: Vercel, AWS, Cloudflare Pages</p>
-            <p>Standards: RGAA 4.1, WCAG 2.1 AA, Schema.org, Open Graph</p>
+            <p><span lang="en">Frontend</span>: <span lang="en">Next.js, React, TypeScript, JavaScript ES6+, Tailwind CSS, HTML5, CSS3</span></p>
+            <p><span lang="en">Backend</span>: <span lang="en">Node.js, PHP, WordPress</span></p>
+            <p>Outils: <span lang="en">Git, Docker, Webpack, Jest, ESLint, Prettier</span></p>
+            <p>Déploiement: <span lang="en">Vercel, AWS, Cloudflare Pages</span></p>
+            <p>Standards: <span lang="en">RGAA 4.1, WCAG 2.1 AA, Schema.org, Open Graph</span></p>
           </section>
         </div>
         

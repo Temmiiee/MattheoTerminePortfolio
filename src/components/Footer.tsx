@@ -17,13 +17,21 @@ export function Footer() {
             <SocialLinks iconSize={20} />
           </div>
           
+          {/* Links */}
+          <div className="flex flex-wrap justify-center gap-4 text-sm">
+            <a 
+              href="/sitemap.xml" 
+              className="text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t('footer.sitemap')}
+            </a>
+          </div>
+          
           {/* Copyright */}
           <p className="text-center text-sm text-muted-foreground">
             &copy; {currentYear} Matthéo Termine. {t('footer.rights')}
-            {/* {' • '}
-            <Link href="/politique-confidentialite" className="underline hover:text-primary">
-              {t('footer.privacy')}
-            </Link> */}
           </p>
         </div>
       </div>

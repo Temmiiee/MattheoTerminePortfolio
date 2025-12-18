@@ -13,16 +13,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 84% 4.9%;
 
-    --primary: 258 89% 50%;
+    --primary: 258 89% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 84% 15%;
+    --secondary: 210 40% 92%;
+    --secondary-foreground: 222 84% 10%;
 
-    --muted: 210 40% 94%;
-    --muted-foreground: 215 25% 20%;
+    --muted: 210 40% 90%;
+    --muted-foreground: 215 25% 15%;
 
-    --accent: 258 89% 55%;
+    --accent: 258 89% 40%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 45%;
@@ -63,16 +63,16 @@
     --popover: 222 84% 5%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 258 89% 70%;
+    --primary: 258 89% 75%;
     --primary-foreground: 222 84% 4.9%;
 
-    --secondary: 217 33% 20%;
+    --secondary: 217 33% 15%;
     --secondary-foreground: 210 40% 95%;
 
-    --muted: 217 33% 18%;
-    --muted-foreground: 210 40% 80%;
+    --muted: 217 33% 12%;
+    --muted-foreground: 210 40% 85%;
 
-    --accent: 258 89% 75%;
+    --accent: 258 89% 80%;
     --accent-foreground: 222 84% 4.9%;
 
     --destructive: 0 63% 55%;
@@ -103,16 +103,18 @@
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
-    --primary: 258 89% 40%;
-    --ring: 258 89% 40%;
+    --primary: 258 89% 25%;
+    --ring: 258 89% 25%;
     --foreground: 0 0% 0%;
-    --muted-foreground: 0 0% 15%;
+    --muted-foreground: 0 0% 10%;
+    --secondary-foreground: 0 0% 5%;
   }
 
   .dark {
-    --primary: 258 89% 80%;
-    --ring: 258 89% 80%;
+    --primary: 258 89% 85%;
+    --ring: 258 89% 85%;
     --foreground: 0 0% 100%;
-    --muted-foreground: 0 0% 90%;
+    --muted-foreground: 0 0% 95%;
+    --secondary-foreground: 0 0% 98%;
   }
 }

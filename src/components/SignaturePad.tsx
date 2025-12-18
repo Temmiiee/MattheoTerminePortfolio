@@ -195,6 +195,8 @@ export function SignaturePad({ onSignatureChange, disabled = false }: SignatureP
               disabled ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             style={{ width: '100%', height: 'auto', maxWidth: '400px' }}
+            role="img"
+            aria-label="Electronic signature pad - draw your signature here"
             onMouseDown={startDrawing}
             onMouseMove={draw}
             onMouseUp={stopDrawing}
@@ -202,7 +204,9 @@ export function SignaturePad({ onSignatureChange, disabled = false }: SignatureP
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-          />
+          >
+            Electronic signature drawing area
+          </canvas>
         </div>
         
         <div className="flex justify-center space-x-2">
