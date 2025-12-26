@@ -9,14 +9,14 @@ export const translations = {
     'nav.process': 'Processus',
     'nav.about': 'À propos',
     'nav.contact': 'Contact',
-    
+
     // Hero
     'hero.title': 'Matthéo Termine',
     'hero.subtitle': 'Intégrateur web freelance',
     'hero.description': 'Création de sites web modernes, performants et accessibles pour développer votre présence en ligne',
     'hero.subdescription': 'Spécialisé dans le développement web sur‑mesure, j\'accompagne les entreprises et particuliers dans la création de leur identité numérique.',
     'hero.discover': 'Découvrir',
-    
+
     // About
     'about.title': 'À propos de moi',
     'about.subtitle': 'Développeur passionné par la création d\'expériences web exceptionnelles',
@@ -26,7 +26,7 @@ export const translations = {
     'about.p4': 'Constamment en veille technologique, j\'aime explorer de nouveaux outils et de nouvelles méthodes pour améliorer la qualité de mon travail et proposer des solutions toujours plus innovantes.',
     'about.downloadCV': 'Télécharger mon CV',
     'about.downloadCVShort': 'Mon CV',
-    
+
     // Projects
     'projects.title': 'Mes Réalisations',
     'projects.subtitle': 'Découvrez quelques‑uns de mes projets récents qui illustrent mon expertise technique',
@@ -35,7 +35,7 @@ export const translations = {
     'projects.sourceCode': 'Code source',
     'projects.technologies': 'Technologies',
     'projects.listLabel': 'Liste de mes réalisations récentes',
-    
+
     // Services
     'services.title': 'Mes Services',
     'services.subtitle': 'Solutions web sur-mesure alliant performance, accessibilité et innovation technologique',
@@ -56,7 +56,7 @@ export const translations = {
     'services.coreWebVitals': 'Core Web Vitals',
     'services.lighthouseScore': 'Lighthouse Score',
     'services.seoOptimization': 'SEO Optimization',
-    
+
     // Process
     'process.title': 'Mon Processus de Travail',
     'process.subtitle': 'Une approche structurée pour votre réussite',
@@ -68,11 +68,11 @@ export const translations = {
     'process.development.desc': 'Je transforme le design validé en un site web fonctionnel, performant et accessible.',
     'process.deployment.title': '4. Déploiement',
     'process.deployment.desc': 'Je mets votre site en ligne sur l\'hébergement choisi (le vôtre ou celui que je gère pour vous), et je veille à ce qu\'il soit sécurisé, rapide et accessible dès sa mise en service.',
-    
+
     // Accessibility
     'a11y.scrollToTop': 'Retourner en haut de la page',
     'a11y.discoverServices': 'Découvrir mes services',
-    
+
     // Contact
     'contact.title': 'Parlons de Votre Projet',
     'contact.subtitle': 'Prêt à donner vie à votre projet web ? Contactez-moi !',
@@ -91,13 +91,13 @@ export const translations = {
     'contact.placeholder.name': 'Votre nom complet',
     'contact.placeholder.email': 'votre.email@exemple.com',
     'contact.placeholder.message': 'Votre message...',
-    
+
     // Footer
     'footer.rights': 'Tous droits réservés.',
     'footer.sitemap': 'Plan du site',
     'footer.privacy': 'Politique de confidentialité',
     'footer.accessibility': 'Déclaration d\'accessibilité',
-    
+
     // Social Media
     'social.followMe': 'Suivez-moi',
     'social.linkedin': 'LinkedIn',
@@ -107,11 +107,12 @@ export const translations = {
     'social.githubAria': 'Visitez mon profil GitHub (ouvre dans une nouvelle fenêtre)',
     'social.maltAria': 'Visitez mon profil Malt (ouvre dans une nouvelle fenêtre)',
 
-    
+
     // Common
     'common.cancel': 'Annuler',
     'common.close': 'Fermer',
-    
+    'common.newWindow': ' (s\'ouvre dans une nouvelle fenêtre)',
+
     // Accessibility
     'a11y.skipToMain': 'Aller au contenu principal',
     'a11y.skipToNav': 'Aller à la navigation',
@@ -130,7 +131,7 @@ export const translations = {
     'a11y.viewAllProjects': 'Voir tous mes projets et réalisations',
     'a11y.emailMe': 'Envoyer un email à mattheotermine104@gmail.com',
     'a11y.contactForQuote': 'Contacter Matthéo Termine pour un devis personnalisé',
-    
+
     // Contact details
     'contact.quickResponse': 'Réponse rapide',
     'contact.quickResponseDesc': 'Je réponds généralement sous 24h pour discuter de votre projet',
@@ -139,7 +140,7 @@ export const translations = {
     'contact.formDescription': 'Remplissez le formulaire ci-dessous.',
     'contact.successTitle': 'Succès !',
     'contact.errorTitle': 'Erreur',
-    
+
     // 404 Page
     'notFound.title': 'Page introuvable',
     'notFound.description': 'Oups ! Il semblerait que cette page se soit perdue dans le cyberespace.',
@@ -158,14 +159,14 @@ export const translations = {
     'nav.process': 'Process',
     'nav.about': 'About',
     'nav.contact': 'Contact',
-    
+
     // Hero
     'hero.title': 'Matthéo Termine',
     'hero.subtitle': 'Web Developer',
     'hero.description': 'Creating modern, high-performance, and accessible websites to grow your online presence',
     'hero.subdescription': 'Specialized in custom web development, I support businesses and individuals in creating their digital identity.',
     'hero.discover': 'Discover',
-    
+
     // About
     'about.title': 'About Me',
     'about.subtitle': 'Developer passionate about creating exceptional web experiences',
@@ -175,7 +176,7 @@ export const translations = {
     'about.p4': 'Constantly keeping up with technology, I enjoy exploring new tools and methods to improve the quality of my work and offer increasingly innovative solutions.',
     'about.downloadCV': 'Download my CV',
     'about.downloadCVShort': 'My CV',
-    
+
     // Projects
     'projects.title': 'My Work',
     'projects.subtitle': 'Discover some of my recent projects that showcase my technical expertise',
@@ -184,7 +185,7 @@ export const translations = {
     'projects.sourceCode': 'Source code',
     'projects.technologies': 'Technologies',
     'projects.listLabel': 'List of my recent projects',
-    
+
     // Services
     'services.title': 'My Services',
     'services.subtitle': 'Custom web solutions combining performance, accessibility and technological innovation',
@@ -205,7 +206,7 @@ export const translations = {
     'services.coreWebVitals': 'Core Web Vitals',
     'services.lighthouseScore': 'Lighthouse Score',
     'services.seoOptimization': 'SEO Optimization',
-    
+
     // Process
     'process.title': 'My Work Process',
     'process.subtitle': 'A structured approach to your success',
@@ -217,11 +218,11 @@ export const translations = {
     'process.development.desc': 'I transform the validated design into a functional, high-performance, and accessible website.',
     'process.deployment.title': '4. Deployment',
     'process.deployment.desc': 'I launch your site on the chosen hosting (yours or one I manage for you), ensuring it\'s secure, fast, and accessible from day one.',
-    
+
     // Accessibility
     'a11y.scrollToTop': 'Back to top',
     'a11y.discoverServices': 'Discover my services',
-    
+
     // Contact
     'contact.title': 'Let\'s Talk About Your Project',
     'contact.subtitle': 'Ready to bring your web project to life? Contact me!',
@@ -240,13 +241,13 @@ export const translations = {
     'contact.placeholder.name': 'Your full name',
     'contact.placeholder.email': 'your.email@example.com',
     'contact.placeholder.message': 'Your message...',
-    
+
     // Footer
     'footer.rights': 'All rights reserved.',
     'footer.sitemap': 'Sitemap',
     'footer.privacy': 'Privacy Policy',
     'footer.accessibility': 'Accessibility Statement',
-    
+
     // Social Media
     'social.followMe': 'Follow me',
     'social.linkedin': 'LinkedIn',
@@ -256,11 +257,12 @@ export const translations = {
     'social.githubAria': 'Visit my GitHub profile (opens in a new window)',
     'social.maltAria': 'Visit my Malt profile (opens in a new window)',
 
-    
+
     // Common
     'common.cancel': 'Cancel',
     'common.close': 'Close',
-    
+    'common.newWindow': ' (opens in a new window)',
+
     // Accessibility
     'a11y.skipToMain': 'Skip to main content',
     'a11y.skipToNav': 'Skip to navigation',
@@ -279,7 +281,7 @@ export const translations = {
     'a11y.viewAllProjects': 'View all my projects and work',
     'a11y.emailMe': 'Send an email to mattheotermine104@gmail.com',
     'a11y.contactForQuote': 'Contact Matthéo Termine for a personalized quote',
-    
+
     // Contact details
     'contact.quickResponse': 'Quick Response',
     'contact.quickResponseDesc': 'I usually respond within 24 hours to discuss your project',
@@ -288,7 +290,7 @@ export const translations = {
     'contact.formDescription': 'Fill out the form below.',
     'contact.successTitle': 'Success!',
     'contact.errorTitle': 'Error',
-    
+
     // 404 Page
     'notFound.title': 'Page Not Found',
     'notFound.description': 'Oops! It looks like this page got lost in cyberspace.',
@@ -304,12 +306,12 @@ export const translations = {
 export function getTranslation(lang: Language, key: string): string {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const langTranslations = translations[lang] as any;
-  
+
   // Accéder directement à la clé (qui peut contenir des points)
   if (key in langTranslations) {
     return langTranslations[key];
   }
-  
+
   // Si la clé n'existe pas, retourner la clé elle-même
   return key;
 }

@@ -18,7 +18,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="h-full overflow-hidden transition-all duration-300 group relative flex flex-col min-h-[450px] justify-end p-6 text-white">
       <div className="absolute inset-0 z-0">
-         <Image
+        <Image
           src={project.imageUrl}
           alt={`Image du projet ${project.title[language]}`}
           fill
@@ -33,49 +33,49 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {/* Enhanced overlay for maximum contrast */}
         <div className="absolute inset-0 bg-overlay-strong"></div>
       </div>
-     
+
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex flex-wrap gap-2 mb-4">
-            {project.technologies.map((tech) => (
+          {project.technologies.map((tech) => (
             <Badge key={tech.name} className="bg-black/60 text-white border border-white/30 backdrop-blur-sm shadow-lg hover:bg-black/80 hover:border-white/50 transition-colors">
-                <tech.icon className="h-4 w-4 mr-1.5" />
-                <span>{tech.name}</span>
+              <tech.icon className="h-4 w-4 mr-1.5" />
+              <span>{tech.name}</span>
             </Badge>
-            ))}
+          ))}
         </div>
 
         <div className="flex-grow">
-            <h3 className="font-headline text-3xl font-bold text-white text-contrast-enhanced">{project.title[language]}</h3>
-            <p className="mt-2 text-white/95 text-contrast-enhanced">{project.description[language]}</p>
+          <h3 className="font-headline text-3xl font-bold text-white text-contrast-enhanced">{project.title[language]}</h3>
+          <p className="mt-2 text-white/95 text-contrast-enhanced">{project.description[language]}</p>
         </div>
 
-    <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col">
-      <p className="text-white/95 text-sm mb-4 text-contrast-enhanced">{project.longDescription[language]}</p>
-      <div className="flex gap-2 mt-auto">
-        {project.liveLink && (
-          <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
-            <Link 
-              href={project.liveLink} 
-              target="_blank"
-              aria-label={`${t('projects.viewProject')} - ${project.title[language]}`}
-            >
-              <ExternalLink className="mr-2 h-4 w-4" /> {t('projects.viewProject')}
-            </Link>
-          </Button>
-        )}
-        {project.repoLink && (
-          <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
-            <Link 
-              href={project.repoLink} 
-              target="_blank"
-              aria-label={`${t('projects.sourceCode')} - ${project.title[language]}`}
-            >
-              <Github className="mr-2 h-4 w-4" /> {t('projects.sourceCode')}
-            </Link>
-          </Button>
-        )}
-      </div>
-    </div>
+        <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col">
+          <p className="text-white/95 text-sm mb-4 text-contrast-enhanced">{project.longDescription[language]}</p>
+          <div className="flex gap-2 mt-auto">
+            {project.liveLink && (
+              <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
+                <Link
+                  href={project.liveLink}
+                  target="_blank"
+                  aria-label={`${t('projects.viewProject')} - ${project.title[language]}${t('common.newWindow')}`}
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" /> {t('projects.viewProject')}
+                </Link>
+              </Button>
+            )}
+            {project.repoLink && (
+              <Button asChild variant="outline" size="sm" className="bg-black/50 border-white text-white hover:bg-white hover:text-black backdrop-blur-sm shadow-lg">
+                <Link
+                  href={project.repoLink}
+                  target="_blank"
+                  aria-label={`${t('projects.sourceCode')} - ${project.title[language]}${t('common.newWindow')}`}
+                >
+                  <Github className="mr-2 h-4 w-4" /> {t('projects.sourceCode')}
+                </Link>
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
     </Card>
   );

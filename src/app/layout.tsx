@@ -149,38 +149,27 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes"
-        />
-        <meta name="theme-color" content="#a259ff" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#a259ff" media="(prefers-color-scheme: dark)" />
-        <meta name="color-scheme" content="dark light" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="msapplication-TileColor" content="#a259ff" />
         <style id="critical-css" dangerouslySetInnerHTML={{
           __html: `:root{--background:0 0% 100%;--foreground:222 84% 4.9%;--primary:258 89% 50%;--primary-foreground:0 0% 100%;--secondary:210 40% 96%;--muted:210 40% 94%;--border:214 31% 85%;--card:0 0% 98%;--card-foreground:222 84% 4.9%;--radius:0.5rem}.dark{--background:222 84% 4.9%;--foreground:210 40% 98%;--primary:258 89% 70%;--primary-foreground:222 84% 4.9%;--secondary:217 33% 20%;--muted:217 33% 18%;--border:217 33% 25%;--card:222 84% 6%;--card-foreground:210 40% 98%}*{border-color:hsl(var(--border))}html{background-color:#0a0a1a;color-scheme:dark light;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;text-rendering:optimizeLegibility;font-display:swap}html.dark{background-color:#0a0a1a}body{background-color:hsl(var(--background));color:hsl(var(--foreground));font-family:inherit;min-height:100vh;opacity:0;animation:fadeInBody 0.2s ease-out forwards;line-height:1.6;font-weight:500;contain:layout style paint}.dark body{background:linear-gradient(to bottom,#0a0a1a 0%,#0f0f23 30%,#1a1a2e 60%,#0d1117 100%)}h1,h2,h3,h4,h5,h6{font-family:var(--font-outfit),system-ui,-apple-system,sans-serif;font-weight:700;line-height:1.2;letter-spacing:-0.025em;font-display:swap}h1{font-weight:800}.hero-section{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;contain:layout style}.skip-link{position:absolute;top:-40px;left:6px;background:hsl(var(--primary));color:hsl(var(--primary-foreground));padding:8px 16px;font-size:0.875rem;font-weight:600;text-decoration:none;border-radius:0 0 4px 4px;z-index:1000;transition:top 0.2s}*:focus-visible{outline:2px solid hsl(var(--primary));outline-offset:2px;border-radius:2px}@keyframes fadeInBody{to{opacity:1}}@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}}`
         }} />
         {/* Critical resource hints for performance optimization */}
         <link rel="preload" href="/theme-init.js" as="script" />
         <link rel="preload" href="/styles/non-critical.css" as="style" />
-        
+
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        
+
         {/* Preconnect for critical external resources */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Optimized icon loading */}
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icon" />
-        <link rel="shortcut icon" href="/favicon.ico" />
+
+        {/* Optimized icon loading - handled by metadata */}
 
         {/* Performance hints - Google Analytics uniquement si activé */}
         {process.env.NEXT_PUBLIC_GA_ID && (
@@ -190,29 +179,17 @@ export default function RootLayout({
           </>
         )}
 
-        {/* Production optimizations */}
-        <meta
-          name="robots"
-          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-        />
-        <meta
-          name="googlebot"
-          content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
-        />
-        <meta
-          name="bingbot"
-          content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
-        />
+        {/* Production optimizations - handled by metadata */}
 
         {/* Security headers - X-Frame-Options removed as it should only be set via HTTP headers */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-        
+
         {/* Theme initialization must be synchronous */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="/theme-init.js" />
-        
+
         {/* Optimized non-critical CSS loading */}
         <script dangerouslySetInnerHTML={{
           __html: `
@@ -239,14 +216,14 @@ export default function RootLayout({
             })();
           `
         }} />
-        
+
         {/* Structured Data for SEO */}
         <StructuredData />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
         <noscript>
           <div className="noscript-warning">
-            ⚠️ JavaScript est désactivé. Certaines fonctionnalités peuvent ne pas fonctionner correctement. 
+            ⚠️ JavaScript est désactivé. Certaines fonctionnalités peuvent ne pas fonctionner correctement.
             Pour une expérience optimale, veuillez activer JavaScript dans votre navigateur.
             <br />
             <small>JavaScript is disabled. Some features may not work properly. Please enable JavaScript for the best experience.</small>
@@ -277,7 +254,7 @@ export default function RootLayout({
             `
           }} />
         </noscript>
-        
+
         <LanguageProvider>
           <ThemeProvider
             attribute="class"
@@ -285,27 +262,27 @@ export default function RootLayout({
             enableSystem={true}
             disableTransitionOnChange
           >
-              <Link href="#main-content" className="skip-link">
-                Aller au contenu principal
-              </Link>
-              <Link href="#navigation" className="skip-link">
-                Aller à la navigation
-              </Link>
-              <Header />
-              <main
-                id="main-content"
-                className="flex-grow"
-                aria-label="Contenu principal"
-              >
-                <ErrorBoundary>{children}</ErrorBoundary>
-              </main>
-              <Footer />
-              <CoreWebVitalsTracking />
-              <Toaster />
-            </ThemeProvider>
+            <Link href="#main-content" className="skip-link">
+              Aller au contenu principal
+            </Link>
+            <Link href="#navigation" className="skip-link">
+              Aller à la navigation
+            </Link>
+            <Header />
+            <main
+              id="main-content"
+              className="flex-grow"
+              aria-label="Contenu principal"
+            >
+              <ErrorBoundary>{children}</ErrorBoundary>
+            </main>
+            <Footer />
+            <CoreWebVitalsTracking />
+            <Toaster />
+          </ThemeProvider>
         </LanguageProvider>
         {/* Optimized JavaScript Loading */}
-        
+
         {/* Optimized Google Analytics GA4 */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <script

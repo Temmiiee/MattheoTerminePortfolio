@@ -6,7 +6,7 @@ import { SocialLinks } from "@/components/SocialLinks";
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const { t } = useTranslation();
-  
+
   return (
     <footer className="bg-background border-t">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -16,19 +16,20 @@ export function Footer() {
             <p className="text-sm font-medium text-foreground">{t('social.followMe')}</p>
             <SocialLinks iconSize={20} />
           </div>
-          
+
           {/* Links */}
           <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <a 
-              href="/sitemap.xml" 
+            <a
+              href="/sitemap.xml"
               className="text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`${t('footer.sitemap')}${t('common.newWindow')}`}
             >
               {t('footer.sitemap')}
             </a>
           </div>
-          
+
           {/* Copyright */}
           <p className="text-center text-sm text-muted-foreground">
             &copy; {currentYear} Matthéo Termine. {t('footer.rights')}
