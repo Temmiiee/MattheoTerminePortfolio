@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Matthéo Termine — Intégrateur Web &amp; Accessibilité
+    </title>
+    <meta
+      name="description"
+      content="Développeur web fullstack spécialisé en accessibilité RGAA. Création d'interfaces performantes, modulaires et conformes aux standards d'accessibilité."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#FAFAF8" />
+    <meta
+      property="og:title"
+      content="Matthéo Termine — Intégrateur Web &amp; Accessibilité"
+    />
+    <meta
+      property="og:description"
+      content="Développeur web fullstack spécialisé en accessibilité RGAA."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:image" content="https://example.com/img/og-image.png" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Aller au contenu principal</a>
+
+    <header class="header">
+      <div class="header__container">
+        <a href="#" class="header__logo" aria-label="Retour à l'accueil"
+          >Matthéo Termine</a
+        >
+        <nav class="nav" aria-label="Navigation principale">
+          <ul class="nav__list">
+            <li><a href="#realisations" class="nav__link">Réalisations</a></li>
+            <li>
+              <a href="#accessibilite" class="nav__link">Accessibilité</a>
+            </li>
+            <li><a href="#contact" class="nav__link">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+          <div class="hero__content">
+            <p class="hero__subtitle">
+              Intégrateur web fullstack — Accessibilité
+            </p>
+            <h1 id="hero-title" class="hero__title">
+              Interfaces web performantes, modulaires et conformes RGAA
+            </h1>
+            <p class="hero__description">
+              Développeur fullstack passionné par la création d'expériences web
+              accessibles à tous, avec une expertise approfondie du référentiel
+              général d'amélioration de l'accessibilité (RGAA).
+            </p>
+            <div class="hero__cta">
+              <a href="#realisations" class="btn btn--primary"
+                >Voir mes réalisations</a
+              >
+              <a href="#contact" class="btn btn--secondary">Me contacter</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="profil" class="about" aria-labelledby="about-title">
+        <div class="container container--reading">
+          <div class="section__header">
+            <h2 id="about-title">Profil</h2>
+          </div>
+          <div class="about__content">
+            <p>
+              Passionné de développement frontend en React, avec un fort intérêt
+              pour l'UI/UX et l'accessibilité numérique selon le RGAA.
+              Rigoureux, autonome et curieux, je conçois des interfaces web
+              performantes et modulaires qui respectent les standards
+              d'accessibilité les plus exigeants.
+            </p>
+            <p>
+              Mon objectif est de créer des expériences web inclusives qui
+              fonctionnent pour tous les utilisateurs, quels que soient leurs
+              capacités ou leurs outils d'assistance.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="competences" class="skills" aria-labelledby="skills-title">
+        <div class="container">
+          <div class="section__header">
+            <h2 id="skills-title">Compétences</h2>
+          </div>
+          <div class="skills__grid">
+            <article class="skill-category">
+              <h3 class="skill-category__title">Front-end</h3>
+              <ul class="skill-list">
+                <li class="skill-list__item">
+                  <span class="skill-list__name">React / TypeScript</span>
+                  <span class="skill-list__experience">2 ans</span>
+                </li>
+                <li class="skill-list__item">
+                  <span class="skill-list__name"
+                    >HTML5, CSS3 — Intégration sémantique</span
+                  >
+                  <span class="skill-list__experience">4 ans</span>
+                </li>
+                <li class="skill-list__item">
+                  <span class="skill-list__name"
+                    >Design accessible (RGAA / WCAG)</span
+                  >
+                  <span class="skill-list__experience">2 ans</span>
+                </li>
+              </ul>
+            </article>
+
+            <article class="skill-category">
+              <h3 class="skill-category__title">Back-end</h3>
+              <ul class="skill-list">
+                <li class="skill-list__item">
+                  <span class="skill-list__name">Node.js, PHP</span>
+                  <span class="skill-list__experience">3 ans</span>
+                </li>
+                <li class="skill-list__item">
+                  <span class="skill-list__name">Bases SQL</span>
+                  <span class="skill-list__experience">3 ans</span>
+                </li>
+              </ul>
+            </article>
+
+            <article class="skill-category">
+              <h3 class="skill-category__title">Outils &amp; méthodes</h3>
+              <ul class="skill-list">
+                <li class="skill-list__item">
+                  <span class="skill-list__name"
+                    >Git / GitHub, CI (GitHub Actions)</span
+                  >
+                  <span class="skill-list__experience">4 ans</span>
+                </li>
+                <li class="skill-list__item">
+                  <span class="skill-list__name"
+                    >Tests d'accessibilité (axe, Lighthouse, ARA)</span
+                  >
+                  <span class="skill-list__experience">2 ans</span>
+                </li>
+                <li class="skill-list__item">
+                  <span class="skill-list__name"
+                    >Environnements : Linux / Docker</span
+                  >
+                  <span class="skill-list__experience">3 ans</span>
+                </li>
+              </ul>
+            </article>
+
+            <article class="skill-category">
+              <h3 class="skill-category__title">Langues</h3>
+              <ul class="skill-list">
+                <li class="skill-list__item">
+                  <span class="skill-list__name">Anglais</span>
+                  <span class="skill-list__experience">C1</span>
+                </li>
+                <li class="skill-list__item">
+                  <span class="skill-list__name">Français</span>
+                  <span class="skill-list__experience">Natif</span>
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="accessibilite"
+        class="accessibility"
+        aria-labelledby="accessibility-title"
+      >
+        <div class="container container--reading">
+          <div class="section__header">
+            <h2 id="accessibility-title">Engagement accessibilité</h2>
+          </div>
+          <div class="accessibility__content">
+            <p>
+              L'accessibilité n'est pas une option, c'est une nécessité. Chaque
+              projet est construit avec du HTML sémantique, une navigation
+              clavier complète et un support optimisé pour les lecteurs d'écran.
+            </p>
+
+            <p>
+              Je teste régulièrement mes interfaces avec des outils reconnus et
+              des technologies d'assistance réelles pour assurer conformité et
+              utilisabilité :
+            </p>
+
+            <ul class="accessibility__list">
+              <li>
+                Conformité RGAA 4.1 (référentiel général d'amélioration de
+                l'accessibilité)
+              </li>
+              <li>Respect des critères WCAG 2.1 niveau AA minimum</li>
+              <li>Tests automatisés avec Lighthouse et axe DevTools</li>
+              <li>
+                Tests manuels avec lecteurs d'écran (NVDA, JAWS, VoiceOver)
+              </li>
+              <li>Navigation complète au clavier</li>
+              <li>Contrastes de couleurs conformes</li>
+              <li>Structure sémantique et landmarks ARIA appropriés</li>
+            </ul>
+
+            <p>
+              Mon approche intègre l'accessibilité dès la conception, pas comme
+              une correction après-coup. Chaque décision de design et
+              d'implémentation est pensée pour offrir une expérience équitable à
+              tous les utilisateurs.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="realisations"
+        class="projects"
+        aria-labelledby="projects-title"
+      >
+        <div class="container">
+          <div class="section__header">
+            <h2 id="projects-title">Réalisations</h2>
+            <p class="hero__description">
+              Chaque projet inclut des notes d'accessibilité, une démo et le
+              code source lorsque disponible.
+            </p>
+          </div>
+
+          <div class="projects__grid">
+            <article class="project-card">
+              <div class="project-card__image">
+                <img
+                  src="img/kit-design-istex.webp"
+                  alt="Capture d'écran du projet Istex Design System"
+                  width="800"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">Istex Design System</h3>
+                <p class="project-card__description">
+                  Un thème WordPress personnalisé pour centraliser le système de
+                  design Istex et les composants d'interface pour les
+                  intégrateurs.
+                </p>
+                <ul class="project-card__features">
+                  <li>Bibliothèque de composants d'interface centralisée</li>
+                  <li>Pictogrammes et règles d'affichage</li>
+                  <li>Assure la cohérence visuelle des produits Istex</li>
+                  <li>Accélère l'intégration pour les développeurs</li>
+                </ul>
+                <div class="project-card__tech">
+                  <span class="tech-tag">WordPress</span>
+                  <span class="tech-tag">PHP</span>
+                  <span class="tech-tag">JavaScript</span>
+                  <span class="tech-tag">Thème WP personnalisé</span>
+                </div>
+                <div class="project-card__links">
+                  <a
+                    href="https://design.istex.fr/"
+                    class="project-link"
+                    aria-label="Voir la démo d'Istex Design System"
+                    >Démo →</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-card__image">
+                <img
+                  src="img/tdm-factory.webp"
+                  alt="Capture d'écran du projet TDM Factory"
+                  width="800"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">TDM Factory</h3>
+                <p class="project-card__description">
+                  Une plateforme de fouille de textes pour l'enseignement
+                  supérieur et la recherche qui transforme les corpus
+                  scientifiques en connaissances exploitables.
+                </p>
+                <ul class="project-card__features">
+                  <li>
+                    Extraction d'informations et enrichissement automatisé
+                  </li>
+                  <li>
+                    Structuration de textes et pipelines de traitement multiples
+                  </li>
+                  <li>
+                    Traitement interne temporaire pour une confidentialité
+                    renforcée
+                  </li>
+                  <li>Accès restreint aux membres du CNRS</li>
+                </ul>
+                <div class="project-card__tech">
+                  <span class="tech-tag">React</span>
+                  <span class="tech-tag">Node.js</span>
+                  <span class="tech-tag">API Text Mining</span>
+                </div>
+                <div class="project-card__links">
+                  <a
+                    href="https://www.linkedin.com/feed/update/urn:li:ugcPost:7401654287451443200/"
+                    class="project-link"
+                    aria-label="Voir la démo de TDM Factory"
+                    >Démo →</a
+                  >
+                  <a
+                    href="https://github.com/Inist-CNRS/tdm-factory"
+                    class="project-link"
+                    aria-label="Voir le code source de TDM Factory"
+                    >Code source →</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-card__image">
+                <img
+                  src="img/mimoo-portfolio.webp"
+                  alt="Capture d'écran du projet Mimoo Portfolio"
+                  width="800"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">Mimoo Portfolio</h3>
+                <p class="project-card__description">
+                  Un portfolio artistique avec un langage visuel inspiré de la
+                  nature et des illustrations originales.
+                </p>
+                <ul class="project-card__features">
+                  <li>Mise en valeur d'œuvres d'art originales</li>
+                  <li>Navigation et design immersifs et poétiques</li>
+                  <li>Thème et illustrations inspirés de la nature</li>
+                </ul>
+                <div class="project-card__tech">
+                  <span class="tech-tag">HTML/CSS</span>
+                  <span class="tech-tag">JavaScript</span>
+                </div>
+                <div class="project-card__links">
+                  <a
+                    href="https://temmiiee.github.io/Mimoo-portfolio/"
+                    class="project-link"
+                    aria-label="Voir la démo de Mimoo Portfolio"
+                    >Démo →</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card">
+              <div class="project-card__image">
+                <img
+                  src="img/3d-morpion.webp"
+                  alt="Capture d'écran du projet 3D Morpion"
+                  width="800"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">3D Morpion</h3>
+                <p class="project-card__description">
+                  Un jeu de morpion 3D immersif construit avec React Three
+                  Fiber, proposant des visuels néon et des considérations
+                  d'accessibilité.
+                </p>
+                <ul class="project-card__features">
+                  <li>Plateau de jeu 3D entièrement rotatable</li>
+                  <li>Effets visuels néon (bloom, glassmorphism)</li>
+                  <li>Modes de jeu multiples et contrôles clavier</li>
+                  <li>
+                    Fonctionnalités d'accessibilité pour clavier et lecteurs
+                    d'écran
+                  </li>
+                </ul>
+                <div class="project-card__tech">
+                  <span class="tech-tag">React</span>
+                  <span class="tech-tag">Three.js</span>
+                  <span class="tech-tag">React Three Fiber</span>
+                  <span class="tech-tag">Vite</span>
+                  <span class="tech-tag">CSS</span>
+                </div>
+                <div class="project-card__links">
+                  <a
+                    href="https://3d-morpion.pages.dev/"
+                    class="project-link"
+                    aria-label="Voir la démo de 3D Morpion"
+                    >Démo →</a
+                  >
+                  <a
+                    href="https://github.com/Temmiiee/3DMorpion"
+                    class="project-link"
+                    aria-label="Voir le code source de 3D Morpion"
+                    >Code source →</a
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="projects__cta">
+            <a href="#contact" class="btn btn--primary"
+              >Discutons de votre projet</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="contact" aria-labelledby="contact-title">
+        <div class="container">
+          <div class="contact__content">
+            <div class="section__header">
+              <h2 id="contact-title">Contact</h2>
+            </div>
+            <p>
+              Intéressé par une collaboration ? N'hésitez pas à me contacter
+              pour discuter de votre projet.
+            </p>
+            <a href="mailto:mattheotermine104@gmail.com" class="contact__email"
+              >mattheotermine104@gmail.com</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>
+          &copy; <span id="year"></span> Matthéo Termine. Tous droits réservés.
+          Portfolio conçu avec accessibilité et conformité RGAA.
+        </p>
+      </div>
+    </footer>
+    <script src="scripts/site.js" defer></script>
+  </body>
+</html>

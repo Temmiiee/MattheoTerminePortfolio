@@ -1,0 +1,11 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA"
+  },
+  "urls": [
+    {
+      "url": "http://localhost:3000/",
+      "includeNotices": true
+    }
+  ]
+}

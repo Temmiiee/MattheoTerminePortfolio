@@ -1,0 +1,21 @@
+# Node
+node_modules/
+
+# Logs
+npm-debug.log*
+
+# Build output
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+
+# Husky
+.husky/
+
+# Temporary files
+*.tmp
