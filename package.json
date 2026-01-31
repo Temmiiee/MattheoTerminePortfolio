@@ -17,7 +17,7 @@
     "lint-staged": "^16.2.7",
     "pa11y-ci": "^4.0.1",
     "prettier": "^2.8.8",
-    "stylelint": "^15.0.0",
+    "stylelint": "^17.1.0",
     "stylelint-config-standard": "^30.0.0"
   },
   "lint-staged": {

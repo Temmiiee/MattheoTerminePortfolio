@@ -1,12 +1,11 @@
-/* Extracted styles from index.html — same styles but now in a separate file for maintainability */
 :root {
-  /* Colors - Refined editorial palette */
+  /* Colors */
   --color-bg: #fafaf8;
   --color-surface: #fff;
   --color-text-primary: #1a1a1a;
   --color-text-secondary: #4a4a4a;
   --color-accent: #2c5f2d;
-  --color-accent-dark: #234a20; /* darker for accessible hover */
+  --color-accent-dark: #234a20;
   --color-accent-contrast-text: #fff;
   --color-accent-light: #97bc62;
   --color-border: #e0e0dc;
@@ -42,7 +41,7 @@
     --color-text-primary: #fafaf8;
     --color-text-secondary: #b0b0b0;
     --color-accent: #97bc62;
-    --color-accent-dark: #7aa14a; /* darker hover in dark mode */
+    --color-accent-dark: #7aa14a;
     --color-accent-contrast-text: #111;
     --color-accent-light: #b8d48b;
     --color-border: #3a3a3a;
@@ -161,7 +160,7 @@ a:focus {
   position: sticky;
   top: 0;
   z-index: 100;
-    animation: slide-down 0.4s var(--transition-easing);
+  animation: slide-down 0.4s var(--transition-easing);
 }
 
 @keyframes slide-down {
@@ -243,7 +242,7 @@ a:focus {
 /* Section */
 section {
   padding: var(--space-2xl) 0;
-    animation: fade-in 0.6s var(--transition-easing);
+  animation: fade-in 0.6s var(--transition-easing);
 }
 
 @keyframes fade-in {
@@ -288,7 +287,7 @@ section {
 }
 
 .hero__content {
-    animation: fade-in-up 0.8s var(--transition-easing) 0.2s both;
+  animation: fade-in-up 0.8s var(--transition-easing) 0.2s both;
 }
 
 @keyframes fade-in-up {
@@ -350,11 +349,11 @@ section {
 }
 
 .btn--primary:hover {
-    background-color: var(--color-accent-dark);
-    border-color: var(--color-accent-dark);
-    color: var(--color-accent-contrast-text);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgb(0, 0, 0, 0.18);
+  background-color: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+  color: var(--color-accent-contrast-text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.18);
 }
 
 .btn--secondary {
@@ -393,8 +392,7 @@ section {
   padding: var(--space-lg);
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
-  transition:
-    transform var(--transition-speed) var(--transition-easing),
+  transition: transform var(--transition-speed) var(--transition-easing),
     box-shadow var(--transition-speed) var(--transition-easing);
 }
 
@@ -484,8 +482,7 @@ section {
   border-radius: var(--border-radius);
   overflow: hidden;
   border: 1px solid var(--color-border);
-  transition:
-    transform var(--transition-speed) var(--transition-easing),
+  transition: transform var(--transition-speed) var(--transition-easing),
     box-shadow var(--transition-speed) var(--transition-easing);
 }
 
