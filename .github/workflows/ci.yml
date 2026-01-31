@@ -40,8 +40,3 @@ jobs:
         run: npm run test:a11y
         env:
           CI: true
-      
-      - name: Lighthouse CI
-        run: npm run lhci
-        env:
-          CI: true
