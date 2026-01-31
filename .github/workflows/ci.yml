@@ -32,7 +32,9 @@ jobs:
           CI: true
       
       - name: Wait for server
-        run: npx wait-on http://localhost:3000 --timeout 30000
+        run: |
+          npx wait-on http://localhost:3000 --timeout 30000
+          sleep 2
       
       - name: Accessibility tests (pa11y)
         run: npm run test:a11y
