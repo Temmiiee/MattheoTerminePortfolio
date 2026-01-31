@@ -16,8 +16,7 @@ jobs:
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            https://example.com/
-            https://example.com/blog
+            https://temmiiee.github.io/MattheoTerminePortfolio/
           budgetPath: ./budget.json
           uploadArtifacts: true
           temporaryPublicStorage: true
