@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -14,16 +14,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Prepare artifact
         run: |
           mkdir out
           cp index.html img styles.css manifest.webmanifest robots.txt sitemap.xml img/favicon.svg README.md LICENSE out/ -r
-      - uses: actions/upload-pages-artifact@v2
+      
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: out
 
   deploy:
     needs: build-and-upload
     runs-on: ubuntu-latest
+    
+    permissions:
+      pages: write
+      id-token: write
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     steps:
-      - uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
