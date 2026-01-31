@@ -14,7 +14,7 @@
   "devDependencies": {
     "html-validate": "^7.6.7",
     "husky": "^8.0.0",
-    "lint-staged": "^13.0.0",
+    "lint-staged": "^16.2.7",
     "pa11y-ci": "^4.0.1",
     "prettier": "^2.8.8",
     "stylelint": "^15.0.0",
