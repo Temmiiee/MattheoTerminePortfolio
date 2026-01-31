@@ -18,7 +18,7 @@ jobs:
         run: |
           mkdir out
           cp index.html img styles.css manifest.webmanifest robots.txt sitemap.xml img/favicon.svg README.md LICENSE out/ -r
-      - uses: actions/upload-pages-artifact@v1
+      - uses: actions/upload-pages-artifact@v2
         with:
           path: out
 
