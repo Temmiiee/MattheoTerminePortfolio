@@ -4,6 +4,18 @@
       {
         "resourceType": "total",
         "budget": 1500
+      },
+      {
+        "resourceType": "script",
+        "budget": 150
+      },
+      {
+        "resourceType": "stylesheet",
+        "budget": 50
+      },
+      {
+        "resourceType": "font",
+        "budget": 100
       }
     ],
     "timings": [
@@ -14,6 +26,14 @@
       {
         "metric": "largest-contentful-paint",
         "budget": 3000
+      },
+      {
+        "metric": "interactive",
+        "budget": 5000
+      },
+      {
+        "metric": "speed-index",
+        "budget": 4000
       }
     ]
   }
