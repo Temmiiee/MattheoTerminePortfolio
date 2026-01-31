@@ -2,7 +2,6 @@
   "extends": ["html-validate:recommended"],
   "rules": {
     "no-inline-style": "warn",
-    "void-style": ["error", { "style": "selfclose" }],
-    "doctype-style": ["error", { "style": "lowercase" }]
+    "void-style": ["error", { "style": "selfclose" }]
   }
 }
