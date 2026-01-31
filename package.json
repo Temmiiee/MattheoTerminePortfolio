@@ -17,8 +17,9 @@
     "lint-staged": "^16.2.7",
     "pa11y-ci": "^4.0.1",
     "prettier": "^2.8.8",
+    "serve": "^14.2.5",
     "stylelint": "^17.1.0",
-    "stylelint-config-standard": "^30.0.0"
+    "stylelint-config-standard": "^40.0.0"
   },
   "lint-staged": {
     "*.{js,css,html,json,md}": [
