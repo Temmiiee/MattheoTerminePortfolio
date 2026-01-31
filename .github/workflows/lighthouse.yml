@@ -24,7 +24,7 @@ jobs:
           urls: |
             https://temmiiee.github.io/MattheoTerminePortfolio/
           budgetPath: ./budget.json
-          configPath: ./lighthouserc.json
+          configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
