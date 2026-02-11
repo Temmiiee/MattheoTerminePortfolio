@@ -991,7 +991,7 @@ section {
 
 .footer-inner p {
   font-size: var(--text-sm);
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
 }
 
 .footer-links {
@@ -1001,7 +1001,7 @@ section {
 
 .footer-links a {
   font-size: var(--text-sm);
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
   transition: color var(--duration-fast) var(--ease-out);
 }
 
