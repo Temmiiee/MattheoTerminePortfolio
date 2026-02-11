@@ -448,12 +448,21 @@ function initContactForm() {
     submitBtn.disabled = true;
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
 
-      submitBtn.classList.remove('loading');
-      submitBtn.classList.add('success');
-
-      form.reset();
+      if (response.ok) {
+        submitBtn.classList.remove('loading');
+        submitBtn.classList.add('success');
+        form.reset();
+      } else {
+        throw new Error('Submission failed');
+      }
 
       setTimeout(() => {
         submitBtn.classList.remove('success');
