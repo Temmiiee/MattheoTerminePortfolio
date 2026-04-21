@@ -17,14 +17,14 @@ const translations = {
     navContact: 'Contact',
     // Hero
     heroEyebrow: 'Ingénieur Accessibilité Web',
-    heroDesc: 'Je conçois des sites web modernes, performants et accessibles. Spécialisé dans la conformité RGAA 4.1 et WCAG 2.1 AA, je crée des expériences numériques utilisables par tous, depuis la France.',
+    heroDesc: "Je conçois des sites et applicatifs métiers modernes et accessibles. Spécialisé en diagnostic d'accessibilité et pré-audits RGAA 4.1 / WCAG 2.1 AA, j'accompagne les équipes fabricantes sur la mise en conformité et l'éco-conception, depuis la France.",
     heroCtaProjects: 'Voir mes projets',
     heroCtaHire: 'Me contacter',
     // About
     aboutTitle: 'À propos',
     aboutP1: "Je suis un développeur web français passionné par la création de sites modernes, performants et accessibles. Diplômé d'un BUT Métiers du Multimédia et de l'Internet (MMI) à l'Université de Lorraine, je suis spécialisé en développement web et interfaces interactives.",
-    aboutP2: "J'aime créer des expériences numériques qui allient code propre, design UX/UI réfléchi et optimisation SEO technique. Mon expertise en accessibilité web garantit que chaque projet que je livre est utilisable par tous, quelles que soient leurs capacités.",
-    aboutP3: "En dehors du code, j'explore les nouveaux standards web, je contribue à des projets open-source et j'expérimente des projets créatifs comme des bots et du développement de jeux.",
+    aboutP2: "J'aime créer des expériences numériques qui allient code propre (HTML, CSS, JavaScript natif, Angular) et conception inclusive. Mon expertise en accessibilité web et en éco-conception garantit que chaque projet que je livre est utilisable par tous et sobre en ressources.",
+    aboutP3: "En dehors du code, j'explore les nouveaux standards web et l'éco-conception numérique, je contribue à des projets open-source et j'expérimente des projets créatifs comme des bots et du développement de jeux.",
     aboutCtaGithub: 'Voir mon GitHub',
     aboutEduLabel: 'Formation',
     aboutFocusLabel: 'Spécialité',
@@ -33,22 +33,23 @@ const translations = {
     aboutLocDesc: 'Disponible en télétravail',
     // Services
     servicesTitle: 'Ce que je fais',
-    svc1Title: 'Développement Web Sur-Mesure',
-    svc1Desc: 'Sites web construits avec Vite, TypeScript, JavaScript et CSS vanilla. Chaque projet est conçu sur mesure, avec un code léger et performant, sans dépendances superflues.',
-    svc2Title: 'Audits & Conformité Accessibilité',
-    svc2Desc: "Audits approfondis selon les normes RGAA 4.1 et WCAG 2.1 AA. J'identifie les obstacles, fournis des recommandations concrètes et implémente les corrections pour rendre votre site accessible à tous.",
-    svc3Title: 'Optimisation des Performances',
-    svc3Desc: 'Optimisation des Core Web Vitals visant un LCP inférieur à 2,5 secondes et des scores Lighthouse supérieurs à 95. Un site rapide est mieux référencé et convertit davantage.',
+    svc1Title: 'Développement Front-End Sur-Mesure',
+    svc1Desc: 'Sites internet et applicatifs métiers construits avec Angular (12 à 21), HTML, CSS et JavaScript natif. Un code propre, maintenable et accessible, pensé pour la qualité et la durabilité.',
+    svc2Title: 'Diagnostics & Pré-audits RGAA',
+    svc2Desc: "Diagnostics d'accessibilité et pré-audits RGAA 4.1 / WCAG 2.1 AA sur sites internet, internes/externes et applicatifs métiers. Rédaction des préconisations et animation des réunions de restitution auprès des équipes fabricantes.",
+    svc3Title: 'Accompagnement des équipes',
+    svc3Desc: "Suivi, vérification et validation des correctifs d'accessibilité. Revue de code, pair programming et échanges techniques pour aider les équipes fabricantes à lever les blocages et monter en compétences.",
     svc4Title: 'Solutions WordPress',
     svc4Desc: 'Thèmes personnalisés, plugins sur-mesure et installations WordPress optimisées. Je crée des sites WordPress rapides, accessibles et faciles à gérer.',
-    svc5Title: 'SEO Technique',
-    svc5Desc: "Données structurées, optimisation des balises meta, sitemaps et configuration robots.txt. Je m'assure que les moteurs de recherche comprennent votre contenu et le référencent correctement.",
+    svc5Title: 'Éco-conception numérique',
+    svc5Desc: "Conception de services numériques sobres en ressources : optimisation du poids des pages, du nombre de requêtes et des parcours utilisateur. Une démarche complémentaire à l'accessibilité pour des produits plus responsables.",
     svc6Title: 'Collaboration & Conseil',
     svc6Desc: 'Je travaille étroitement avec les designers, chefs de projet et équipes de développement. Une communication claire et des méthodes agiles garantissent des livraisons dans les délais.',
     // Stack
     stackTitle: 'Technologies',
     stackTools: 'Outils',
     stackDeploy: 'Déploiement',
+    stackEcodesign: 'Éco-conception',
     // Projects
     projectsTitle: 'Projets Sélectionnés',
     proj1Title: 'Istex Design System',
@@ -95,6 +96,9 @@ const translations = {
     errEmailInvalid: 'Veuillez entrer une adresse e-mail valide.',
     errMsg: 'Veuillez entrer un message.',
     errGeneric: "Une erreur s'est produite. Veuillez réessayer.",
+    formSuccess: 'Message envoyé avec succès. Je vous réponds très vite.',
+    navOpen: 'Ouvrir le menu de navigation',
+    navClose: 'Fermer le menu de navigation',
   },
   en: {
     skipMain: 'Skip to main content',
@@ -105,13 +109,13 @@ const translations = {
     navProcess: 'Process',
     navContact: 'Contact',
     heroEyebrow: 'Web Accessibility Engineer',
-    heroDesc: 'I build modern, performant, and accessible websites. Specialized in RGAA 4.1 and WCAG 2.1 AA compliance, I create digital experiences that everyone can use, from France.',
+    heroDesc: 'I build modern and accessible websites and business applications. Specialized in accessibility diagnostics and RGAA 4.1 / WCAG 2.1 AA pre-audits, I support delivery teams on compliance fixes and eco-design, from France.',
     heroCtaProjects: 'View My Projects',
-    heroCtaHire: 'Hire Me',
+    heroCtaHire: 'Contact Me',
     aboutTitle: 'About Me',
     aboutP1: "I'm a French web developer passionate about building modern, performant, and accessible websites. With a degree in Métiers du Multimédia et de l'Internet (MMI) from Université de Lorraine, I specialize in web development and interactive interfaces.",
-    aboutP2: 'I love creating digital experiences that combine clean code, thoughtful UX/UI design, and technical SEO optimization. My focus on web accessibility ensures that every project I deliver can be used by everyone, regardless of their abilities.',
-    aboutP3: "When I'm not coding, I'm exploring new web standards, contributing to open-source projects, or experimenting with creative side projects like bots and game development.",
+    aboutP2: 'I love creating digital experiences that combine clean code (HTML, CSS, native JavaScript, Angular) and inclusive design. My expertise in web accessibility and eco-design ensures that every project I deliver can be used by everyone and remains resource-efficient.',
+    aboutP3: "When I'm not coding, I'm exploring new web standards and digital eco-design, contributing to open-source projects, or experimenting with creative side projects like bots and game development.",
     aboutCtaGithub: 'View My GitHub',
     aboutEduLabel: 'Education',
     aboutFocusLabel: 'Focus',
@@ -119,21 +123,22 @@ const translations = {
     aboutLocLabel: 'Location',
     aboutLocDesc: 'Available for remote work',
     servicesTitle: 'What I Do',
-    svc1Title: 'Custom Web Development',
-    svc1Desc: 'Bespoke websites built with Vite, TypeScript, JavaScript, and vanilla CSS. Every project is crafted with lightweight, performant code and no unnecessary dependencies.',
-    svc2Title: 'Accessibility Audits & Compliance',
-    svc2Desc: 'Thorough audits against RGAA 4.1 and WCAG 2.1 AA standards. I identify barriers, provide actionable recommendations, and implement fixes to make your site accessible to all.',
-    svc3Title: 'Performance Optimization',
-    svc3Desc: 'Core Web Vitals optimization targeting LCP under 2.5 seconds and Lighthouse scores above 95. Fast sites rank better and convert more visitors.',
+    svc1Title: 'Custom Front-End Development',
+    svc1Desc: 'Websites and business applications built with Angular (12 to 21), HTML, CSS, and native JavaScript. Clean, maintainable, and accessible code, designed for quality and durability.',
+    svc2Title: 'Accessibility Diagnostics & RGAA Pre-Audits',
+    svc2Desc: 'Accessibility diagnostics and RGAA 4.1 / WCAG 2.1 AA pre-audits on public websites, internal sites, and business applications. Written recommendations and facilitation of restitution meetings with delivery teams.',
+    svc3Title: 'Team Support & Coaching',
+    svc3Desc: 'Monitoring, verifying, and validating accessibility fixes. Code reviews, pair programming, and technical discussions to help delivery teams unblock issues and grow their skills.',
     svc4Title: 'WordPress Solutions',
     svc4Desc: 'Custom themes, tailored plugins, and performance-tuned WordPress installations. I build WordPress sites that are fast, accessible, and easy to manage.',
-    svc5Title: 'Technical SEO',
-    svc5Desc: 'Structured data markup, meta optimization, sitemaps, and robots configuration. I ensure search engines understand your content and rank it properly.',
+    svc5Title: 'Digital Eco-Design',
+    svc5Desc: 'Designing resource-efficient digital services: optimizing page weight, request counts, and user journeys. A natural complement to accessibility for more responsible products.',
     svc6Title: 'Collaboration & Consulting',
     svc6Desc: 'I work closely with designers, project managers, and development teams. Clear communication and agile workflows ensure projects ship on time.',
     stackTitle: 'Tech Stack',
     stackTools: 'Tools',
     stackDeploy: 'Deployment',
+    stackEcodesign: 'Eco-Design',
     projectsTitle: 'Selected Projects',
     proj1Title: 'Istex Design System',
     proj1Desc: 'A custom WordPress theme built to centralize a design system and UI component library for the Istex team. It serves as a reference for brand guidelines, icon sets, and display rules, ensuring visual consistency across all Istex products.',
@@ -175,6 +180,9 @@ const translations = {
     errEmailInvalid: 'Please enter a valid email address.',
     errMsg: 'Please enter a message.',
     errGeneric: 'Something went wrong. Please try again.',
+    formSuccess: 'Message sent successfully. I will get back to you shortly.',
+    navOpen: 'Open navigation menu',
+    navClose: 'Close navigation menu',
   },
 };
 
@@ -190,6 +198,9 @@ function initLanguage() {
   if (stored && translations[stored]) {
     currentLang = stored;
   }
+
+  // Keep the html lang attribute in sync with the active language
+  document.documentElement.lang = currentLang;
 
   // If starting in EN, apply translations immediately
   if (currentLang === 'en') {
@@ -216,6 +227,16 @@ function initLanguage() {
 
     // Update html lang attribute
     document.documentElement.lang = next;
+
+    // Keep the nav toggle aria-label in sync with the current menu state
+    const navToggle = document.querySelector('.nav-toggle');
+    if (navToggle) {
+      const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute(
+        'aria-label',
+        isOpen ? translations[next].navClose : translations[next].navOpen
+      );
+    }
   });
 }
 
@@ -313,16 +334,21 @@ function initMobileNav() {
 
   function closeMenu() {
     toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', translations[currentLang].navOpen);
     menu.classList.remove('open');
     document.body.style.overflow = '';
   }
 
   function openMenu() {
     toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', translations[currentLang].navClose);
     menu.classList.add('open');
     document.body.style.overflow = 'hidden';
     links[0]?.focus();
   }
+
+  // Initial label synced with current language
+  toggle.setAttribute('aria-label', translations[currentLang].navOpen);
 
   toggle.addEventListener('click', () => {
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
@@ -415,15 +441,20 @@ function initScrollReveal() {
 function initContactForm() {
   const form = document.getElementById('contact-form');
   const submitBtn = form.querySelector('.btn-submit');
+  const status = document.getElementById('form-status');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const t = translations[currentLang];
 
-    // Clear previous errors
+    // Clear previous errors and status
     form.querySelectorAll('.form-error').forEach((el) => (el.textContent = ''));
     form.querySelectorAll('.error').forEach((el) => el.classList.remove('error'));
+    if (status) {
+      status.textContent = '';
+      status.classList.remove('error');
+    }
 
     const name = form.querySelector('#contact-name');
     const email = form.querySelector('#contact-email');
@@ -466,6 +497,10 @@ function initContactForm() {
         submitBtn.classList.remove('loading');
         submitBtn.classList.add('success');
         form.reset();
+        if (status) {
+          status.classList.remove('error');
+          status.textContent = t.formSuccess;
+        }
       } else {
         throw new Error('Submission failed');
       }
@@ -478,6 +513,10 @@ function initContactForm() {
       submitBtn.classList.remove('loading');
       submitBtn.disabled = false;
       showError(message, 'message-error', t.errGeneric);
+      if (status) {
+        status.classList.add('error');
+        status.textContent = t.errGeneric;
+      }
     }
   });
 }

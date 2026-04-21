@@ -19,9 +19,11 @@
   --color-accent-hover: #1e40af;
   --color-accent-light: #5184C8;
   --color-accent-text: #1e40af;
+  --color-accent-subtle: #dbeafe;
 
   --color-border: #d6d3d1;
   --color-border-subtle: #e7e5e4;
+  --color-border-strong: #78716c;
 
   --color-success: #16a34a;
   --color-error: #dc2626;
@@ -126,6 +128,7 @@
 
     --color-border: #44403c;
     --color-border-subtle: #292524;
+    --color-border-strong: #78716c;
 
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
@@ -322,8 +325,8 @@ textarea {
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   padding: var(--space-2);
   border-radius: var(--radius-sm);
   transition: background-color var(--duration-fast) var(--ease-out);
@@ -360,7 +363,8 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 36px;
+  min-width: 44px;
+  height: 44px;
   padding-inline: var(--space-3);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
@@ -985,9 +989,10 @@ section {
 .form-group input,
 .form-group textarea {
   padding: var(--space-3) var(--space-4);
-  font-size: var(--text-sm);
+  min-height: 44px;
+  font-size: var(--text-base);
   background-color: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   transition: border-color var(--duration-fast) var(--ease-out),
     box-shadow var(--duration-fast) var(--ease-out);
@@ -1019,6 +1024,17 @@ section {
   font-size: var(--text-xs);
   color: var(--color-error);
   min-height: var(--text-xs);
+}
+
+.form-status {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-success);
+  min-height: var(--text-sm);
+}
+
+.form-status.error {
+  color: var(--color-error);
 }
 
 
@@ -1200,15 +1216,21 @@ section {
     border-top: 1px solid var(--color-border-subtle);
     transform: translateX(100%);
     opacity: 0;
+    visibility: hidden;
     transition: transform var(--duration-normal) var(--ease-out),
-      opacity var(--duration-normal) var(--ease-out);
+      opacity var(--duration-normal) var(--ease-out),
+      visibility 0s linear var(--duration-normal);
     pointer-events: none;
   }
 
   .nav-menu.open {
     transform: translateX(0);
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
+    transition: transform var(--duration-normal) var(--ease-out),
+      opacity var(--duration-normal) var(--ease-out),
+      visibility 0s linear 0s;
   }
 
   .nav-link {
