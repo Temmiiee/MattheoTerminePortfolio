@@ -67,18 +67,13 @@ const translations = {
     proj6Title: 'Bluffet',
     proj6Desc: "Un jeu mobile de déduction sociale pour 3 à 8 joueurs sur un seul téléphone. Inspiré par Among Us et les formats \"Qui est l'imposteur\", Bluffet propose des parties locales rapides avec des packs de questions thématiques et un gameplay de bluff accessible à tous.",
     proj6Cta: 'Voir sur Google Play',
-    // Process
-    processTitle: 'Mon Processus',
-    proc1Title: 'Découverte',
-    proc1Desc: "Je commence chaque projet en comprenant vos objectifs, votre audience et vos contraintes. Nous définissons ensemble le périmètre, les critères de succès et les exigences d'accessibilité.",
-    proc2Desc: "Les maquettes et prototypes sont construits avec l'accessibilité en tête dès le premier jour. Je valide les contrastes, l'ordre de focus et la structure sémantique avant la moindre ligne de code.",
-    proc3Title: 'Développement',
-    proc3Desc: "Code propre et modulaire avec tests automatisés. Chaque composant est conçu pour être navigable au clavier, compatible avec les lecteurs d'écran et performant sur tous les appareils.",
-    proc4Title: 'Livraison',
-    proc4Desc: "Audit d'accessibilité complet, benchmarks de performance et validation SEO avant le lancement. Je fournis la documentation et le support pour assurer la maintenabilité à long terme.",
+    proj7Title: 'M2A-DAC Paris Ouest',
+    proj7Desc: "Réalisation d'une déclaration d'accessibilité RGAA 4.1.2 pour le site de la M2A-DAC Paris Ouest, puis correction des principales erreurs identifiées. Le taux de conformité est passé de 55 % à 89 %, améliorant significativement l'accessibilité numérique du site.",
+    proj7Cta: 'Voir la déclaration',
+    proj7CtaHref: '/D%C3%A9claration%20d%27accessibilit%C3%A9%20M2A-DAC%20ParisOuest.pdf',
     // Contact
     contactTitle: 'Me Contacter',
-    contactLead: "Un projet en tête ou besoin d'un audit d'accessibilité ? N'hésitez pas à me contacter.",
+    contactLead: "Un projet en tête ou besoin d'un diagnostic d'accessibilité ? N'hésitez pas à me contacter.",
     contactLinkedin: 'Profil LinkedIn',
     formName: 'Nom complet',
     formNamePh: 'Votre nom complet',
@@ -155,6 +150,10 @@ const translations = {
     proj6Title: 'Bluffet',
     proj6Desc: 'A social deduction mobile game for 3 to 8 players on a single phone. Inspired by Among Us and "Who is the impostor?" formats, Bluffet delivers fast local matches with themed question packs and accessible bluff-focused gameplay.',
     proj6Cta: 'View on Google Play',
+    proj7Title: 'M2A-DAC Paris Ouest',
+    proj7Desc: 'RGAA 4.1.2 accessibility declaration for the M2A-DAC Paris Ouest website, followed by remediation of the main identified issues. Compliance rate improved from 55% to 89%, significantly enhancing the site\'s digital accessibility.',
+    proj7Cta: 'View Declaration',
+    proj7CtaHref: '/Accessibility%20Statement%20M2A-DAC%20ParisOuest.pdf',
     processTitle: 'How I Work',
     proc1Title: 'Discovery',
     proc1Desc: 'I start every project by understanding your goals, audience, and constraints. We define scope, success metrics, and accessibility requirements together.',
@@ -164,7 +163,7 @@ const translations = {
     proc4Title: 'Delivery',
     proc4Desc: 'Full accessibility audit, performance benchmarks, and SEO validation before launch. I provide documentation and support to ensure long-term maintainability.',
     contactTitle: 'Get in Touch',
-    contactLead: "Have a project in mind or need an accessibility audit? I'd love to hear from you.",
+    contactLead: "Have a project in mind or need an accessibility diagnostic? I'd love to hear from you.",
     contactLinkedin: 'LinkedIn Profile',
     formName: 'Full Name',
     formNamePh: 'Your full name',
@@ -266,6 +265,14 @@ function applyTranslations(lang) {
     const key = el.getAttribute('data-i18n-placeholder');
     if (t[key] !== undefined) {
       el.placeholder = t[key];
+    }
+  });
+
+  // Href attributes
+  document.querySelectorAll('[data-i18n-href]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-href');
+    if (t[key] !== undefined) {
+      el.href = t[key];
     }
   });
 }
