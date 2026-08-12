@@ -5,11 +5,19 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-
 <url>
   <loc>https://mattheo-termine.fr/</loc>
-  <lastmod>2026-02-11T17:13:15+00:00</lastmod>
+  <lastmod>2026-08-12T00:00:00+00:00</lastmod>
 </url>
 
+<url>
+  <loc>https://mattheo-termine.fr/mentions-legales.html</loc>
+  <lastmod>2026-08-12T00:00:00+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://mattheo-termine.fr/confidentialite.html</loc>
+  <lastmod>2026-08-12T00:00:00+00:00</lastmod>
+</url>
 
 </urlset>
