@@ -50,12 +50,13 @@ function initActiveNav() {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
-          navLinks.forEach((link) => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-          });
-        }
+        if (!entry.isIntersecting) return;
+        const id = entry.target.getAttribute('id');
+        const matchingLink = Array.from(navLinks).find((link) => link.getAttribute('href') === `#${id}`);
+        // Sections without their own nav entry (e.g. intermediate content) keep
+        // the previously active link highlighted instead of clearing it.
+        if (!matchingLink) return;
+        navLinks.forEach((link) => link.classList.toggle('active', link === matchingLink));
       });
     },
     {
