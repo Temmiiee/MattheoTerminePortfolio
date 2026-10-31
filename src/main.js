@@ -191,7 +191,10 @@ function initContactForm() {
 
     // Clear previous errors and status
     form.querySelectorAll('.form-error').forEach((el) => (el.textContent = ''));
-    form.querySelectorAll('.error').forEach((el) => el.classList.remove('error'));
+    form.querySelectorAll('.error').forEach((el) => {
+      el.classList.remove('error');
+      el.removeAttribute('aria-invalid');
+    });
     if (status) {
       status.textContent = '';
       status.classList.remove('error');
@@ -220,7 +223,10 @@ function initContactForm() {
       isValid = false;
     }
 
-    if (!isValid) return;
+    if (!isValid) {
+      form.querySelector('.error')?.focus();
+      return;
+    }
 
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
@@ -253,7 +259,6 @@ function initContactForm() {
     } catch {
       submitBtn.classList.remove('loading');
       submitBtn.disabled = false;
-      showError(message, 'message-error', messages.errGeneric);
       if (status) {
         status.classList.add('error');
         status.textContent = messages.errGeneric;
@@ -264,6 +269,7 @@ function initContactForm() {
 
 function showError(input, errorId, message) {
   input.classList.add('error');
+  input.setAttribute('aria-invalid', 'true');
   document.getElementById(errorId).textContent = message;
 }
 
@@ -286,7 +292,10 @@ function initSmoothScroll() {
       if (!target) return;
 
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 'auto'
+        : 'smooth';
+      target.scrollIntoView({ behavior, block: 'start' });
 
       history.pushState(null, '', targetId);
     });
