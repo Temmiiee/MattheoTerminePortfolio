@@ -1,16 +1,25 @@
-# Portfolio - Matthéo Termine
+# Matthéo Termine · Pré-audit d’accessibilité RGAA
 
-Portfolio personnel axé sur l'accessibilité web (RGAA 4.1 / WCAG 2.1 AA) et la performance. 
+Site vitrine statique en français. Le HTML est disponible dès le chargement. Vite compile les feuilles de style et le script du formulaire.
 
-## 🚀 Technologie
-- **Build Tool** : [Vite](https://vitejs.dev/)
-- **Langage** : JavaScript (ES6+), TypeScript
-- **Stylisation** : CSS Vanilla (Design System complet)
-- **Internationalisation** : Système i18n personnalisé (Français/Anglais)
-- **Déploiement** : Cloudflare Pages
+## Développement
 
-## ✨ Caractéristiques
-- **Accessibilité First** : Navigation au clavier, respect des lecteurs d'écran, contrastes élevés.
-- **Bi-langue** : Support complet FR/EN avec persistence du choix.
-- **Responsive Design** : Optimisé pour tous les terminaux (Mobile, Tablette, Desktop).
-- **Zéro Dépendances** : Pas de frameworks lourds, code léger et rapide.
+Prérequis : Node.js 22.12 ou version ultérieure.
+
+```sh
+npm ci
+npm run dev
+npm run build
+```
+
+Le dossier `out/` est généré à chaque compilation. `npm run preview` permet de vérifier le rendu du build. Pour vérifier aussi les routes sans extension, les redirections et les en-têtes de Cloudflare Pages, servir `out/` avec `wrangler pages dev out`.
+
+## Production
+
+Dans le projet Cloudflare Pages associé à `mattheo-termine.fr`, utiliser `npm run build` comme commande de compilation et `out` comme dossier de sortie. Si la racine Git contient le dossier `MattheoTermine`, sélectionner celui-ci comme répertoire racine dans Cloudflare Pages.
+
+Les fichiers `public/_headers` et `public/_redirects` sont copiés dans le build. Les URLs publiques des pages HTML s’écrivent sans extension. Le sitemap et les URLs canoniques utilisent le domaine de production.
+
+Après publication, vérifier les réponses HTTPS, les en-têtes, la redirection de `/exemples`, la page 404 et la réception d’une demande de test via Formspree.
+
+L’offre utilise des devis sur périmètre. Les tickets affichés sont des exemples fictifs. Les tests automatiques d’accessibilité complètent les vérifications manuelles au clavier et avec des technologies d’assistance.

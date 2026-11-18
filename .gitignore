@@ -1,2 +1,7 @@
-node_modules
-out
+node_modules/
+out/
+.wrangler/
+.env
+.env.*
+.dev.vars
+.dev.vars.*

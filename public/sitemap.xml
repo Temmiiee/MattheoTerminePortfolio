@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-<url>
-  <loc>https://mattheo-termine.fr/</loc>
-  <lastmod>2026-08-12T00:00:00+00:00</lastmod>
-</url>
-
-<url>
-  <loc>https://mattheo-termine.fr/mentions-legales</loc>
-  <lastmod>2026-08-12T00:00:00+00:00</lastmod>
-</url>
-
-<url>
-  <loc>https://mattheo-termine.fr/confidentialite</loc>
-  <lastmod>2026-08-12T00:00:00+00:00</lastmod>
-</url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mattheo-termine.fr/</loc></url>
+  <url><loc>https://mattheo-termine.fr/pre-audit-vs-audit-rgaa</loc></url>
+  <url><loc>https://mattheo-termine.fr/accessibilite</loc></url>
+  <url><loc>https://mattheo-termine.fr/plan-du-site</loc></url>
+  <url><loc>https://mattheo-termine.fr/mentions-legales</loc></url>
+  <url><loc>https://mattheo-termine.fr/confidentialite</loc></url>
 </urlset>
