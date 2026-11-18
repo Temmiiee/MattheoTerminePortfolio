@@ -7,7 +7,8 @@ Revue du 18 novembre 2026 sur le build local servi par l’émulateur Cloudflare
 - Pages éditoriales examinées : accueil, guide pré-audit et audit, plan du site, accessibilité, mentions légales et confidentialité. La réponse 404 a aussi été examinée comme page technique hors navigation éditoriale.
 - Parcours examinés : navigation avec les liens et le plan, lien d’évitement, ouverture et fermeture des tickets et de la FAQ, formulaire de devis avec saisie vide ou invalide, échec et succès simulés.
 - Outils : Chromium sous Windows, clavier et pointeur, validation ciblée du HTML, inspection du DOM et du script, axe-core sur les pages et les états du formulaire, rendu sans feuilles de style, texte agrandi à 200 %, fenêtres de 320 px de large et de 256 px de haut, espacement du texte personnalisé.
-- Limites : l’envoi Formspree a été intercepté localement. Ses écrans natifs, un éventuel défi anti-spam et la réception réelle restent à tester. Le test vocal avec NVDA a été interrompu par l’outil de contrôle de Firefox. Les vérifications de restitution et le contrôle du site publié restent à faire.
+- Le formulaire a aussi été vérifié sur le site publié. Formspree a accepté une demande fictive depuis l’interface avec JavaScript et la confirmation en ligne s’est affichée. Sans JavaScript, le formulaire natif a abouti à la confirmation de Formspree en français. La réception dans la boîte mail n’a pas été vérifiée.
+- La vérification de la restitution vocale avec NVDA reste distincte des contrôles du balisage et des tests d’envoi.
 
 ## Corrections apportées
 
@@ -28,7 +29,7 @@ Revue du 18 novembre 2026 sur le build local servi par l’émulateur Cloudflare
 | 4. Multimédia | — | — | 4.1 à 4.13 | Aucun média temporel, lecteur embarqué ou média non temporel. |
 | 5. Tableaux | — | — | 5.1 à 5.8 | Aucun tableau de données ou de présentation dans les pages publiques. |
 | 6. Liens | 6.1, 6.2 | — | — | Intitulés visibles, destinations compréhensibles, liens mail et téléphone nommés, lien d’évitement activable. |
-| 7. Scripts | 7.3, 7.4 | 7.1, 7.2, 7.5 | — | Les tickets et la FAQ s’actionnent au clavier et au pointeur. Les erreurs déplacent le focus vers le premier champ concerné après l’action d’envoi. Les états, rôles et associations ont été inspectés dans le DOM. Les soumissions sans JavaScript utilisent le formulaire natif vers Formspree. Il reste à vérifier ce parcours et les annonces de statut avec une technologie d’assistance. |
+| 7. Scripts | 7.2, 7.3, 7.4 | 7.1, 7.5 | — | Les tickets et la FAQ s’actionnent au clavier et au pointeur. Les erreurs déplacent le focus vers le premier champ concerné après l’action d’envoi. Les états, rôles et associations ont été inspectés dans le DOM. Le parcours sans JavaScript a fonctionné en production jusqu’à la confirmation du formulaire natif. |
 | 8. Éléments obligatoires | 8.1 à 8.6, 8.9 | — | 8.7, 8.8, 8.10 | Type de document HTML, titres de pages distincts, langue française, contrôle de l’imbrication et de l’unicité des identifiants et attributs. Aucun passage en langue étrangère ni changement de sens de lecture. |
 | 9. Structuration | 9.1, 9.2, 9.3 | — | 9.4 | Hiérarchie des titres, structure d’en-tête et de contenu, listes ordonnées et listes de description. Les textes entre guillemets décrivent des messages fictifs de l’interface. |
 | 10. Présentation | 10.1 à 10.12 | — | 10.13, 10.14 | CSS externe, contenu et ordre préservés sans CSS, grossissement du texte et contrôles de reflow et d’espacement, liens soulignés dans le texte, indicateurs de focus visibles et aucun contenu informatif réservé au survol. |
@@ -39,5 +40,5 @@ Revue du 18 novembre 2026 sur le build local servi par l’émulateur Cloudflare
 ## Vérifications à terminer
 
 1. Avec une combinaison de l’[environnement de test RGAA](https://accessibilite.numerique.gouv.fr/methode/environnement-de-test/), vérifier les repères sur chaque page, les noms et états ouverts ou fermés des accordéons, la restitution des champs et erreurs, et les annonces d’envoi en cours, d’échec et de succès.
-2. Sur le domaine publié, réaliser un envoi autorisé vers Formspree et vérifier la réception, l’alternative sans JavaScript et les étapes imposées par l’anti-spam le cas échéant.
+2. Confirmer la réception des deux demandes fictives dans la boîte mail du site.
 3. Confirmer les statuts par critère sur l’échantillon publié avant de calculer un taux selon la [méthode d’évaluation du RGAA](https://accessibilite.numerique.gouv.fr/obligations/evaluation-conformite/).
