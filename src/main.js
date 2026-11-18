@@ -1,5 +1,6 @@
 const form = document.querySelector('#contact-form');
 const status = document.querySelector('#form-status');
+const alert = document.querySelector('#form-alert');
 const submit = form.querySelector('button');
 const fields = [
   { input: form.elements.name, error: document.querySelector('#name-error'), required: 'Indiquez votre nom.' },
@@ -43,12 +44,13 @@ form.addEventListener('submit', async (event) => {
   event.preventDefault();
   if (submit.getAttribute('aria-disabled') === 'true') return;
   status.textContent = '';
+  alert.textContent = '';
 
   const invalid = fields.filter((field) => !validate(field));
   if (invalid.length) {
     const first = invalid[0];
     if (document.activeElement === first.input) {
-      status.textContent = first.error.textContent;
+      alert.textContent = first.error.textContent;
     } else {
       first.input.focus();
     }
@@ -71,7 +73,8 @@ form.addEventListener('submit', async (event) => {
     form.reset();
     status.textContent = 'Votre demande a été envoyée. Merci pour votre message.';
   } catch {
-    status.textContent = 'Impossible de confirmer l’envoi. Réessayez ou contactez-moi directement par e-mail.';
+    status.textContent = '';
+    alert.textContent = 'Impossible de confirmer l’envoi. Réessayez ou contactez-moi directement par e-mail.';
   } finally {
     submit.removeAttribute('aria-disabled');
     for (const { input } of fields) input.readOnly = false;

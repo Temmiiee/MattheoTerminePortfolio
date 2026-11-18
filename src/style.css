@@ -138,7 +138,8 @@ textarea { resize: vertical; }
 .field-note { font-size: .9rem; color: var(--muted); margin-block: .55rem .9rem; }
 .field-error { margin-top: .25rem; color: #8d1b35; font-size: .9rem; }
 [aria-invalid=true] { border-color: #8d1b35; }
-#form-status:not(:empty) { margin-top: .7rem; }
+#form-status:not(:empty), #form-alert:not(:empty) { margin-top: .7rem; }
+#form-alert { color: #8d1b35; }
 .footer { font-size: .9rem; }
 
 @media (max-width: 58rem) {
